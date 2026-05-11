@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: devstack-manager-backend
+    environment:
+      - FLASK_ENV=production
+      - OPENSTACK_AUTH_URL=http://192.168.91.128/identity
+      - OPENSTACK_USERNAME=admin
+      - OPENSTACK_PASSWORD=pfestack26
+      - OPENSTACK_PROJECT_NAME=admin
+      - OPENSTACK_PROJECT_DOMAIN_NAME=Default
+      - OPENSTACK_USER_DOMAIN_NAME=Default
+      - JWT_SECRET_KEY=devstack-manager-secret-key-change-in-production
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: devstack-manager-frontend
+    environment:
+      - REACT_APP_API_URL=http://192.168.91.128:5000/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: devstack-manager-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
