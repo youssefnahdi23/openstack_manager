@@ -1,17 +1,23 @@
-# DevStack Manager
+# OpenStack VM Portal
 
-A web application for managing, accessing, and monitoring OpenStack DevStack instances.
+## Stack
 
-## Prerequisites
-- Docker and Docker Compose installed
-- Access to DevStack server (192.168.91.128)
-- OpenStack credentials
+- React + Vite
+- Flask REST API
+- PostgreSQL
+- OpenStack SDK
+- Docker Compose
+- Prometheus + Grafana
+- noVNC
+- ttyd
 
-## Quick Start
+---
 
-1. Clone the repository
-2. Configure environment variables in `.env` file
-3. Build and start the containers:
+## Start Project
+
+### Backend
 
 ```bash
-docker-compose up -d
+cd backend
+pip install -r requirements.txt
+python -m app.main
