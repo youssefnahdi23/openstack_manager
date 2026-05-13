@@ -176,3 +176,47 @@
 2026-05-13 09:40:32 - app - INFO - Application started in production mode
 2026-05-13 09:40:32 - app - INFO - Application started in production mode
 2026-05-13 09:40:32 - app - INFO - Application started in production mode
+2026-05-13 09:44:14 - app - INFO - Logging configured successfully
+2026-05-13 09:44:14 - app - INFO - Logging configured successfully
+2026-05-13 09:44:14 - app - INFO - Logging configured successfully
+2026-05-13 09:44:14 - app - INFO - Logging configured successfully
+2026-05-13 09:44:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 09:44:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 09:44:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 09:44:15 - app - INFO - Application started in production mode
+2026-05-13 09:44:15 - app - INFO - Application started in production mode
+2026-05-13 09:44:15 - app - INFO - Application started in production mode
+2026-05-13 09:44:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 09:44:15 - app - INFO - Application started in production mode
+2026-05-13 09:46:56 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-13 09:46:56 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-13 09:48:42 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-13 09:48:43 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-13 09:51:42 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-13 09:51:42 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-13 09:53:46 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-13 09:53:46 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-13 10:12:25 - app - INFO - Logging configured successfully
+2026-05-13 10:12:25 - app - INFO - Logging configured successfully
+2026-05-13 10:12:25 - app - INFO - Logging configured successfully
+2026-05-13 10:12:25 - app - INFO - Logging configured successfully
+2026-05-13 10:12:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 10:12:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 10:12:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 10:12:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 10:12:26 - app - INFO - Application started in production mode
+2026-05-13 10:12:26 - app - INFO - Application started in production mode
+2026-05-13 10:12:26 - app - INFO - Application started in production mode
+2026-05-13 10:12:26 - app - INFO - Application started in production mode
+2026-05-13 10:16:20 - app - INFO - Logging configured successfully
+2026-05-13 10:16:20 - app - INFO - Logging configured successfully
+2026-05-13 10:16:20 - app - INFO - Logging configured successfully
+2026-05-13 10:16:20 - app - INFO - Logging configured successfully
+2026-05-13 10:16:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 10:16:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 10:16:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 10:16:21 - app - INFO - Application started in production mode
+2026-05-13 10:16:21 - app - INFO - Application started in production mode
+2026-05-13 10:16:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-13 10:16:21 - app - INFO - Application started in production mode
+2026-05-13 10:16:21 - app - INFO - Application started in production mode

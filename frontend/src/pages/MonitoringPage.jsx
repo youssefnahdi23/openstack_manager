@@ -18,7 +18,8 @@ export default function MonitoringPage() {
 
   const fetchMetrics = async () => {
     try {
-      const response = await fetch('http://localhost/api/metrics')
+      const metricsUrl = import.meta.env.VITE_PROMETHEUS_METRICS_URL || '/metrics'
+      const response = await fetch(metricsUrl)
       const text = await response.text()
       setMetrics(text)
     } catch (error) {

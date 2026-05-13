@@ -150,7 +150,8 @@ export default function VMManagementPage() {
   const handleConsole = async (instanceId) => {
     try {
       const response = await vmService.getConsole(instanceId)
-      window.open('http://localhost:6080', '_blank')
+      const url = response.data?.console_url || response.data?.vnc_url || 'http://localhost:6080'
+      window.open(url, '_blank')
     } catch (error) {
       addNotification({
         type: 'error',

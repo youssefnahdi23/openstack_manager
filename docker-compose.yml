@@ -148,7 +148,7 @@ services:
       VNC_SERVER: ${VNC_SERVER:-localhost:5900}
       NOVNC_PORT: 6080
     ports:
-      - "6080:6080"
+      - "6080:8080"
     networks:
       - vm-portal-network
     restart: unless-stopped
