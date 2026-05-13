@@ -46,10 +46,10 @@ export function VMStatus({ status }) {
   )
 }
 
-export function LoadingSpinner() {
+export function Card({ children, className = '', ...props }) {
   return (
-    <div className="flex items-center justify-center">
-      <div className="w-8 h-8 border-4 border-slate-700 border-t-blue-500 rounded-full animate-spin" />
+    <div className={`bg-slate-800 border border-slate-700 rounded-lg p-6 ${className}`} {...props}>
+      {children}
     </div>
   )
 }
@@ -70,6 +70,14 @@ export function StatCard({ icon: Icon, label, value, loading = false }) {
           <Icon className="w-6 h-6 text-blue-400" />
         </div>
       </div>
+    </div>
+  )
+}
+
+export function LoadingSpinner() {
+  return (
+    <div className="flex items-center justify-center">
+      <div className="w-8 h-8 border-4 border-slate-700 border-t-blue-500 rounded-full animate-spin" />
     </div>
   )
 }

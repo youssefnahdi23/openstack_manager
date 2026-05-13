@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth, useNotificationStore } from '../store'
 import { Button } from '../components/Common'
-import { Lock, Mail } from 'lucide-react'
+import { Cloud, Lock, Mail } from 'lucide-react'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -124,5 +124,3 @@ export default function LoginPage() {
     </div>
   )
 }
-
-import { Cloud } from 'lucide-react'

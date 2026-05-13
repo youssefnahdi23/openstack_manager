@@ -1,7 +1,8 @@
 import { create } from 'zustand'
-import { authService } from '../services/api'
+import { authService } from './services/api'
 
 export const useAuthStore = create((set) => ({
+
   token: localStorage.getItem('token') || null,
   user: JSON.parse(localStorage.getItem('user') || 'null'),
   isAuthenticated: !!localStorage.getItem('token'),
@@ -59,6 +60,8 @@ export const useAuthStore = create((set) => ({
 
   clearError: () => set({ error: null }),
 }))
+
+export const useAuth = useAuthStore
 
 export const useVMStore = create((set) => ({
   instances: [],
