@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   # PostgreSQL Database
   db:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     container_name: vm-portal-db
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-vm_portal}
@@ -62,7 +60,7 @@ services:
       REDIS_URL: redis://redis:6379/0
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
     ports:
-      - "5000:5000"
+      - "5000:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -133,9 +131,9 @@ services:
 
   # ttyd Web Terminal
   ttyd:
-    image: tsl0741/ttyd:latest
+    image: tsl0922/ttyd:latest
     container_name: vm-portal-ttyd
-    command: -W /bin/bash
+    command: ["ttyd", "-p", "7681", "bash"]
     ports:
       - "7681:7681"
     networks:
@@ -144,7 +142,7 @@ services:
 
   # noVNC Console
   novnc:
-    image: geek1011/novnc:latest
+    image: theasp/novnc:latest
     container_name: vm-portal-novnc
     environment:
       VNC_SERVER: ${VNC_SERVER:-localhost:5900}

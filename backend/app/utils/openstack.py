@@ -1,6 +1,5 @@
 import os
 from openstack import connect
-from openstack.config import get_config
 import logging
 
 logger = logging.getLogger(__name__)
@@ -8,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 class OpenStackManager:
     """Manager for OpenStack operations"""
-    
+
     def __init__(self):
         self.auth_url = os.getenv('OPENSTACK_AUTH_URL', 'http://192.168.91.128/identity')
         self.username = os.getenv('OPENSTACK_USERNAME', 'admin')
@@ -17,17 +16,26 @@ class OpenStackManager:
         self.user_domain_name = os.getenv('OPENSTACK_USER_DOMAIN_NAME', 'Default')
         self.project_domain_name = os.getenv('OPENSTACK_PROJECT_DOMAIN_NAME', 'Default')
         self.region_name = os.getenv('OPENSTACK_REGION_NAME', 'RegionOne')
-        
+
         self.conn = None
         self._connect()
-    
+
     def _connect(self):
         """Establish connection to OpenStack"""
         try:
-            config = get_config()
-            config.set_override('auth_url', self.auth_url)
-            config.set_override('username', self.username)
-            config.set_override('password', self.password)
+            self.conn = connect(
+                auth_url=self.auth_url,
+                username=self.username,
+                password=self.password,
+                project_name=self.project_name,
+                user_domain_name=self.user_domain_name,
+                project_domain_name=self.project_domain_name,
+                region_name=self.region_name
+            )
+            logger.info("Successfully connected to OpenStack")
+        except Exception as e:
+            logger.error(f"Failed to connect to OpenStack: {e}")
+            self.conn = None
             config.set_override('project_name', self.project_name)
             config.set_override('user_domain_name', self.user_domain_name)
             config.set_override('project_domain_name', self.project_domain_name)
