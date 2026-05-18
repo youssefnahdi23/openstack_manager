@@ -172,7 +172,7 @@ export default function VMManagementPage() {
     } catch (error) {
       addNotification({
         type: 'error',
-        message: 'Failed to open console',
+        message: error.response?.data?.message || 'Failed to open console',
       })
     }
   }

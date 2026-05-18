@@ -325,3 +325,65 @@ DETAIL:  Failing row contains (4, 1, null, demo-instance, create, pending, null,
 2026-05-18 09:35:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
 2026-05-18 09:35:29 - app.utils.openstack - ERROR - Error creating instances: BadRequestException: 400: Client Error for url: http://192.168.91.128/compute/v2.1/servers, Invalid input for field/attribute server. Value: {'name': 'mysql-server', 'flavorRef': '42', 'imageRef': '4f5210dd-2117-4064-b9c0-de94f5327e36'}. 'networks' is a required property
 2026-05-18 09:35:29 - app.routes.vms - ERROR - Error creating instance: BadRequestException: 400: Client Error for url: http://192.168.91.128/compute/v2.1/servers, Invalid input for field/attribute server. Value: {'name': 'mysql-server', 'flavorRef': '42', 'imageRef': '4f5210dd-2117-4064-b9c0-de94f5327e36'}. 'networks' is a required property
+2026-05-18 09:53:18 - app - INFO - Logging configured successfully
+2026-05-18 09:53:18 - app - INFO - Logging configured successfully
+2026-05-18 09:53:18 - app - INFO - Logging configured successfully
+2026-05-18 09:53:18 - app - INFO - Logging configured successfully
+2026-05-18 09:53:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:53:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:53:20 - app - INFO - Application started in production mode
+2026-05-18 09:53:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:53:20 - app - INFO - Application started in production mode
+2026-05-18 09:53:20 - app - INFO - Application started in production mode
+2026-05-18 09:53:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:53:20 - app - INFO - Application started in production mode
+2026-05-18 09:53:27 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:53:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:05 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:05 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:12 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-18 09:54:12 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-18 09:54:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:54:16 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-18 09:54:54 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:55:08 - app.utils.openstack - ERROR - Error allocating floating IP: ResourceNotFound: 404: Client Error for url: http://192.168.91.128/networking/v2.0/floatingips, External network 2e49a9f5-ff65-42e1-a3a3-8551a71bda73 is not reachable from subnet 5f230bdf-2e46-4c61-8782-24b52617a509.  Therefore, cannot associate Port 9a994b64-67fa-4bd2-b833-e6e62121366d with a Floating IP.
+2026-05-18 09:55:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:55:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:55:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:55:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:55:08 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-18 09:55:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 09:55:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:24:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:24:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:24:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:24:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:24:47 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-18 10:25:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:40 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-18 10:25:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:43 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-18 10:25:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-18 10:25:43 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-18 10:25:45 - app.utils.openstack - INFO - Successfully connected to OpenStack

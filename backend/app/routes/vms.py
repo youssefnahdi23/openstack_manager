@@ -102,6 +102,9 @@ def create_instance(current_user):
             db.session.commit()
             raise e
     
+    except ValueError as e:
+        logger.error(f'Error creating instance: {str(e)}')
+        return jsonify({'message': str(e)}), 400
     except Exception as e:
         logger.error(f'Error creating instance: {str(e)}')
         return jsonify({'message': str(e)}), 500
@@ -299,13 +302,21 @@ def list_projects():
 @bp.route('/instances/<instance_id>/console', methods=['GET'])
 @token_required
 def get_console(current_user, instance_id):
-    """Get console URL for an instance"""
+    """Get console/SSH access for an instance"""
     try:
         manager = get_openstack_manager_for_request()
-        console_url = manager.get_vnc_console(instance_id) or manager.vnc_base_url
+        instance = manager.get_instance(instance_id)
+        if not instance:
+            return jsonify({'message': 'Instance not found'}), 404
+
+        floating_ip = manager._get_floating_ip_from_addresses(instance.get('addresses'))
+        if not floating_ip:
+            return jsonify({'message': 'Cannot access noVNC: no floating IP assigned'}), 400
+
+        ssh_url = f'ssh://{floating_ip}'
         return jsonify({
-            'console_url': console_url,
-            'vnc_url': manager.vnc_base_url
+            'console_url': ssh_url,
+            'floating_ip': floating_ip
         }), 200
     
     except Exception as e:

@@ -107,6 +107,32 @@ class OpenStackManager:
             logger.error(f'Error getting instance: {str(e)}')
             return None
     
+    def _get_default_network_id(self):
+        """Return the first available private network ID."""
+        try:
+            for network in self.conn.network.networks():
+                if not getattr(network, 'is_router_external', False):
+                    return network.id
+        except Exception as e:
+            logger.error(f'Error finding default network: {str(e)}')
+        return None
+
+    def _get_floating_ip_from_addresses(self, addresses):
+        """Extract the first floating IP from OpenStack addresses."""
+        if not addresses:
+            return None
+
+        if isinstance(addresses, dict):
+            for network_name, addr_list in addresses.items():
+                if not isinstance(addr_list, list):
+                    continue
+                for addr in addr_list:
+                    if addr.get('OS-EXT-IPS:type') == 'floating' or addr.get('type') == 'floating':
+                        return addr.get('addr')
+                    if addr.get('floating_ip_address'):
+                        return addr.get('floating_ip_address')
+        return None
+
     def create_instance(self, name, flavor_id, image_id, network_id=None, **kwargs):
         """Create a new instance"""
         try:
@@ -117,12 +143,17 @@ class OpenStackManager:
             flavor = self.conn.compute.get_flavor(flavor_id)
             image = self.conn.image.get_image(image_id)
             
+            if not network_id:
+                network_id = self._get_default_network_id()
+                if not network_id:
+                    raise ValueError('No network selected and no default network is available')
+            
             # Create server
             server = self.conn.compute.create_server(
                 name=name,
                 flavor_id=flavor_id,
                 image_id=image_id,
-                networks=[{'uuid': network_id}] if network_id else [],
+                networks=[{'uuid': network_id}],
                 **kwargs
             )
             
@@ -283,6 +314,11 @@ class OpenStackManager:
             if not self.conn:
                 return []
 
+            if not network_id:
+                network_id = self._get_default_network_id()
+                if not network_id:
+                    raise ValueError('No network selected and no default network is available')
+
             instances = []
             for idx in range(max(1, int(count))):
                 server_name = name if int(count) == 1 else f"{name}-{idx + 1}"
@@ -290,9 +326,8 @@ class OpenStackManager:
                     'name': server_name,
                     'flavor_id': flavor_id,
                     'image_id': image_id,
+                    'networks': [{'uuid': network_id}],
                 }
-                if network_id:
-                    create_kwargs['networks'] = [{'uuid': network_id}]
                 create_kwargs.update(kwargs)
 
                 server = self.conn.compute.create_server(**create_kwargs)
