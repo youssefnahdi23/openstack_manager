@@ -125,3 +125,194 @@ DETAIL:  Failing row contains (4, 1, null, demo-instance, create, pending, null,
 2026-05-18 12:30:21 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
 2026-05-18 12:30:26 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
 2026-05-18 12:30:26 - app.utils.openstack - ERROR - Error listing networks: 'Network' object has no attribute 'admin_state_up'
+2026-05-18 13:25:44 - app.utils.openstack - ERROR - Error getting VNC console: 'Proxy' object has no attribute 'create_server_console'
+2026-05-18 13:25:47 - app.utils.openstack - ERROR - Error getting VNC console: 'Proxy' object has no attribute 'create_server_console'
+2026-05-18 13:42:26 - app.utils.openstack - ERROR - Error starting instance: ConflictException: 409: Client Error for url: http://192.168.91.128/compute/v2.1/servers/f1d08e4f-40e7-4b9a-ac3e-418532d0775c/action, Cannot 'start' instance f1d08e4f-40e7-4b9a-ac3e-418532d0775c while it is in vm_state rescued
+2026-05-18 13:42:26 - app.routes.vms - ERROR - Error starting instance: ConflictException: 409: Client Error for url: http://192.168.91.128/compute/v2.1/servers/f1d08e4f-40e7-4b9a-ac3e-418532d0775c/action, Cannot 'start' instance f1d08e4f-40e7-4b9a-ac3e-418532d0775c while it is in vm_state rescued
+2026-05-18 13:42:54 - app.utils.openstack - ERROR - Error getting VNC console: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)']; last error: 'Proxy' object has no attribute 'create_server_console'
+Traceback (most recent call last):
+  File "/app/app/utils/openstack.py", line 549, in get_vnc_console
+    return self.get_console_url(instance_id, console_type='novnc')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 542, in get_console_url
+    raise RuntimeError(
+RuntimeError: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)']; last error: 'Proxy' object has no attribute 'create_server_console'
+2026-05-18 13:42:54 - app.routes.vms - ERROR - Error getting console: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)']; last error: 'Proxy' object has no attribute 'create_server_console'
+Traceback (most recent call last):
+  File "/app/app/routes/vms.py", line 349, in get_console
+    vnc_url = manager.get_vnc_console(instance_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 549, in get_vnc_console
+    return self.get_console_url(instance_id, console_type='novnc')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 542, in get_console_url
+    raise RuntimeError(
+RuntimeError: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)']; last error: 'Proxy' object has no attribute 'create_server_console'
+2026-05-18 13:44:51 - app.utils.openstack - ERROR - Error getting VNC console: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)']; last error: 'Proxy' object has no attribute 'create_server_console'
+Traceback (most recent call last):
+  File "/app/app/utils/openstack.py", line 549, in get_vnc_console
+    return self.get_console_url(instance_id, console_type='novnc')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 542, in get_console_url
+    raise RuntimeError(
+RuntimeError: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)']; last error: 'Proxy' object has no attribute 'create_server_console'
+2026-05-18 13:44:51 - app.routes.vms - ERROR - Error getting console: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)']; last error: 'Proxy' object has no attribute 'create_server_console'
+Traceback (most recent call last):
+  File "/app/app/routes/vms.py", line 349, in get_console
+    vnc_url = manager.get_vnc_console(instance_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 549, in get_vnc_console
+    return self.get_console_url(instance_id, console_type='novnc')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 542, in get_console_url
+    raise RuntimeError(
+RuntimeError: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)']; last error: 'Proxy' object has no attribute 'create_server_console'
+2026-05-18 13:49:15 - app.routes.vms - ERROR - Error getting console: 'Image' object has no attribute 'owner_seen'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 178, in __get__
+    value = attributes[self.name]
+            ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 282, in __getitem__
+    return self.attributes[key]
+           ~~~~~~~~~~~~~~~^^^^^
+KeyError: 'owner'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/routes/vms.py", line 350, in get_console
+    return jsonify({
+           ^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/json/__init__.py", line 170, in jsonify
+    return current_app.json.response(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/json/provider.py", line 215, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/json/provider.py", line 180, in dumps
+    return json.dumps(obj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 765, in items
+    res.append((attr, self[attr]))
+                      ~~~~^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 683, in __getitem__
+    return getattr(self, name)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 670, in __getattribute__
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 658, in __getattribute__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 199, in __get__
+    delattr(instance, seen_flag)
+AttributeError: 'Image' object has no attribute 'owner_seen'
+2026-05-18 13:49:23 - app.utils.openstack - ERROR - Error starting instance: ConflictException: 409: Client Error for url: http://192.168.91.128/compute/v2.1/servers/f1d08e4f-40e7-4b9a-ac3e-418532d0775c/action, Cannot 'start' instance f1d08e4f-40e7-4b9a-ac3e-418532d0775c while it is in vm_state rescued
+2026-05-18 13:49:23 - app.routes.vms - ERROR - Error starting instance: ConflictException: 409: Client Error for url: http://192.168.91.128/compute/v2.1/servers/f1d08e4f-40e7-4b9a-ac3e-418532d0775c/action, Cannot 'start' instance f1d08e4f-40e7-4b9a-ac3e-418532d0775c while it is in vm_state rescued
+2026-05-18 13:50:01 - app.routes.vms - ERROR - Error getting console: 'Image' object has no attribute 'owner_seen'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 178, in __get__
+    value = attributes[self.name]
+            ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 282, in __getitem__
+    return self.attributes[key]
+           ~~~~~~~~~~~~~~~^^^^^
+KeyError: 'owner'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/routes/vms.py", line 350, in get_console
+    return jsonify({
+           ^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/json/__init__.py", line 170, in jsonify
+    return current_app.json.response(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/json/provider.py", line 215, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/json/provider.py", line 180, in dumps
+    return json.dumps(obj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 765, in items
+    res.append((attr, self[attr]))
+                      ~~~~^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 683, in __getitem__
+    return getattr(self, name)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 670, in __getattribute__
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 658, in __getattribute__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 199, in __get__
+    delattr(instance, seen_flag)
+AttributeError: 'Image' object has no attribute 'owner_seen'
+2026-05-18 13:54:04 - app.routes.vms - ERROR - Error getting console: 'Image' object has no attribute 'owner_seen'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 178, in __get__
+    value = attributes[self.name]
+            ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 282, in __getitem__
+    return self.attributes[key]
+           ~~~~~~~~~~~~~~~^^^^^
+KeyError: 'owner'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/routes/vms.py", line 350, in get_console
+    @token_required
+                   
+  File "/usr/local/lib/python3.11/site-packages/flask/json/__init__.py", line 170, in jsonify
+    return current_app.json.response(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/json/provider.py", line 215, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/json/provider.py", line 180, in dumps
+    return json.dumps(obj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 765, in items
+    res.append((attr, self[attr]))
+                      ~~~~^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 683, in __getitem__
+    return getattr(self, name)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 670, in __getattribute__
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 658, in __getattribute__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/openstack/resource.py", line 199, in __get__
+    delattr(instance, seen_flag)
+AttributeError: 'Image' object has no attribute 'owner_seen'
+2026-05-18 13:54:07 - app.utils.openstack - ERROR - Error starting instance: ConflictException: 409: Client Error for url: http://192.168.91.128/compute/v2.1/servers/f1d08e4f-40e7-4b9a-ac3e-418532d0775c/action, Cannot 'start' instance f1d08e4f-40e7-4b9a-ac3e-418532d0775c while it is in vm_state rescued
+2026-05-18 13:54:07 - app.routes.vms - ERROR - Error starting instance: ConflictException: 409: Client Error for url: http://192.168.91.128/compute/v2.1/servers/f1d08e4f-40e7-4b9a-ac3e-418532d0775c/action, Cannot 'start' instance f1d08e4f-40e7-4b9a-ac3e-418532d0775c while it is in vm_state rescued
+2026-05-18 13:54:55 - app.utils.openstack - ERROR - Error starting instance: ConflictException: 409: Client Error for url: http://192.168.91.128/compute/v2.1/servers/f1d08e4f-40e7-4b9a-ac3e-418532d0775c/action, Cannot 'start' instance f1d08e4f-40e7-4b9a-ac3e-418532d0775c while it is in vm_state rescued

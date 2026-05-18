@@ -192,6 +192,10 @@ export default function VMManagementPage() {
       let message = ''
 
       switch (action) {
+        case 'unrescue':
+          await vmService.unrescueInstance(instanceId)
+          message = 'Instance unrescued successfully'
+          break
         case 'start':
           await vmService.startInstance(instanceId)
           message = 'Instance started successfully'
@@ -519,17 +523,27 @@ export default function VMManagementPage() {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex gap-2">
-                          {instance.status !== 'ACTIVE' && (
-                            <Button
-                              size="sm"
-                              variant="success"
-                              onClick={() => handleVMAction(instance.id, 'start')}
-                              loading={operatingInstance === `${instance.id}-start`}
-                              disabled={isLoading}
-                            >
-                              <Play className="w-4 h-4" />
-                            </Button>
-                          )}
+                          {(instance.status && instance.status.toString().toLowerCase().includes('rescue')) ? (
+                              <Button
+                                size="sm"
+                                variant="warning"
+                                onClick={() => handleVMAction(instance.id, 'unrescue')}
+                                loading={operatingInstance === `${instance.id}-unrescue`}
+                                disabled={isLoading}
+                              >
+                                Unrescue
+                              </Button>
+                            ) : instance.status !== 'ACTIVE' ? (
+                              <Button
+                                size="sm"
+                                variant="success"
+                                onClick={() => handleVMAction(instance.id, 'start')}
+                                loading={operatingInstance === `${instance.id}-start`}
+                                disabled={isLoading}
+                              >
+                                <Play className="w-4 h-4" />
+                              </Button>
+                            ) : null}
                           {instance.status === 'ACTIVE' && (
                             <>
                               <Button

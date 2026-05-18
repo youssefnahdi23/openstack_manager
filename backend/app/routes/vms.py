@@ -171,6 +171,17 @@ def start_instance(current_user, instance_id):
             return jsonify({'message': 'Instance started successfully'}), 200
         
         except Exception as e:
+            # If instance is in rescued vm_state, surface a clearer message
+            msg = str(e)
+            if 'rescued' in msg.lower() or 'vm_state rescued' in msg.lower():
+                msg = (
+                    f"Instance is in 'rescued' state and cannot be started. "
+                    f"Call the unrescue endpoint to return it to a normal state: /api/vms/instances/{instance_id}/unrescue"
+                )
+                vm_log.status = 'failed'
+                vm_log.message = msg
+                db.session.commit()
+                return jsonify({'message': msg}), 409
             vm_log.status = 'failed'
             vm_log.message = str(e)
             db.session.commit()
@@ -338,25 +349,37 @@ def list_projects():
 @bp.route('/instances/<instance_id>/console', methods=['GET'])
 @token_required
 def get_console(current_user, instance_id):
-    """Get console/SSH access for an instance"""
+    """Get noVNC console access for an instance"""
     try:
+        logger.info(f"User '{current_user.username}' requested noVNC console for instance {instance_id}")
         manager = get_openstack_manager_for_request()
         instance = manager.get_instance(instance_id)
         if not instance:
             return jsonify({'message': 'Instance not found'}), 404
 
-        floating_ip = manager._get_floating_ip_from_addresses(instance.get('addresses'))
-        if not floating_ip:
-            return jsonify({'message': 'Cannot access noVNC: no floating IP assigned'}), 400
-
-        ssh_url = f'ssh://{floating_ip}'
+        vnc_url = manager.get_vnc_console(instance_id)
         return jsonify({
-            'console_url': ssh_url,
-            'floating_ip': floating_ip
+            'console_url': vnc_url,
+            'instance': instance
         }), 200
-    
     except Exception as e:
-        logger.error(f'Error getting console: {str(e)}')
+        logger.error(f'Error getting console: {str(e)}', exc_info=True)
+        return jsonify({'message': f'Unable to create noVNC console for this instance: {str(e)}'}), 500
+
+
+@bp.route('/instances/<instance_id>/unrescue', methods=['POST'])
+@token_required
+def unrescue_instance(current_user, instance_id):
+    """Unrescue an instance that is in rescued vm_state"""
+    try:
+        logger.info(f"User '{current_user.username}' requested unrescue for instance {instance_id}")
+        manager = get_openstack_manager_for_request()
+        success = manager.unrescue_instance(instance_id)
+        if success:
+            return jsonify({'message': 'Instance unrescued successfully'}), 200
+        return jsonify({'message': 'Failed to unrescue instance'}), 500
+    except Exception as e:
+        logger.error(f'Error unrescuing instance: {str(e)}', exc_info=True)
         return jsonify({'message': str(e)}), 500
 
 

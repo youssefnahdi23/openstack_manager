@@ -56,6 +56,7 @@ export const vmService = {
   listProjects: () => api.get('/vms/projects'),
   getConsole: (id) => api.get(`/vms/instances/${id}/console`),
   getStats: () => api.get('/vms/stats'),
+  unrescueInstance: (id) => api.post(`/vms/instances/${id}/unrescue`),
 }
 
 export const healthService = {

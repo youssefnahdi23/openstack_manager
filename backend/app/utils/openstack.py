@@ -90,22 +90,81 @@ class OpenStackManager:
             
             server = self.conn.compute.get_server(instance_id)
             if server:
+                # Normalize image and flavor to simple identifiers to keep the
+                # returned structure JSON-serializable (avoid SDK resource objects)
+                image = None
+                try:
+                    if getattr(server, 'image', None):
+                        if hasattr(server.image, 'get'):
+                            image = server.image.get('id')
+                        elif hasattr(server.image, 'id'):
+                            image = server.image.id
+                        else:
+                            image = str(server.image)
+                except Exception:
+                    image = None
+
+                flavor = None
+                try:
+                    if getattr(server, 'flavor', None):
+                        if hasattr(server.flavor, 'get'):
+                            flavor = server.flavor.get('id')
+                        elif hasattr(server.flavor, 'id'):
+                            flavor = server.flavor.id
+                        else:
+                            flavor = str(server.flavor)
+                except Exception:
+                    flavor = None
+
                 return {
                     'id': server.id,
-                    'name': server.name,
-                    'status': server.status,
-                    'created': server.created_at,
-                    'updated': server.updated_at,
-                    'flavor': server.flavor,
-                    'image': server.image,
-                    'addresses': server.addresses,
-                    'metadata': server.metadata,
-                    'security_groups': server.security_groups
+                    'name': getattr(server, 'name', None),
+                    'status': getattr(server, 'status', None),
+                    'created': getattr(server, 'created_at', None),
+                    'updated': getattr(server, 'updated_at', None),
+                    'flavor': flavor,
+                    'image': image,
+                    'addresses': getattr(server, 'addresses', None),
+                    'metadata': getattr(server, 'metadata', None),
+                    'security_groups': getattr(server, 'security_groups', None)
                 }
             return None
         except Exception as e:
             logger.error(f'Error getting instance: {str(e)}')
             return None
+
+    def unrescue_instance(self, instance_id):
+        """Attempt to unrescue an instance (reverse rescued state)."""
+        try:
+            if not self.conn:
+                return False
+
+            # The OpenStack SDK exposes an unrescue call on the compute proxy
+            if hasattr(self.conn.compute, 'unrescue_server'):
+                self.conn.compute.unrescue_server(instance_id)
+            else:
+                # Fallback to direct action via session
+                endpoint = None
+                if hasattr(self.conn, 'session') and hasattr(self.conn.session, 'get_endpoint'):
+                    endpoint = self.conn.session.get_endpoint(service_type='compute', interface='public')
+                if not endpoint and hasattr(self.conn, 'get_endpoint'):
+                    try:
+                        endpoint = self.conn.get_endpoint(service_type='compute', interface='public')
+                    except Exception:
+                        endpoint = None
+
+                if not endpoint:
+                    raise RuntimeError('Unable to determine compute endpoint for unrescue')
+
+                action_url = endpoint.rstrip('/') + f'/servers/{instance_id}/action'
+                payload = {'os-unrescue': None}
+                resp = self.conn.session.post(action_url, json=payload)
+                resp.raise_for_status()
+
+            return True
+        except Exception as e:
+            logger.error(f'Error unrescuing instance {instance_id}: {e}', exc_info=True)
+            raise e
     
     def _is_external_network(self, network):
         return any([
@@ -466,35 +525,121 @@ class OpenStackManager:
             logger.error(f'Error listing networks: {str(e)}')
             return []
     
+    def _extract_console_url(self, result):
+        if not result:
+            return None
+
+        if isinstance(result, dict):
+            console = result.get('console')
+            if isinstance(console, dict):
+                return console.get('url')
+            return None
+
+        if hasattr(result, 'get'):
+            console = result.get('console')
+            if isinstance(console, dict):
+                return console.get('url')
+
+        if hasattr(result, 'console'):
+            console = getattr(result, 'console')
+            if isinstance(console, dict):
+                return console.get('url')
+            if hasattr(console, 'url'):
+                return getattr(console, 'url')
+
+        return None
+
     def get_console_url(self, instance_id, console_type='novnc'):
         """Get console URL for an instance"""
+        if not self.conn:
+            raise RuntimeError('Not connected to OpenStack')
+
+        last_error = None
+        attempts = []
+
         try:
-            if not self.conn:
-                return None
-            
-            # Get the console URL
-            console = self.conn.compute.create_server_console(
-                instance_id,
-                console_type
-            )
-            
-            return console.get('console', {}).get('url')
+            attempts.append('create_server_console(instance_id, console_type=console_type)')
+            console = self.conn.compute.create_server_console(instance_id, console_type=console_type)
+            url = self._extract_console_url(console)
+            if url:
+                return url
         except Exception as e:
-            logger.error(f'Error getting console URL: {str(e)}')
-            return None
-    
+            last_error = e
+            logger.warning(f'Console creation attempt 1 failed: {e}', exc_info=True)
+
+        try:
+            attempts.append('create_server_console(instance_id, console_type)')
+            console = self.conn.compute.create_server_console(instance_id, console_type)
+            url = self._extract_console_url(console)
+            if url:
+                return url
+        except Exception as e:
+            last_error = e
+            logger.warning(f'Console creation attempt 2 failed: {e}', exc_info=True)
+
+        if hasattr(self.conn.compute, 'get_server_console'):
+            try:
+                attempts.append('get_server_console(instance_id, console_type=console_type)')
+                console = self.conn.compute.get_server_console(instance_id, console_type=console_type)
+                url = self._extract_console_url(console)
+                if url:
+                    return url
+            except Exception as e:
+                last_error = e
+                logger.warning(f'Console creation attempt 3 failed: {e}', exc_info=True)
+
+            try:
+                attempts.append('get_server_console(instance_id, console_type)')
+                console = self.conn.compute.get_server_console(instance_id, console_type)
+                url = self._extract_console_url(console)
+                if url:
+                    return url
+            except Exception as e:
+                last_error = e
+                logger.warning(f'Console creation attempt 4 failed: {e}', exc_info=True)
+        # Final fallback: attempt direct compute API call using Keystone session endpoint
+        try:
+            attempts.append('direct session POST /servers/{id}/action os-getVNCConsole')
+            endpoint = None
+            if hasattr(self.conn, 'session') and hasattr(self.conn.session, 'get_endpoint'):
+                endpoint = self.conn.session.get_endpoint(service_type='compute', interface='public')
+            if not endpoint and hasattr(self.conn, 'get_endpoint'):
+                try:
+                    endpoint = self.conn.get_endpoint(service_type='compute', interface='public')
+                except Exception:
+                    endpoint = None
+
+            if endpoint:
+                action_url = endpoint.rstrip('/') + f'/servers/{instance_id}/action'
+                payload = {f'os-getVNCConsole': {'type': console_type}}
+                resp = None
+                try:
+                    resp = self.conn.session.post(action_url, json=payload)
+                    resp.raise_for_status()
+                    data = resp.json()
+                    url = self._extract_console_url(data)
+                    if url:
+                        return url
+                    last_error = RuntimeError(f'No URL in compute API response: {data}')
+                except Exception as e:
+                    last_error = e
+                    logger.warning(f'Direct compute API attempt failed: {e}; resp={getattr(resp, "text", None)}', exc_info=True)
+
+        except Exception as e:
+            last_error = e
+            logger.warning(f'Final direct compute API fallback failed: {e}', exc_info=True)
+
+        raise RuntimeError(
+            f"Unable to create console with attempts {attempts}; last error: {last_error}"
+        )
+
     def get_vnc_console(self, instance_id):
         """Get VNC console for an instance"""
         try:
-            if not self.conn:
-                return None
-            
-            # Create VNC console
-            result = self.conn.compute.create_server_console(instance_id, 'novnc')
-            return result.get('console', {}).get('url')
+            return self.get_console_url(instance_id, console_type='novnc')
         except Exception as e:
-            logger.error(f'Error getting VNC console: {str(e)}')
-            return None
+            logger.error(f'Error getting VNC console: {str(e)}', exc_info=True)
+            raise
     
     def is_connected(self):
         """Check if connected to OpenStack"""
