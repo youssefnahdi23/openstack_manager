@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, request, jsonify
 from app import db
 from app.models.user import token_required, VMLog
@@ -7,7 +8,10 @@ import logging
 bp = Blueprint('vms', __name__, url_prefix='/api/vms')
 logger = logging.getLogger(__name__)
 
-os_manager = get_openstack_manager()
+
+def get_openstack_manager_for_request():
+    project_name = request.headers.get('X-OpenStack-Project') or os.getenv('OPENSTACK_PROJECT_NAME', 'admin')
+    return get_openstack_manager(project_name=project_name)
 
 
 @bp.route('/instances', methods=['GET'])
@@ -15,7 +19,8 @@ os_manager = get_openstack_manager()
 def list_instances(current_user):
     """List all instances"""
     try:
-        instances = os_manager.list_instances()
+        manager = get_openstack_manager_for_request()
+        instances = manager.list_instances()
         return jsonify({
             'instances': instances
         }), 200
@@ -30,7 +35,8 @@ def list_instances(current_user):
 def get_instance(current_user, instance_id):
     """Get instance details"""
     try:
-        instance = os_manager.get_instance(instance_id)
+        manager = get_openstack_manager_for_request()
+        instance = manager.get_instance(instance_id)
         if not instance:
             return jsonify({'message': 'Instance not found'}), 404
         
@@ -46,41 +52,53 @@ def get_instance(current_user, instance_id):
 def create_instance(current_user):
     """Create a new instance"""
     try:
-        data = request.get_json()
+        data = request.get_json() or {}
         
-        if not data or not data.get('name') or not data.get('flavor_id') or not data.get('image_id'):
+        if not data.get('name') or not data.get('flavor_id') or not data.get('image_id'):
             return jsonify({'message': 'Missing required fields'}), 400
-        
-        # Create VM log
-        vm_log = VMLog(
-            user_id=current_user.id,
-            instance_name=data.get('name'),
-            action='create',
-            status='pending'
-        )
-        db.session.add(vm_log)
-        db.session.commit()
-        
+
+        count = int(data.get('count', 1))
+        assign_floating_ip = bool(data.get('assign_floating_ip', False))
+        manager = get_openstack_manager_for_request()
+
         try:
-            result = os_manager.create_instance(
+            created_instances = manager.create_instances(
                 name=data.get('name'),
                 flavor_id=data.get('flavor_id'),
                 image_id=data.get('image_id'),
-                network_id=data.get('network_id')
+                network_id=data.get('network_id'),
+                count=count,
+                assign_floating_ip=assign_floating_ip
             )
-            
-            vm_log.instance_id = result['id']
-            vm_log.status = 'success'
+
+            vm_logs = []
+            for instance in created_instances:
+                vm_logs.append(VMLog(
+                    user_id=current_user.id,
+                    instance_id=instance.get('id', ''),
+                    instance_name=instance.get('name'),
+                    action='create',
+                    status='success'
+                ))
+
+            db.session.add_all(vm_logs)
             db.session.commit()
-            
+
             return jsonify({
-                'message': 'Instance created successfully',
-                'instance': result
+                'message': 'Instance(s) created successfully',
+                'instances': created_instances
             }), 201
-        
+
         except Exception as e:
-            vm_log.status = 'failed'
-            vm_log.message = str(e)
+            failed_log = VMLog(
+                user_id=current_user.id,
+                instance_id='',
+                instance_name=data.get('name'),
+                action='create',
+                status='failed',
+                message=str(e)
+            )
+            db.session.add(failed_log)
             db.session.commit()
             raise e
     
@@ -94,7 +112,6 @@ def create_instance(current_user):
 def delete_instance(current_user, instance_id):
     """Delete an instance"""
     try:
-        # Create VM log
         vm_log = VMLog(
             user_id=current_user.id,
             instance_id=instance_id,
@@ -105,7 +122,8 @@ def delete_instance(current_user, instance_id):
         db.session.commit()
         
         try:
-            os_manager.delete_instance(instance_id)
+            manager = get_openstack_manager_for_request()
+            manager.delete_instance(instance_id)
             vm_log.status = 'success'
             db.session.commit()
             
@@ -137,7 +155,8 @@ def start_instance(current_user, instance_id):
         db.session.commit()
         
         try:
-            os_manager.start_instance(instance_id)
+            manager = get_openstack_manager_for_request()
+            manager.start_instance(instance_id)
             vm_log.status = 'success'
             db.session.commit()
             
@@ -169,7 +188,8 @@ def stop_instance(current_user, instance_id):
         db.session.commit()
         
         try:
-            os_manager.stop_instance(instance_id)
+            manager = get_openstack_manager_for_request()
+            manager.stop_instance(instance_id)
             vm_log.status = 'success'
             db.session.commit()
             
@@ -204,7 +224,8 @@ def reboot_instance(current_user, instance_id):
         db.session.commit()
         
         try:
-            os_manager.reboot_instance(instance_id, hard=hard_reboot)
+            manager = get_openstack_manager_for_request()
+            manager.reboot_instance(instance_id, hard=hard_reboot)
             vm_log.status = 'success'
             db.session.commit()
             
@@ -226,7 +247,8 @@ def reboot_instance(current_user, instance_id):
 def list_flavors(current_user):
     """List all flavors"""
     try:
-        flavors = os_manager.list_flavors()
+        manager = get_openstack_manager_for_request()
+        flavors = manager.list_flavors()
         return jsonify({'flavors': flavors}), 200
     
     except Exception as e:
@@ -239,7 +261,8 @@ def list_flavors(current_user):
 def list_images(current_user):
     """List all images"""
     try:
-        images = os_manager.list_images()
+        manager = get_openstack_manager_for_request()
+        images = manager.list_images()
         return jsonify({'images': images}), 200
     
     except Exception as e:
@@ -252,11 +275,24 @@ def list_images(current_user):
 def list_networks(current_user):
     """List all networks"""
     try:
-        networks = os_manager.list_networks()
+        manager = get_openstack_manager_for_request()
+        networks = manager.list_networks()
         return jsonify({'networks': networks}), 200
     
     except Exception as e:
         logger.error(f'Error listing networks: {str(e)}')
+        return jsonify({'message': str(e)}), 500
+
+
+@bp.route('/projects', methods=['GET'])
+def list_projects():
+    """List all OpenStack projects using environment credentials"""
+    try:
+        manager = get_openstack_manager()
+        projects = manager.list_projects()
+        return jsonify({'projects': projects}), 200
+    except Exception as e:
+        logger.error(f'Error listing projects: {str(e)}')
         return jsonify({'message': str(e)}), 500
 
 
@@ -265,10 +301,11 @@ def list_networks(current_user):
 def get_console(current_user, instance_id):
     """Get console URL for an instance"""
     try:
-        console_url = os_manager.get_vnc_console(instance_id)
+        manager = get_openstack_manager_for_request()
+        console_url = manager.get_vnc_console(instance_id) or manager.vnc_base_url
         return jsonify({
             'console_url': console_url,
-            'vnc_url': 'http://localhost:6080/vnc.html'
+            'vnc_url': manager.vnc_base_url
         }), 200
     
     except Exception as e:
@@ -281,7 +318,8 @@ def get_console(current_user, instance_id):
 def get_stats(current_user):
     """Get OpenStack statistics"""
     try:
-        stats = os_manager.get_stats()
+        manager = get_openstack_manager_for_request()
+        stats = manager.get_stats()
         return jsonify({'stats': stats}), 200
     
     except Exception as e:

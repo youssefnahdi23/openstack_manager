@@ -110,7 +110,7 @@ export default function MonitoringPage() {
                 Raw Prometheus Metrics
               </h2>
               <p className="text-slate-400 text-sm mb-4">
-                View detailed metrics at <a href="http://localhost:9090" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">Prometheus Dashboard</a>
+                View detailed metrics at <a href={import.meta.env.VITE_PROMETHEUS_URL || `http://${window.location.hostname}:9090`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">Prometheus Dashboard</a>
               </p>
               {loading ? (
                 <div className="flex items-center justify-center h-64">

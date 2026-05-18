@@ -39,6 +39,8 @@ export default function VMManagementPage() {
     flavor_id: '',
     image_id: '',
     network_id: '',
+    count: 1,
+    assign_floating_ip: false,
   })
   const [operatingInstance, setOperatingInstance] = useState(null)
 
@@ -82,6 +84,14 @@ export default function VMManagementPage() {
       return
     }
 
+    if (formData.count < 1) {
+      addNotification({
+        type: 'error',
+        message: 'Instance count must be at least 1',
+      })
+      return
+    }
+
     try {
       setLoading(true)
       await vmService.createInstance(formData)
@@ -89,7 +99,14 @@ export default function VMManagementPage() {
         type: 'success',
         message: `Instance "${formData.name}" created successfully`,
       })
-      setFormData({ name: '', flavor_id: '', image_id: '', network_id: '' })
+      setFormData({
+        name: '',
+        flavor_id: '',
+        image_id: '',
+        network_id: '',
+        count: 1,
+        assign_floating_ip: false,
+      })
       setShowCreateForm(false)
       await fetchData()
     } catch (error) {
@@ -150,7 +167,7 @@ export default function VMManagementPage() {
   const handleConsole = async (instanceId) => {
     try {
       const response = await vmService.getConsole(instanceId)
-      const url = response.data?.console_url || response.data?.vnc_url || 'http://localhost:6080'
+      const url = response.data?.console_url || response.data?.vnc_url || import.meta.env.VITE_NO_VNC_URL || `http://${window.location.hostname}:6080`
       window.open(url, '_blank')
     } catch (error) {
       addNotification({
@@ -269,6 +286,34 @@ export default function VMManagementPage() {
                         </option>
                       ))}
                     </select>
+                  </div>
+
+                  {/* Count */}
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                      Instance Count
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={formData.count}
+                      onChange={(e) => setFormData({ ...formData, count: Number(e.target.value) })}
+                      className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+
+                  {/* Floating IP */}
+                  <div className="flex items-center gap-3 pt-6">
+                    <input
+                      id="assign_floating_ip"
+                      type="checkbox"
+                      checked={formData.assign_floating_ip}
+                      onChange={(e) => setFormData({ ...formData, assign_floating_ip: e.target.checked })}
+                      className="h-4 w-4 text-blue-500 bg-slate-700 border-slate-600 rounded"
+                    />
+                    <label htmlFor="assign_floating_ip" className="text-sm text-slate-300">
+                      Assign floating IP
+                    </label>
                   </div>
                 </div>
 

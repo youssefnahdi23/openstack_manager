@@ -5,6 +5,7 @@ export const useAuthStore = create((set) => ({
 
   token: localStorage.getItem('token') || null,
   user: JSON.parse(localStorage.getItem('user') || 'null'),
+  selectedProject: localStorage.getItem('openstack_project') || import.meta.env.VITE_OPENSTACK_PROJECT_NAME || 'admin',
   isAuthenticated: !!localStorage.getItem('token'),
   isLoading: false,
   error: null,
@@ -18,6 +19,15 @@ export const useAuthStore = create((set) => ({
     set({ token })
   },
 
+  setSelectedProject: (project) => {
+    if (project) {
+      localStorage.setItem('openstack_project', project)
+    } else {
+      localStorage.removeItem('openstack_project')
+    }
+    set({ selectedProject: project })
+  },
+
   setUser: (user) => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user))
@@ -27,11 +37,16 @@ export const useAuthStore = create((set) => ({
     set({ user })
   },
 
-  login: async (username, password) => {
+  login: async (username, password, project) => {
     set({ isLoading: true, error: null })
     try {
       const response = await authService.login(username, password)
       const { token, user } = response.data
+
+      if (project) {
+        localStorage.setItem('openstack_project', project)
+        set({ selectedProject: project })
+      }
 
       set({ token, user, isAuthenticated: true })
       localStorage.setItem('token', token)

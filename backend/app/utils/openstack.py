@@ -8,14 +8,24 @@ logger = logging.getLogger(__name__)
 class OpenStackManager:
     """Manager for OpenStack operations"""
 
-    def __init__(self):
-        self.auth_url = os.getenv('OPENSTACK_AUTH_URL', 'http://192.168.91.128/identity')
-        self.username = os.getenv('OPENSTACK_USERNAME', 'admin')
-        self.password = os.getenv('OPENSTACK_PASSWORD', 'pfestack26')
-        self.project_name = os.getenv('OPENSTACK_PROJECT_NAME', 'admin')
-        self.user_domain_name = os.getenv('OPENSTACK_USER_DOMAIN_NAME', 'Default')
-        self.project_domain_name = os.getenv('OPENSTACK_PROJECT_DOMAIN_NAME', 'Default')
-        self.region_name = os.getenv('OPENSTACK_REGION_NAME', 'RegionOne')
+    def __init__(
+        self,
+        auth_url=None,
+        username=None,
+        password=None,
+        project_name=None,
+        user_domain_name=None,
+        project_domain_name=None,
+        region_name=None,
+    ):
+        self.auth_url = auth_url or os.getenv('OPENSTACK_AUTH_URL', 'http://192.168.91.128/identity')
+        self.username = username or os.getenv('OPENSTACK_USERNAME', 'admin')
+        self.password = password or os.getenv('OPENSTACK_PASSWORD', 'pfestack26')
+        self.project_name = project_name or os.getenv('OPENSTACK_PROJECT_NAME', 'admin')
+        self.user_domain_name = user_domain_name or os.getenv('OPENSTACK_USER_DOMAIN_NAME', 'Default')
+        self.project_domain_name = project_domain_name or os.getenv('OPENSTACK_PROJECT_DOMAIN_NAME', 'Default')
+        self.region_name = region_name or os.getenv('OPENSTACK_REGION_NAME', 'RegionOne')
+        self.vnc_base_url = os.getenv('VNC_BASE_URL', 'http://localhost:6080/vnc.html')
 
         self.conn = None
         self._connect()
@@ -219,7 +229,97 @@ class OpenStackManager:
         except Exception as e:
             logger.error(f'Error listing images: {str(e)}')
             return []
-    
+
+    def list_projects(self):
+        """List all available OpenStack projects"""
+        try:
+            if not self.conn:
+                return []
+
+            projects = []
+            for project in self.conn.identity.projects():
+                projects.append({
+                    'id': project.id,
+                    'name': project.name,
+                    'domain_id': getattr(project, 'domain_id', None),
+                    'enabled': getattr(project, 'enabled', True)
+                })
+            return projects
+        except Exception as e:
+            logger.error(f'Error listing projects: {str(e)}')
+            return []
+
+    def allocate_floating_ip(self, server):
+        """Allocate a floating IP and attach it to the server"""
+        try:
+            if not self.conn:
+                return None
+
+            external_networks = [
+                network for network in self.conn.network.networks()
+                if getattr(network, 'is_router_external', False)
+            ]
+            if not external_networks:
+                return None
+
+            external_network = external_networks[0]
+            ports = list(self.conn.network.ports(device_id=server.id))
+            if not ports:
+                return None
+
+            port = ports[0]
+            floating_ip = self.conn.network.create_ip(
+                floating_network_id=external_network.id,
+                port_id=port.id
+            )
+            return getattr(floating_ip, 'floating_ip_address', None) or floating_ip.get('floating_ip_address')
+        except Exception as e:
+            logger.error(f'Error allocating floating IP: {str(e)}')
+            return None
+
+    def create_instances(self, name, flavor_id, image_id, network_id=None, count=1, assign_floating_ip=False, **kwargs):
+        """Create one or more new instances"""
+        try:
+            if not self.conn:
+                return []
+
+            instances = []
+            for idx in range(max(1, int(count))):
+                server_name = name if int(count) == 1 else f"{name}-{idx + 1}"
+                create_kwargs = {
+                    'name': server_name,
+                    'flavor_id': flavor_id,
+                    'image_id': image_id,
+                }
+                if network_id:
+                    create_kwargs['networks'] = [{'uuid': network_id}]
+                create_kwargs.update(kwargs)
+
+                server = self.conn.compute.create_server(**create_kwargs)
+
+                try:
+                    server = self.conn.compute.wait_for_server(server, status='ACTIVE', failures=['ERROR'], interval=3, wait=120)
+                except Exception:
+                    # Continue even if waiting fails; server object still contains an ID
+                    pass
+
+                instance_data = {
+                    'id': server.id,
+                    'name': server.name,
+                    'status': getattr(server, 'status', None),
+                }
+
+                if assign_floating_ip:
+                    floating_ip = self.allocate_floating_ip(server)
+                    instance_data['floating_ip'] = floating_ip
+
+                instances.append(instance_data)
+
+            return instances
+        except Exception as e:
+            logger.error(f'Error creating instances: {str(e)}')
+            raise e
+
     def list_networks(self):
         """List all networks"""
         try:
@@ -314,9 +414,28 @@ class OpenStackManager:
 _openstack_manager = None
 
 
-def get_openstack_manager():
+def get_openstack_manager(
+    project_name=None,
+    user_domain_name=None,
+    project_domain_name=None,
+    username=None,
+    password=None,
+    auth_url=None,
+    region_name=None,
+):
     """Get or create OpenStack manager instance"""
     global _openstack_manager
+    if project_name or user_domain_name or project_domain_name or username or password or auth_url or region_name:
+        return OpenStackManager(
+            auth_url=auth_url,
+            username=username,
+            password=password,
+            project_name=project_name,
+            user_domain_name=user_domain_name,
+            project_domain_name=project_domain_name,
+            region_name=region_name,
+        )
+
     if _openstack_manager is None:
         _openstack_manager = OpenStackManager()
     return _openstack_manager

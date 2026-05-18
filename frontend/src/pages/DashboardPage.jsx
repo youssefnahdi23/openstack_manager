@@ -123,7 +123,7 @@ export default function DashboardPage() {
                     <p className="text-white font-medium">Manage VMs</p>
                   </a>
                   <a
-                    href="http://localhost:7681"
+                    href={import.meta.env.VITE_WEB_TERMINAL_URL || `http://${window.location.hostname}:7681`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-4 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-lg text-center transition-colors"
@@ -132,7 +132,7 @@ export default function DashboardPage() {
                     <p className="text-white font-medium">Web Terminal</p>
                   </a>
                   <a
-                    href="http://localhost:6080"
+                    href={import.meta.env.VITE_NO_VNC_URL || `http://${window.location.hostname}:6080`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-4 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-lg text-center transition-colors"

@@ -132,7 +132,7 @@ class VMLog(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    instance_id = db.Column(db.String(255), nullable=False)
+    instance_id = db.Column(db.String(255), nullable=False, default='')
     instance_name = db.Column(db.String(255))
     action = db.Column(db.String(255), nullable=False)  # create, delete, start, stop, reboot
     status = db.Column(db.String(50), default='pending')  # pending, success, failed

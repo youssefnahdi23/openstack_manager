@@ -4,12 +4,14 @@ import { Menu, LogOut, Home, Cloud, Settings, Terminal, Monitor } from 'lucide-r
 
 export function Sidebar({ isOpen, setIsOpen }) {
   const auth = useAuth()
+  const currentHost = import.meta.env.VITE_WEB_SERVER_HOST || window.location.hostname
+  const terminalUrl = import.meta.env.VITE_WEB_TERMINAL_URL || `http://${currentHost}:7681`
 
   const menuItems = [
     { label: 'Dashboard', href: '/dashboard', icon: Home },
     { label: 'VM Management', href: '/vms', icon: Cloud },
     { label: 'Monitoring', href: '/monitoring', icon: Monitor },
-    { label: 'Web Terminal', href: 'http://localhost:7681', external: true, icon: Terminal },
+    { label: 'Web Terminal', href: terminalUrl, external: true, icon: Terminal },
     { label: 'Settings', href: '/settings', icon: Settings },
   ]
 

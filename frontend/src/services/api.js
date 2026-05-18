@@ -1,16 +1,22 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
   timeout: parseInt(import.meta.env.VITE_API_TIMEOUT || '30000')
 })
 
-// Add token to request headers
+// Add token and OpenStack project to request headers
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('token')
+  const project = localStorage.getItem('openstack_project') || import.meta.env.VITE_OPENSTACK_PROJECT_NAME || 'admin'
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
+  if (project) {
+    config.headers['X-OpenStack-Project'] = project
+  }
+
   return config
 }, error => {
   return Promise.reject(error)
@@ -46,6 +52,7 @@ export const vmService = {
   listFlavors: () => api.get('/vms/flavors'),
   listImages: () => api.get('/vms/images'),
   listNetworks: () => api.get('/vms/networks'),
+  listProjects: () => api.get('/vms/projects'),
   getConsole: (id) => api.get(`/vms/instances/${id}/console`),
   getStats: () => api.get('/vms/stats'),
 }

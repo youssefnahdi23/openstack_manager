@@ -11,6 +11,8 @@ export default function LoginPage() {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [project, setProject] = useState(localStorage.getItem('openstack_project') || 'admin')
+  const [projects, setProjects] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -18,6 +20,24 @@ export default function LoginPage() {
       navigate('/dashboard')
     }
   }, [auth.isAuthenticated, navigate])
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const apiBase = import.meta.env.VITE_API_BASE_URL || '/api'
+        const response = await fetch(`${apiBase}/vms/projects`)
+        const payload = await response.json()
+        if (response.ok && payload.projects?.length) {
+          setProjects(payload.projects)
+          setProject((current) => current || payload.projects[0].name)
+        }
+      } catch (error) {
+        console.warn('Unable to load OpenStack projects', error)
+      }
+    }
+
+    loadProjects()
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -31,7 +51,7 @@ export default function LoginPage() {
     }
 
     setIsLoading(true)
-    const result = await auth.login(username, password)
+    const result = await auth.login(username, password, project)
 
     if (result.success) {
       addNotification({
@@ -95,6 +115,25 @@ export default function LoginPage() {
                 className="w-full pl-10 pr-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
+          </div>
+
+          {/* OpenStack Project */}
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-2">
+              OpenStack Project
+            </label>
+            <select
+              value={project}
+              onChange={(e) => setProject(e.target.value)}
+              className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+            >
+              <option value="admin">admin</option>
+              {projects.map((projectItem) => (
+                <option key={projectItem.id} value={projectItem.name}>
+                  {projectItem.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Demo Credentials */}
