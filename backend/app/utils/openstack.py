@@ -662,8 +662,8 @@ class OpenStackManager:
             
             return {
                 'total_instances': len(instances),
-                'running_instances': len([i for i in instances if i.status == 'ACTIVE']),
-                'stopped_instances': len([i for i in instances if i.status == 'STOPPED']),
+                'running_instances': len([i for i in instances if getattr(i, 'status', '').upper() == 'ACTIVE']),
+                'stopped_instances': len([i for i in instances if getattr(i, 'status', '').upper() in ['STOPPED', 'SHUTOFF']]),
                 'total_flavors': len(list(self.conn.compute.flavors())),
                 'total_images': len(list(self.conn.image.images())),
                 'total_networks': len(list(self.conn.network.networks()))

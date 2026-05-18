@@ -13,20 +13,60 @@ export function VMStatus({ status }) {
       color: 'bg-red-900/20 text-red-400 border-red-700',
       icon: AlertCircle,
     },
+    SHUTOFF: {
+      label: 'Stopped',
+      color: 'bg-red-900/20 text-red-400 border-red-700',
+      icon: AlertCircle,
+    },
     PAUSED: {
       label: 'Paused',
       color: 'bg-yellow-900/20 text-yellow-400 border-yellow-700',
+      icon: Clock,
+    },
+    STARTING: {
+      label: 'Starting',
+      color: 'bg-blue-900/20 text-blue-400 border-blue-700',
+      icon: Clock,
+    },
+    BUILD: {
+      label: 'Starting',
+      color: 'bg-blue-900/20 text-blue-400 border-blue-700',
+      icon: Clock,
+    },
+    BUILDING: {
+      label: 'Starting',
+      color: 'bg-blue-900/20 text-blue-400 border-blue-700',
+      icon: Clock,
+    },
+    REBOOT: {
+      label: 'Starting',
+      color: 'bg-blue-900/20 text-blue-400 border-blue-700',
+      icon: Clock,
+    },
+    REBOOTING: {
+      label: 'Starting',
+      color: 'bg-blue-900/20 text-blue-400 border-blue-700',
+      icon: Clock,
+    },
+    REBUILD: {
+      label: 'Starting',
+      color: 'bg-blue-900/20 text-blue-400 border-blue-700',
+      icon: Clock,
+    },
+    REBUILDING: {
+      label: 'Starting',
+      color: 'bg-blue-900/20 text-blue-400 border-blue-700',
+      icon: Clock,
+    },
+    STOPPING: {
+      label: 'Stopping',
+      color: 'bg-blue-900/20 text-blue-400 border-blue-700',
       icon: Clock,
     },
     ERROR: {
       label: 'Error',
       color: 'bg-red-900/20 text-red-400 border-red-700',
       icon: AlertTriangle,
-    },
-    BUILDING: {
-      label: 'Building',
-      color: 'bg-blue-900/20 text-blue-400 border-blue-700',
-      icon: Clock,
     },
   }
 

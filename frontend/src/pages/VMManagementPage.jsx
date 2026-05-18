@@ -52,6 +52,90 @@ export default function VMManagementPage() {
     assign_floating_ip: false,
   })
   const [operatingInstance, setOperatingInstance] = useState(null)
+  const [pendingStarts, setPendingStarts] = useState([])
+  const [pendingStops, setPendingStops] = useState([])
+
+  const addPendingStart = (instanceId) => {
+    setPendingStarts((current) => (current.includes(instanceId) ? current : [...current, instanceId]))
+  }
+
+  const removePendingStart = (instanceId) => {
+    setPendingStarts((current) => current.filter((id) => id !== instanceId))
+  }
+
+  const addPendingStop = (instanceId) => {
+    setPendingStops((current) => (current.includes(instanceId) ? current : [...current, instanceId]))
+  }
+
+  const removePendingStop = (instanceId) => {
+    setPendingStops((current) => current.filter((id) => id !== instanceId))
+  }
+
+  const waitForInstanceActive = async (instanceId) => {
+    const maxAttempts = 6
+    let attempt = 0
+
+    while (attempt < maxAttempts) {
+      attempt += 1
+      try {
+        const response = await vmService.getInstance(instanceId)
+        const status = response.data?.instance?.status?.toString().toUpperCase()
+
+        setInstances((current) => current.map((instance) => {
+          if (instance.id !== instanceId) return instance
+          return {
+            ...instance,
+            status: status === 'ACTIVE' ? 'ACTIVE' : 'STARTING',
+          }
+        }))
+
+        if (status === 'ACTIVE') {
+          removePendingStart(instanceId)
+          return
+        }
+      } catch (error) {
+        console.error('Error polling instance status:', error)
+        break
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+    }
+
+    removePendingStart(instanceId)
+  }
+
+  const waitForInstanceStopped = async (instanceId) => {
+    const maxAttempts = 6
+    let attempt = 0
+
+    while (attempt < maxAttempts) {
+      attempt += 1
+      try {
+        const response = await vmService.getInstance(instanceId)
+        const status = response.data?.instance?.status?.toString().toUpperCase()
+
+        setInstances((current) => current.map((instance) => {
+          if (instance.id !== instanceId) return instance
+          return {
+            ...instance,
+            status: ['STOPPED', 'SHUTOFF'].includes(status) ? status : 'STOPPING',
+          }
+        }))
+
+        if (['STOPPED', 'SHUTOFF'].includes(status)) {
+          removePendingStop(instanceId)
+          return
+        }
+      } catch (error) {
+        console.error('Error polling instance status:', error)
+        break
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+    }
+
+    removePendingStop(instanceId)
+  }
 
   useEffect(() => {
     fetchData()
@@ -69,7 +153,33 @@ export default function VMManagementPage() {
       ])
 
       if (instancesRes.status === 'fulfilled') {
-        setInstances(instancesRes.value.data.instances || [])
+        const fetchedInstances = instancesRes.value.data.instances || []
+        const updatedInstances = fetchedInstances.map((instance) => {
+          const status = instance.status?.toString().toUpperCase()
+          if (pendingStarts.includes(instance.id) && status !== 'ACTIVE') {
+            return { ...instance, status: 'STARTING' }
+          }
+          if (pendingStops.includes(instance.id) && !['STOPPED', 'SHUTOFF'].includes(status)) {
+            return { ...instance, status: 'STOPPING' }
+          }
+          return instance
+        })
+
+        setInstances(updatedInstances)
+
+        const completedStartIds = fetchedInstances
+          .filter((instance) => pendingStarts.includes(instance.id) && instance.status?.toString().toUpperCase() === 'ACTIVE')
+          .map((instance) => instance.id)
+        if (completedStartIds.length > 0) {
+          setPendingStarts((current) => current.filter((id) => !completedStartIds.includes(id)))
+        }
+
+        const completedStopIds = fetchedInstances
+          .filter((instance) => pendingStops.includes(instance.id) && ['STOPPED', 'SHUTOFF'].includes(instance.status?.toString().toUpperCase()))
+          .map((instance) => instance.id)
+        if (completedStopIds.length > 0) {
+          setPendingStops((current) => current.filter((id) => !completedStopIds.includes(id)))
+        }
       } else {
         console.error('Error fetching instances:', instancesRes.reason)
         addNotification({
@@ -187,9 +297,21 @@ export default function VMManagementPage() {
   }
 
   const handleVMAction = async (instanceId, action) => {
+    const originalInstances = instances
+    const oldStatus = instances.find((instance) => instance.id === instanceId)?.status
+
     try {
       setOperatingInstance(`${instanceId}-${action}`)
       let message = ''
+
+      if (action === 'start') {
+        addPendingStart(instanceId)
+        setInstances((current) => current.map((instance) => instance.id === instanceId ? { ...instance, status: 'STARTING' } : instance))
+      }
+      if (action === 'stop') {
+        addPendingStop(instanceId)
+        setInstances((current) => current.map((instance) => instance.id === instanceId ? { ...instance, status: 'STOPPING' } : instance))
+      }
 
       switch (action) {
         case 'unrescue':
@@ -199,10 +321,12 @@ export default function VMManagementPage() {
         case 'start':
           await vmService.startInstance(instanceId)
           message = 'Instance started successfully'
+          await waitForInstanceActive(instanceId)
           break
         case 'stop':
           await vmService.stopInstance(instanceId)
           message = 'Instance stopped successfully'
+          await waitForInstanceStopped(instanceId)
           break
         case 'reboot':
           await vmService.rebootInstance(instanceId)
@@ -226,6 +350,15 @@ export default function VMManagementPage() {
       })
       await fetchData()
     } catch (error) {
+      if (['start', 'stop'].includes(action) && oldStatus) {
+        setInstances(originalInstances)
+      }
+      if (action === 'start') {
+        removePendingStart(instanceId)
+      }
+      if (action === 'stop') {
+        removePendingStop(instanceId)
+      }
       addNotification({
         type: 'error',
         message: error.response?.data?.message || `Failed to ${action} instance`,
@@ -523,17 +656,39 @@ export default function VMManagementPage() {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex gap-2">
-                          {(instance.status && instance.status.toString().toLowerCase().includes('rescue')) ? (
-                              <Button
-                                size="sm"
-                                variant="warning"
-                                onClick={() => handleVMAction(instance.id, 'unrescue')}
-                                loading={operatingInstance === `${instance.id}-unrescue`}
-                                disabled={isLoading}
-                              >
-                                Unrescue
-                              </Button>
-                            ) : instance.status !== 'ACTIVE' ? (
+                          {(() => {
+                            const status = (instance.status || '').toString().toLowerCase()
+                            const isRescued = status.includes('rescue')
+                            const isStarting = pendingStarts.includes(instance.id) || status === 'starting' || status.includes('build') || status.includes('reboot') || status.includes('rebuild')
+                            const isStopping = pendingStops.includes(instance.id) || status === 'stopping'
+
+                            if (isRescued) {
+                              return (
+                                <Button
+                                  size="sm"
+                                  variant="warning"
+                                  onClick={() => handleVMAction(instance.id, 'unrescue')}
+                                  loading={operatingInstance === `${instance.id}-unrescue`}
+                                  disabled={isLoading}
+                                >
+                                  Unrescue
+                                </Button>
+                              )
+                            }
+
+                            if (isStarting || isStopping) {
+                              return (
+                                <Button
+                                  size="sm"
+                                  variant="secondary"
+                                  disabled
+                                >
+                                  {isStopping ? 'Stopping' : 'Starting'}
+                                </Button>
+                              )
+                            }
+
+                            return instance.status !== 'ACTIVE' ? (
                               <Button
                                 size="sm"
                                 variant="success"
@@ -543,7 +698,8 @@ export default function VMManagementPage() {
                               >
                                 <Play className="w-4 h-4" />
                               </Button>
-                            ) : null}
+                            ) : null
+                          })()}
                           {instance.status === 'ACTIVE' && (
                             <>
                               <Button

@@ -88,7 +88,9 @@ export const useVMStore = create((set) => ({
   isLoading: false,
   error: null,
 
-  setInstances: (instances) => set({ instances }),
+  setInstances: (instances) => set((state) => ({
+    instances: typeof instances === 'function' ? instances(state.instances) : instances,
+  })),
   setFlavors: (flavors) => set({ flavors }),
   setImages: (images) => set({ images }),
   setNetworks: (networks) => set({ networks }),
