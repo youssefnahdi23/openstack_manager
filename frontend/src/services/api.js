@@ -52,6 +52,7 @@ export const vmService = {
   listFlavors: () => api.get('/vms/flavors'),
   listImages: () => api.get('/vms/images'),
   listNetworks: () => api.get('/vms/networks'),
+  listKeypairs: () => api.get('/vms/keypairs'),
   listProjects: () => api.get('/vms/projects'),
   getConsole: (id) => api.get(`/vms/instances/${id}/console`),
   getStats: () => api.get('/vms/stats'),

@@ -23,11 +23,19 @@ export default function VMManagementPage() {
   const flavors = useVMStore((state) => state.flavors)
   const images = useVMStore((state) => state.images)
   const networks = useVMStore((state) => state.networks)
+  const keypairs = useVMStore((state) => state.keypairs)
+  const selectedProject = localStorage.getItem('openstack_project') || import.meta.env.VITE_OPENSTACK_PROJECT_NAME || 'admin'
+
+  const sortedNetworks = [...networks].sort((a, b) => {
+    if (a.private === b.private) return 0
+    return a.private ? -1 : 1
+  })
 
   const setInstances = useVMStore((state) => state.setInstances)
   const setFlavors = useVMStore((state) => state.setFlavors)
   const setImages = useVMStore((state) => state.setImages)
   const setNetworks = useVMStore((state) => state.setNetworks)
+  const setKeypairs = useVMStore((state) => state.setKeypairs)
   const setLoading = useVMStore((state) => state.setLoading)
   const isLoading = useVMStore((state) => state.isLoading)
 
@@ -38,7 +46,8 @@ export default function VMManagementPage() {
     name: '',
     flavor_id: '',
     image_id: '',
-    network_id: '',
+    network_ids: [],
+    key_name: '',
     count: 1,
     assign_floating_ip: false,
   })
@@ -46,30 +55,87 @@ export default function VMManagementPage() {
 
   useEffect(() => {
     fetchData()
+    fetchKeypairs()
   }, [])
 
   const fetchData = async () => {
+    setLoading(true)
     try {
-      setLoading(true)
-      const [instancesRes, flavorsRes, imagesRes, networksRes] = await Promise.all([
+      const [instancesRes, flavorsRes, imagesRes, networksRes] = await Promise.allSettled([
         vmService.listInstances(),
         vmService.listFlavors(),
         vmService.listImages(),
         vmService.listNetworks(),
       ])
 
-      setInstances(instancesRes.data.instances)
-      setFlavors(flavorsRes.data.flavors)
-      setImages(imagesRes.data.images)
-      setNetworks(networksRes.data.networks)
+      if (instancesRes.status === 'fulfilled') {
+        setInstances(instancesRes.value.data.instances || [])
+      } else {
+        console.error('Error fetching instances:', instancesRes.reason)
+        addNotification({
+          type: 'error',
+          message: 'Failed to load instances',
+        })
+      }
+
+      if (flavorsRes.status === 'fulfilled') {
+        setFlavors(flavorsRes.value.data.flavors || [])
+      } else {
+        console.error('Error fetching flavors:', flavorsRes.reason)
+        addNotification({
+          type: 'error',
+          message: 'Failed to load flavors',
+        })
+      }
+
+      if (imagesRes.status === 'fulfilled') {
+        setImages(imagesRes.value.data.images || [])
+      } else {
+        console.error('Error fetching images:', imagesRes.reason)
+        addNotification({
+          type: 'error',
+          message: 'Failed to load images',
+        })
+      }
+
+      if (networksRes.status === 'fulfilled') {
+        setNetworks(networksRes.value.data.networks || [])
+      } else {
+        const errMsg = networksRes.reason?.response?.data?.message || networksRes.reason?.message || String(networksRes.reason)
+        console.error('Error fetching networks:', networksRes.reason)
+        addNotification({
+          type: 'error',
+          message: `Failed to load networks: ${errMsg}`,
+        })
+      }
     } catch (error) {
-      console.error('Error fetching data:', error)
+      const errMsg = error?.response?.data?.message || error?.message || String(error)
+      console.error('Unexpected error fetching data:', error)
       addNotification({
         type: 'error',
-        message: 'Failed to load data',
+        message: `Failed to load data: ${errMsg}`,
       })
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchKeypairs = async () => {
+    try {
+      const keypairsRes = await vmService.listKeypairs()
+      setKeypairs(keypairsRes.data.keypairs || [])
+
+      if (keypairsRes.data.keypairs?.length === 1 && !formData.key_name) {
+        setFormData((current) => ({ ...current, key_name: keypairsRes.data.keypairs[0].name }))
+      }
+    } catch (error) {
+      const errMsg = error?.response?.data?.message || error?.message || String(error)
+      console.error('Error fetching keypairs:', error)
+      addNotification({
+        type: 'error',
+        message: `Failed to load keypairs: ${errMsg}`,
+      })
+      setKeypairs([])
     }
   }
 
@@ -103,7 +169,8 @@ export default function VMManagementPage() {
         name: '',
         flavor_id: '',
         image_id: '',
-        network_id: '',
+        network_ids: [],
+        key_name: '',
         count: 1,
         assign_floating_ip: false,
       })
@@ -188,6 +255,7 @@ export default function VMManagementPage() {
             <div>
               <h1 className="text-2xl font-bold text-white">VM Management</h1>
               <p className="text-slate-400 text-sm">Manage your virtual machines</p>
+              <p className="text-slate-500 text-xs mt-1">OpenStack project: <span className="font-semibold text-slate-200">{selectedProject}</span></p>
             </div>
             <div className="flex gap-2">
               <Button
@@ -198,7 +266,13 @@ export default function VMManagementPage() {
                 Refresh
               </Button>
               <Button
-                onClick={() => setShowCreateForm(!showCreateForm)}
+                onClick={() => {
+                  const nextOpen = !showCreateForm
+                  setShowCreateForm(nextOpen)
+                  if (nextOpen) {
+                    fetchKeypairs()
+                  }
+                }}
                 variant="primary"
                 size="md"
               >
@@ -269,23 +343,92 @@ export default function VMManagementPage() {
                     </select>
                   </div>
 
-                  {/* Network */}
+                  {/* Network selection */}
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                      Network Interfaces
+                    </label>
+                    <div className="grid gap-2">
+                      {sortedNetworks.length > 0 ? (
+                        sortedNetworks.map((network) => (
+                          <label key={network.id} className="flex flex-col gap-2 px-3 py-3 bg-slate-800 border border-slate-700 rounded-lg cursor-pointer">
+                            <div className="flex items-start gap-3">
+                              <input
+                                type="checkbox"
+                                checked={formData.network_ids.includes(network.id)}
+                                onChange={(e) => {
+                                  const checked = e.target.checked
+                                  setFormData((current) => {
+                                    const ids = new Set(current.network_ids)
+                                    if (checked) {
+                                      ids.add(network.id)
+                                    } else {
+                                      ids.delete(network.id)
+                                    }
+                                    return { ...current, network_ids: Array.from(ids) }
+                                  })
+                                }}
+                                className="mt-1 h-4 w-4 text-blue-500 bg-slate-700 border-slate-600 rounded"
+                              />
+                              <div>
+                                <div className="text-sm font-medium text-slate-200">
+                                  {network.name}{' '}
+                                  <span className="text-xs text-slate-400">
+                                    {network.private ? 'private network' : network.external ? 'public/external network' : 'shared network'}
+                                  </span>
+                                  {network.source === 'admin' && (
+                                    <span className="text-xs text-amber-300 ml-2">(from admin)</span>
+                                  )}
+                                </div>
+                                {network.subnets?.length > 0 && (
+                                  <div className="text-xs text-slate-400 mt-1">
+                                    {network.subnets.map((subnet) => (
+                                      <span key={subnet.id} className="block">
+                                        {subnet.name || subnet.cidr} ({subnet.cidr})
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </label>
+                        ))
+                      ) : (
+                        <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-amber-100">
+                          No networks are available for the current OpenStack project. Verify your project selection or OpenStack permissions.
+                        </div>
+                      )}
+                      <p className="text-xs text-slate-500">
+                        If you do not select any network, the portal will choose a default private network.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Keypair */}
                   <div>
                     <label className="block text-sm font-medium text-slate-300 mb-2">
-                      Network
+                      SSH Keypair
                     </label>
                     <select
-                      value={formData.network_id}
-                      onChange={(e) => setFormData({ ...formData, network_id: e.target.value })}
+                      value={formData.key_name}
+                      onChange={(e) => setFormData({ ...formData, key_name: e.target.value })}
                       className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
                     >
-                      <option value="">Auto-select</option>
-                      {networks.map((network) => (
-                        <option key={network.id} value={network.id}>
-                          {network.name}
+                      <option value="">Select a keypair (optional)</option>
+                      {keypairs.map((keypair) => (
+                        <option key={keypair.name} value={keypair.name}>
+                          {keypair.name}{keypair.source === 'admin' ? ' (from admin)' : ''}
                         </option>
                       ))}
                     </select>
+                    <p className="text-xs text-slate-500 mt-1">
+                      If only one keypair exists, it will be selected automatically.
+                    </p>
+                    {keypairs.length === 0 && (
+                      <p className="text-xs text-amber-300 mt-1">
+                        No keypairs found for the current OpenStack project.
+                      </p>
+                    )}
                   </div>
 
                   {/* Count */}

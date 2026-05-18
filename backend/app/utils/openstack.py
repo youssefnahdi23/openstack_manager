@@ -1,5 +1,5 @@
 import os
-from openstack import connect
+from openstack import connect, config as openstack_config
 import logging
 
 logger = logging.getLogger(__name__)
@@ -46,17 +46,17 @@ class OpenStackManager:
         except Exception as e:
             logger.error(f"Failed to connect to OpenStack: {e}")
             self.conn = None
-            config.set_override('project_name', self.project_name)
-            config.set_override('user_domain_name', self.user_domain_name)
-            config.set_override('project_domain_name', self.project_domain_name)
-            config.set_override('region_name', self.region_name)
-            config.set_override('interface', 'public')
-            
-            self.conn = connect(config=config)
-            logger.info('Connected to OpenStack successfully')
-        except Exception as e:
-            logger.error(f'Failed to connect to OpenStack: {str(e)}')
-            self.conn = None
+            try:
+                openstack_config.set_override('project_name', self.project_name)
+                openstack_config.set_override('user_domain_name', self.user_domain_name)
+                openstack_config.set_override('project_domain_name', self.project_domain_name)
+                openstack_config.set_override('region_name', self.region_name)
+                openstack_config.set_override('interface', 'public')
+                self.conn = connect(config=openstack_config)
+                logger.info('Connected to OpenStack successfully')
+            except Exception as inner_e:
+                logger.error(f'Failed fallback OpenStack connection: {inner_e}')
+                self.conn = None
     
     def list_instances(self):
         """List all instances"""
@@ -107,12 +107,48 @@ class OpenStackManager:
             logger.error(f'Error getting instance: {str(e)}')
             return None
     
+    def _is_external_network(self, network):
+        return any([
+            getattr(network, 'is_router_external', False),
+            getattr(network, 'router_external', False),
+            getattr(network, 'external', False),
+            getattr(network, 'is_external', False),
+        ])
+
+    def _is_shared_network(self, network):
+        return any([
+            getattr(network, 'is_shared', False),
+            getattr(network, 'shared', False),
+        ])
+
     def _get_default_network_id(self):
-        """Return the first available private network ID."""
+        """Return the best available private network ID.
+
+        Preference order:
+        1. Private networks with a subnet in the 10.0.0.0/8 range
+        2. Any private network
+        3. Any non-external network
+        """
         try:
-            for network in self.conn.network.networks():
-                if not getattr(network, 'is_router_external', False):
-                    return network.id
+            networks = self.list_networks()
+
+            # 1) Prefer private networks that have a 10.* subnet
+            for net in networks:
+                if net.get('private'):
+                    for subnet in net.get('subnets', []):
+                        cidr = subnet.get('cidr') or ''
+                        if cidr.startswith('10.'):
+                            return net.get('id')
+
+            # 2) Next prefer any private network
+            for net in networks:
+                if net.get('private'):
+                    return net.get('id')
+
+            # 3) Fall back to any non-external network
+            for net in networks:
+                if not net.get('external'):
+                    return net.get('id')
         except Exception as e:
             logger.error(f'Error finding default network: {str(e)}')
         return None
@@ -133,7 +169,7 @@ class OpenStackManager:
                         return addr.get('floating_ip_address')
         return None
 
-    def create_instance(self, name, flavor_id, image_id, network_id=None, **kwargs):
+    def create_instance(self, name, flavor_id, image_id, network_ids=None, **kwargs):
         """Create a new instance"""
         try:
             if not self.conn:
@@ -143,17 +179,17 @@ class OpenStackManager:
             flavor = self.conn.compute.get_flavor(flavor_id)
             image = self.conn.image.get_image(image_id)
             
-            if not network_id:
-                network_id = self._get_default_network_id()
-                if not network_id:
+            if not network_ids:
+                default_network = self._get_default_network_id()
+                if not default_network:
                     raise ValueError('No network selected and no default network is available')
+                network_ids = [default_network]
             
-            # Create server
             server = self.conn.compute.create_server(
                 name=name,
                 flavor_id=flavor_id,
                 image_id=image_id,
-                networks=[{'uuid': network_id}],
+                networks=[{'uuid': net_id} for net_id in network_ids if net_id],
                 **kwargs
             )
             
@@ -308,16 +344,47 @@ class OpenStackManager:
             logger.error(f'Error allocating floating IP: {str(e)}')
             return None
 
-    def create_instances(self, name, flavor_id, image_id, network_id=None, count=1, assign_floating_ip=False, **kwargs):
+    def _get_default_keypair_name(self):
+        """Return the single available keypair name if only one exists."""
+        try:
+            keypairs = list(self.conn.compute.keypairs())
+            if len(keypairs) == 1:
+                return keypairs[0].name
+        except Exception as e:
+            logger.error(f'Error listing keypairs: {str(e)}')
+        return None
+
+    def list_keypairs(self):
+        """List available keypairs."""
+        try:
+            if not self.conn:
+                return []
+
+            keypairs = []
+            for keypair in self.conn.compute.keypairs():
+                keypairs.append({
+                    'name': keypair.name,
+                    'fingerprint': getattr(keypair, 'fingerprint', None)
+                })
+            return keypairs
+        except Exception as e:
+            logger.error(f'Error listing keypairs: {str(e)}')
+            return []
+
+    def create_instances(self, name, flavor_id, image_id, network_ids=None, count=1, assign_floating_ip=False, key_name=None, **kwargs):
         """Create one or more new instances"""
         try:
             if not self.conn:
                 return []
 
-            if not network_id:
-                network_id = self._get_default_network_id()
-                if not network_id:
+            if not network_ids:
+                default_network = self._get_default_network_id()
+                if not default_network:
                     raise ValueError('No network selected and no default network is available')
+                network_ids = [default_network]
+
+            if not key_name:
+                key_name = self._get_default_keypair_name()
 
             instances = []
             for idx in range(max(1, int(count))):
@@ -326,8 +393,10 @@ class OpenStackManager:
                     'name': server_name,
                     'flavor_id': flavor_id,
                     'image_id': image_id,
-                    'networks': [{'uuid': network_id}],
+                    'networks': [{'uuid': net_id} for net_id in network_ids if net_id],
                 }
+                if key_name:
+                    create_kwargs['key_name'] = key_name
                 create_kwargs.update(kwargs)
 
                 server = self.conn.compute.create_server(**create_kwargs)
@@ -356,20 +425,41 @@ class OpenStackManager:
             raise e
 
     def list_networks(self):
-        """List all networks"""
+        """List all networks with subnet details."""
         try:
             if not self.conn:
                 return []
-            
+
             networks = []
             for network in self.conn.network.networks():
+                external = self._is_external_network(network)
+                shared = self._is_shared_network(network)
+                subnets = []
+                try:
+                    for subnet in self.conn.network.subnets(network_id=network.id):
+                        subnets.append({
+                            'id': subnet.id,
+                            'name': getattr(subnet, 'name', None),
+                            'cidr': getattr(subnet, 'cidr', None),
+                            'ip_version': getattr(subnet, 'ip_version', None),
+                            'gateway_ip': getattr(subnet, 'gateway_ip', None),
+                        })
+                except Exception as e:
+                    logger.warning(f'Error loading subnets for network {network.id}: {e}')
+
                 networks.append({
                     'id': network.id,
                     'name': network.name,
-                    'status': network.status,
-                    'admin_state_up': network.admin_state_up,
-                    'shared': network.is_shared,
-                    'external': network.is_router_external
+                    'status': getattr(network, 'status', None),
+                    'admin_state_up': getattr(network, 'admin_state_up', None),
+                    'shared': shared,
+                    'external': external,
+                    'private': not external and not shared,
+                    'project_id': getattr(network, 'project_id', None) or getattr(network, 'tenant_id', None),
+                    'provider_network_type': getattr(network, 'provider_network_type', None),
+                    'provider_physical_network': getattr(network, 'provider_physical_network', None),
+                    'provider_segmentation_id': getattr(network, 'provider_segmentation_id', None),
+                    'subnets': subnets,
                 })
             return networks
         except Exception as e:

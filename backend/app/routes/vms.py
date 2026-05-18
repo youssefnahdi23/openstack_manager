@@ -59,6 +59,10 @@ def create_instance(current_user):
 
         count = int(data.get('count', 1))
         assign_floating_ip = bool(data.get('assign_floating_ip', False))
+        network_ids = data.get('network_ids') or []
+        if data.get('network_id') and not network_ids:
+            network_ids = [data.get('network_id')]
+        key_name = data.get('key_name')
         manager = get_openstack_manager_for_request()
 
         try:
@@ -66,9 +70,10 @@ def create_instance(current_user):
                 name=data.get('name'),
                 flavor_id=data.get('flavor_id'),
                 image_id=data.get('image_id'),
-                network_id=data.get('network_id'),
+                network_ids=network_ids,
                 count=count,
-                assign_floating_ip=assign_floating_ip
+                assign_floating_ip=assign_floating_ip,
+                key_name=key_name
             )
 
             vm_logs = []
@@ -278,12 +283,43 @@ def list_images(current_user):
 def list_networks(current_user):
     """List all networks"""
     try:
+        logger.info(f"User '{current_user.username}' requested network list; headers={dict(request.headers)}")
         manager = get_openstack_manager_for_request()
         networks = manager.list_networks()
+
+        if not networks:
+            logger.warning('No networks visible in current project, falling back to admin network list')
+            admin_manager = get_openstack_manager()
+            networks = admin_manager.list_networks()
+            for network in networks:
+                network['source'] = 'admin'
+
         return jsonify({'networks': networks}), 200
     
     except Exception as e:
         logger.error(f'Error listing networks: {str(e)}')
+        return jsonify({'message': str(e)}), 500
+
+
+@bp.route('/keypairs', methods=['GET'])
+@token_required
+def list_keypairs(current_user):
+    """List available keypairs"""
+    try:
+        logger.info(f"User '{current_user.username}' requested keypair list; headers={dict(request.headers)}")
+        manager = get_openstack_manager_for_request()
+        keypairs = manager.list_keypairs()
+
+        if not keypairs:
+            logger.warning('No keypairs visible in current project, falling back to admin keypair list')
+            admin_manager = get_openstack_manager()
+            keypairs = admin_manager.list_keypairs()
+            for keypair in keypairs:
+                keypair['source'] = 'admin'
+
+        return jsonify({'keypairs': keypairs}), 200
+    except Exception as e:
+        logger.error(f'Error listing keypairs: {str(e)}')
         return jsonify({'message': str(e)}), 500
 
 
