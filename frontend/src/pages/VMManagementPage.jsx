@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRequireAuth } from '../hooks/useAuth'
+import { Link } from 'react-router-dom'
 import { Sidebar } from '../components/Sidebar'
 import { useVMStore, useNotificationStore } from '../store'
 import { vmService } from '../services/api'
@@ -11,7 +12,6 @@ import {
   Trash2,
   Plus,
   Monitor,
-  Zap,
   AlertCircle,
 } from 'lucide-react'
 
@@ -40,6 +40,26 @@ export default function VMManagementPage() {
   const isLoading = useVMStore((state) => state.isLoading)
 
   const addNotification = useNotificationStore((state) => state.addNotification)
+
+  const formatInterfaces = (interfaces) => {
+    if (!interfaces || interfaces.length === 0) return '-'
+    return interfaces
+      .map((iface) => {
+        const address = iface.address || '-'
+        const type = iface.type ? ` (${iface.type})` : ''
+        return `${iface.network}: ${address}${type}`
+      })
+      .join(', ')
+  }
+
+  const getFloatingIp = (instance) => {
+    if (instance.floating_ip) return instance.floating_ip
+    if (instance.interfaces) {
+      const floating = instance.interfaces.find((iface) => iface.type === 'floating')
+      return floating?.address || '-'
+    }
+    return '-'
+  }
 
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [formData, setFormData] = useState({
@@ -634,6 +654,12 @@ export default function VMManagementPage() {
                       Status
                     </th>
                     <th className="px-4 py-3 text-left text-sm font-semibold text-slate-300">
+                      Flavor
+                    </th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-slate-300">
+                      Floating IP
+                    </th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-slate-300">
                       Created
                     </th>
                     <th className="px-4 py-3 text-left text-sm font-semibold text-slate-300">
@@ -651,6 +677,12 @@ export default function VMManagementPage() {
                       <td className="px-4 py-3">
                         <VMStatus status={instance.status} />
                       </td>
+                      <td className="px-4 py-3 text-sm text-slate-200">
+                        {instance.flavor || '-'}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-slate-200">
+                        {getFloatingIp(instance)}
+                      </td>
                       <td className="px-4 py-3 text-sm text-slate-400">
                         {new Date(instance.created).toLocaleDateString()}
                       </td>
@@ -667,6 +699,7 @@ export default function VMManagementPage() {
                                 <Button
                                   size="sm"
                                   variant="warning"
+                                  title="Unrescue instance"
                                   onClick={() => handleVMAction(instance.id, 'unrescue')}
                                   loading={operatingInstance === `${instance.id}-unrescue`}
                                   disabled={isLoading}
@@ -692,6 +725,7 @@ export default function VMManagementPage() {
                               <Button
                                 size="sm"
                                 variant="success"
+                                title="Start instance"
                                 onClick={() => handleVMAction(instance.id, 'start')}
                                 loading={operatingInstance === `${instance.id}-start`}
                                 disabled={isLoading}
@@ -705,6 +739,7 @@ export default function VMManagementPage() {
                               <Button
                                 size="sm"
                                 variant="secondary"
+                                title="Stop instance"
                                 onClick={() => handleVMAction(instance.id, 'stop')}
                                 loading={operatingInstance === `${instance.id}-stop`}
                                 disabled={isLoading}
@@ -714,6 +749,7 @@ export default function VMManagementPage() {
                               <Button
                                 size="sm"
                                 variant="secondary"
+                                title="Reboot instance"
                                 onClick={() => handleVMAction(instance.id, 'reboot')}
                                 loading={operatingInstance === `${instance.id}-reboot`}
                                 disabled={isLoading}
@@ -723,6 +759,7 @@ export default function VMManagementPage() {
                               <Button
                                 size="sm"
                                 variant="secondary"
+                                title="Open console"
                                 onClick={() => handleConsole(instance.id)}
                               >
                                 <Monitor className="w-4 h-4" />
@@ -732,12 +769,19 @@ export default function VMManagementPage() {
                           <Button
                             size="sm"
                             variant="danger"
+                            title="Delete instance"
                             onClick={() => handleVMAction(instance.id, 'delete')}
                             loading={operatingInstance === `${instance.id}-delete`}
                             disabled={isLoading}
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
+                          <Link
+                            to={`/vms/${instance.id}`}
+                            className="inline-flex items-center px-3 py-1 text-sm font-medium text-blue-300 bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700 hover:text-blue-100 transition-colors"
+                          >
+                            VM Details
+                          </Link>
                         </div>
                       </td>
                     </tr>

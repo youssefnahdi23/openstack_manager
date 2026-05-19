@@ -59,6 +59,10 @@ export const vmService = {
   unrescueInstance: (id) => api.post(`/vms/instances/${id}/unrescue`),
 }
 
+export const monitoringService = {
+  getPlacementUsage: () => api.get('/placement/usage'),
+}
+
 export const healthService = {
   check: () => api.get('/health'),
 }

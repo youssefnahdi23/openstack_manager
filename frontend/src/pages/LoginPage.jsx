@@ -157,7 +157,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <p className="text-center text-slate-400 text-sm mt-6">
-          © 2024 PFE VM Management Portal. All rights reserved.
+          © 2026 PFE VM Management Portal. All rights reserved.
         </p>
       </div>
     </div>

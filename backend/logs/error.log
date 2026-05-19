@@ -320,3 +320,13 @@ AttributeError: 'Image' object has no attribute 'owner_seen'
 2026-05-18 23:06:08 - app.routes.vms - ERROR - Error starting instance: ConflictException: 409: Client Error for url: http://192.168.91.128/compute/v2.1/servers/a669be0c-b645-46d1-812a-d65ce19e40d8/action, Cannot 'start' instance a669be0c-b645-46d1-812a-d65ce19e40d8 while it is in task_state powering-on
 2026-05-18 23:10:11 - app.utils.openstack - ERROR - Error starting instance: ConflictException: 409: Client Error for url: http://192.168.91.128/compute/v2.1/servers/a669be0c-b645-46d1-812a-d65ce19e40d8/action, Cannot 'start' instance a669be0c-b645-46d1-812a-d65ce19e40d8 while it is in task_state powering-on
 2026-05-18 23:10:11 - app.routes.vms - ERROR - Error starting instance: ConflictException: 409: Client Error for url: http://192.168.91.128/compute/v2.1/servers/a669be0c-b645-46d1-812a-d65ce19e40d8/action, Cannot 'start' instance a669be0c-b645-46d1-812a-d65ce19e40d8 while it is in task_state powering-on
+2026-05-19 09:30:54 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-cbcb366a-3955-4c9b-a845-a04d84eac342)
+2026-05-19 09:30:54 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-8e9c6d76-00eb-49bc-b343-4c8062811997)
+2026-05-19 09:31:48 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-bc06d807-f782-44b3-8ce7-f2864b0d6e71)
+2026-05-19 09:43:41 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-1c40e999-d82e-4e96-94b6-0354ea11af72)
+2026-05-19 09:43:41 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-d87dd17b-9454-4be8-abba-543423c9a7d7)
+2026-05-19 09:43:54 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-9180fdf1-d932-4654-992a-aa1c652ae448)
+2026-05-19 09:43:54 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-61957351-50a0-4829-b3d3-a7cb201efed7)
+2026-05-19 09:44:24 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-15bd15c4-6d09-4eb2-8f7a-eade1c130bd2)
+2026-05-19 09:44:57 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-2d90caaa-b01b-4f96-9e06-92a6aa39ad5a)
+2026-05-19 09:45:30 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-9d169753-aa4c-4920-bf6d-b02ccf3f7f2f)

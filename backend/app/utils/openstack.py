@@ -58,6 +58,37 @@ class OpenStackManager:
                 logger.error(f'Failed fallback OpenStack connection: {inner_e}')
                 self.conn = None
     
+    def _resolve_resource_reference(self, resource):
+        if not resource:
+            return None
+
+        if hasattr(resource, 'get'):
+            return resource.get('name') or resource.get('id') or str(resource)
+
+        if hasattr(resource, 'name'):
+            return resource.name
+
+        if hasattr(resource, 'id'):
+            return resource.id
+
+        return str(resource)
+
+    def _extract_interface_details(self, addresses):
+        if not addresses or not isinstance(addresses, dict):
+            return []
+
+        interfaces = []
+        for network_name, addr_list in addresses.items():
+            if not isinstance(addr_list, list):
+                continue
+            for addr in addr_list:
+                interfaces.append({
+                    'network': network_name,
+                    'address': addr.get('addr') or addr.get('fixed_ip_address') or addr.get('floating_ip_address'),
+                    'type': addr.get('OS-EXT-IPS:type') or addr.get('type'),
+                })
+        return interfaces
+
     def list_instances(self):
         """List all instances"""
         try:
@@ -66,16 +97,21 @@ class OpenStackManager:
             
             instances = []
             for server in self.conn.compute.servers():
+                flavor_name = self._resolve_resource_reference(getattr(server, 'flavor', None))
+                image_name = self._resolve_resource_reference(getattr(server, 'image', None))
+                interfaces = self._extract_interface_details(getattr(server, 'addresses', None))
                 instances.append({
                     'id': server.id,
-                    'name': server.name,
-                    'status': server.status,
-                    'created': server.created_at,
-                    'updated': server.updated_at,
-                    'flavor': server.flavor.get('id') if server.flavor else None,
-                    'image': server.image.get('id') if server.image else None,
-                    'addresses': server.addresses,
-                    'metadata': server.metadata
+                    'name': getattr(server, 'name', None),
+                    'status': getattr(server, 'status', None),
+                    'created': getattr(server, 'created_at', None),
+                    'updated': getattr(server, 'updated_at', None),
+                    'flavor': flavor_name,
+                    'image': image_name,
+                    'addresses': getattr(server, 'addresses', None),
+                    'interfaces': interfaces,
+                    'floating_ip': self._get_floating_ip_from_addresses(getattr(server, 'addresses', None)),
+                    'metadata': getattr(server, 'metadata', None)
                 })
             return instances
         except Exception as e:
@@ -93,29 +129,40 @@ class OpenStackManager:
                 # Normalize image and flavor to simple identifiers to keep the
                 # returned structure JSON-serializable (avoid SDK resource objects)
                 image = None
+                image_name = None
                 try:
                     if getattr(server, 'image', None):
                         if hasattr(server.image, 'get'):
                             image = server.image.get('id')
+                            image_name = server.image.get('name') or image
                         elif hasattr(server.image, 'id'):
                             image = server.image.id
+                            image_name = getattr(server.image, 'name', image)
                         else:
                             image = str(server.image)
+                            image_name = image
                 except Exception:
                     image = None
+                    image_name = None
 
                 flavor = None
+                flavor_name = None
                 try:
                     if getattr(server, 'flavor', None):
                         if hasattr(server.flavor, 'get'):
                             flavor = server.flavor.get('id')
+                            flavor_name = server.flavor.get('name') or flavor
                         elif hasattr(server.flavor, 'id'):
                             flavor = server.flavor.id
+                            flavor_name = getattr(server.flavor, 'name', flavor)
                         else:
                             flavor = str(server.flavor)
+                            flavor_name = flavor
                 except Exception:
                     flavor = None
+                    flavor_name = None
 
+                interfaces = self._extract_interface_details(getattr(server, 'addresses', None))
                 return {
                     'id': server.id,
                     'name': getattr(server, 'name', None),
@@ -123,8 +170,12 @@ class OpenStackManager:
                     'created': getattr(server, 'created_at', None),
                     'updated': getattr(server, 'updated_at', None),
                     'flavor': flavor,
+                    'flavor_name': flavor_name,
                     'image': image,
+                    'image_name': image_name,
                     'addresses': getattr(server, 'addresses', None),
+                    'interfaces': interfaces,
+                    'floating_ip': self._get_floating_ip_from_addresses(getattr(server, 'addresses', None)),
                     'metadata': getattr(server, 'metadata', None),
                     'security_groups': getattr(server, 'security_groups', None)
                 }
@@ -678,6 +729,152 @@ class OpenStackManager:
                 'total_images': 0,
                 'total_networks': 0
             }
+
+    def _get_service_endpoint(self, service_type='placement'):
+        """Resolve a service endpoint for a given service type."""
+        if not self.conn:
+            return None
+
+        endpoint = None
+        if hasattr(self.conn, 'session') and hasattr(self.conn.session, 'get_endpoint'):
+            for interface in ['public', 'internal', 'admin']:
+                try:
+                    endpoint = self.conn.session.get_endpoint(service_type=service_type, interface=interface)
+                    if endpoint:
+                        return endpoint
+                except Exception:
+                    continue
+
+        if hasattr(self.conn, 'get_endpoint'):
+            for interface in ['public', 'internal', 'admin']:
+                try:
+                    endpoint = self.conn.get_endpoint(service_type=service_type, interface=interface)
+                    if endpoint:
+                        return endpoint
+                except Exception:
+                    continue
+
+        return None
+
+    def get_placement_usage(self):
+        """Get total resource usage from the Placement API."""
+        try:
+            if not self.conn:
+                return self._empty_placement_response()
+
+            endpoint = self._get_service_endpoint('placement')
+            if not endpoint:
+                logger.warning('Placement endpoint not found; trying direct URL fallback')
+                # Try fallback: assume placement is at /placement on keystone host
+                try:
+                    ident_endpoint = self._get_service_endpoint('identity')
+                    if ident_endpoint:
+                        base_url = ident_endpoint.split('/identity')[0] if '/identity' in ident_endpoint else ident_endpoint
+                        endpoint = f'{base_url}/placement'
+                except Exception:
+                    pass
+
+            if not endpoint:
+                logger.warning('Unable to resolve placement endpoint')
+                return self._empty_placement_response()
+
+            if endpoint.endswith('/'):
+                endpoint = endpoint[:-1]
+
+            session = getattr(self.conn, 'session', None)
+            if not session:
+                logger.warning('OpenStack session not available for placement')
+                return self._empty_placement_response()
+
+            headers = {'Accept': 'application/json'}
+            try:
+                if hasattr(session, 'get_token'):
+                    token = session.get_token()
+                    if token:
+                        headers['X-Auth-Token'] = token
+            except Exception as e:
+                logger.debug(f'Unable to get token for placement: {e}')
+
+            try:
+                response = session.get(f'{endpoint}/resource_providers', headers=headers, timeout=10)
+                response.raise_for_status()
+            except Exception as e:
+                logger.warning(f'Placement API request failed: {e}; using empty response')
+                return self._empty_placement_response()
+
+            data = response.json()
+            providers = data.get('resource_providers', [])
+
+            totals = {
+                'cpu': {'total': 0, 'used': 0},
+                'ram': {'total': 0, 'used': 0},
+                'disk': {'total': 0, 'used': 0}
+            }
+            provider_details = []
+
+            for provider in providers:
+                provider_id = provider.get('uuid') or provider.get('id')
+                provider_name = provider.get('name') or provider_id
+                inventories = {}
+                usages = {}
+
+                try:
+                    inv_resp = session.get(f'{endpoint}/resource_providers/{provider_id}/inventories', headers=headers, timeout=10)
+                    inv_resp.raise_for_status()
+                    inventories = inv_resp.json().get('inventories', {})
+                except Exception as e:
+                    logger.debug(f'Unable to load placement inventories for {provider_id}: {e}')
+
+                try:
+                    usage_resp = session.get(f'{endpoint}/resource_providers/{provider_id}/usages', headers=headers, timeout=10)
+                    if usage_resp.status_code == 200:
+                        usages = usage_resp.json().get('usages', {})
+                except Exception as e:
+                    logger.debug(f'Unable to load placement usages for {provider_id}: {e}')
+
+                cpu_total = int(inventories.get('VCPU', {}).get('total', 0) or 0)
+                cpu_used = int(usages.get('VCPU', 0) or 0)
+                ram_total = int(inventories.get('MEMORY_MB', {}).get('total', 0) or 0)
+                ram_used = int(usages.get('MEMORY_MB', 0) or 0)
+                disk_total = int(inventories.get('DISK_GB', {}).get('total', 0) or 0)
+                disk_used = int(usages.get('DISK_GB', 0) or 0)
+
+                totals['cpu']['total'] += cpu_total
+                totals['cpu']['used'] += cpu_used
+                totals['ram']['total'] += ram_total
+                totals['ram']['used'] += ram_used
+                totals['disk']['total'] += disk_total
+                totals['disk']['used'] += disk_used
+
+                provider_details.append({
+                    'id': provider_id,
+                    'name': provider_name,
+                    'cpu_total': cpu_total,
+                    'cpu_used': cpu_used,
+                    'ram_total_mb': ram_total,
+                    'ram_used_mb': ram_used,
+                    'disk_total_gb': disk_total,
+                    'disk_used_gb': disk_used,
+                })
+
+            return {
+                'totals': totals,
+                'providers': provider_details
+            }
+        except Exception as e:
+            logger.error(f'Error getting placement usage: {str(e)}')
+            return self._empty_placement_response()
+
+    def _empty_placement_response(self):
+        """Return empty but valid placement response."""
+        return {
+            'totals': {
+                'cpu': {'total': 0, 'used': 0},
+                'ram': {'total': 0, 'used': 0},
+                'disk': {'total': 0, 'used': 0}
+            },
+            'providers': []
+        }
 
 
 # Global instance

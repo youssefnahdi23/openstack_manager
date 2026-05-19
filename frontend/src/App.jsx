@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import VMManagementPage from './pages/VMManagementPage'
+import VMDetailsPage from './pages/VMDetailsPage'
 import MonitoringPage from './pages/MonitoringPage'
 import { NotificationContainer } from './components/Notification'
 import './index.css'
@@ -25,6 +26,10 @@ function App() {
           <Route
             path="/vms"
             element={<ProtectedRoute element={<VMManagementPage />} />}
+          />
+          <Route
+            path="/vms/:instanceId"
+            element={<ProtectedRoute element={<VMDetailsPage />} />}
           />
           <Route
             path="/monitoring"
