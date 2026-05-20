@@ -129,13 +129,16 @@ services:
       - vm-portal-network
     restart: unless-stopped
 
-  # ttyd Web Terminal
+  # ttyd Web Terminal with SSH support via Node.js proxy
   ttyd:
-    image: tsl0922/ttyd:latest
+    build:
+      context: .
+      dockerfile: ttyd/Dockerfile
     container_name: vm-portal-ttyd
-    command: ["ttyd", "-p", "7681", "bash"]
     ports:
       - "7681:7681"
+    volumes:
+      - ./ttyd-proxy.js:/app/ttyd-proxy.js:ro
     networks:
       - vm-portal-network
     restart: unless-stopped

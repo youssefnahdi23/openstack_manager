@@ -330,3 +330,65 @@ AttributeError: 'Image' object has no attribute 'owner_seen'
 2026-05-19 09:44:24 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-15bd15c4-6d09-4eb2-8f7a-eade1c130bd2)
 2026-05-19 09:44:57 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-2d90caaa-b01b-4f96-9e06-92a6aa39ad5a)
 2026-05-19 09:45:30 - app.utils.openstack - ERROR - Error getting placement usage: Bad Request (HTTP 400) (Request-ID: req-9d169753-aa4c-4920-bf6d-b02ccf3f7f2f)
+2026-05-19 10:06:30 - app.utils.openstack - ERROR - Error getting stats: Could not find versioned identity endpoints when attempting to authenticate. Please check that your auth_url is correct. Request to http://192.168.91.128/identity timed out
+2026-05-19 10:06:54 - app.utils.openstack - ERROR - Error listing projects: Could not find versioned identity endpoints when attempting to authenticate. Please check that your auth_url is correct. Request to http://192.168.91.128/identity timed out
+2026-05-19 10:06:57 - app.utils.openstack - ERROR - Error listing projects: Could not find versioned identity endpoints when attempting to authenticate. Please check that your auth_url is correct. Unable to establish connection to http://192.168.91.128/identity: HTTPConnectionPool(host='192.168.91.128', port=80): Max retries exceeded with url: /identity (Caused by NewConnectionError("HTTPConnection(host='192.168.91.128', port=80): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-05-19 10:06:57 - app.utils.openstack - ERROR - Error listing projects: Could not find versioned identity endpoints when attempting to authenticate. Please check that your auth_url is correct. Unable to establish connection to http://192.168.91.128/identity: HTTPConnectionPool(host='192.168.91.128', port=80): Max retries exceeded with url: /identity (Caused by NewConnectionError("HTTPConnection(host='192.168.91.128', port=80): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-05-19 10:06:57 - app.utils.openstack - ERROR - Error listing projects: Could not find versioned identity endpoints when attempting to authenticate. Please check that your auth_url is correct. Unable to establish connection to http://192.168.91.128/identity: HTTPConnectionPool(host='192.168.91.128', port=80): Max retries exceeded with url: /identity (Caused by NewConnectionError("HTTPConnection(host='192.168.91.128', port=80): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-05-19 11:07:56 - app.utils.openstack - ERROR - Error getting VNC console: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-a15b2c63-f69b-44a2-b58e-dbdcdeb022d7)
+Traceback (most recent call last):
+  File "/app/app/utils/openstack.py", line 690, in get_vnc_console
+    return self.get_console_url(instance_id, console_type='novnc')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 683, in get_console_url
+    raise RuntimeError(
+RuntimeError: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-a15b2c63-f69b-44a2-b58e-dbdcdeb022d7)
+2026-05-19 11:07:56 - app.routes.vms - ERROR - Error getting console: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-a15b2c63-f69b-44a2-b58e-dbdcdeb022d7)
+Traceback (most recent call last):
+  File "/app/app/routes/vms.py", line 360, in get_console
+    vnc_url = manager.get_vnc_console(instance_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 690, in get_vnc_console
+    return self.get_console_url(instance_id, console_type='novnc')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 683, in get_console_url
+    raise RuntimeError(
+RuntimeError: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-a15b2c63-f69b-44a2-b58e-dbdcdeb022d7)
+2026-05-19 11:07:57 - app.utils.openstack - ERROR - Error getting VNC console: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-ddd673fb-2b4a-4eac-9982-cded5105509c)
+Traceback (most recent call last):
+  File "/app/app/utils/openstack.py", line 690, in get_vnc_console
+    return self.get_console_url(instance_id, console_type='novnc')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 683, in get_console_url
+    raise RuntimeError(
+RuntimeError: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-ddd673fb-2b4a-4eac-9982-cded5105509c)
+2026-05-19 11:07:57 - app.routes.vms - ERROR - Error getting console: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-ddd673fb-2b4a-4eac-9982-cded5105509c)
+Traceback (most recent call last):
+  File "/app/app/routes/vms.py", line 360, in get_console
+    vnc_url = manager.get_vnc_console(instance_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 690, in get_vnc_console
+    return self.get_console_url(instance_id, console_type='novnc')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 683, in get_console_url
+    raise RuntimeError(
+RuntimeError: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-ddd673fb-2b4a-4eac-9982-cded5105509c)
+2026-05-19 11:08:56 - app.utils.openstack - ERROR - Error getting VNC console: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-4ef9c744-d8d5-472e-be1a-3bba0722c774)
+Traceback (most recent call last):
+  File "/app/app/utils/openstack.py", line 690, in get_vnc_console
+    return self.get_console_url(instance_id, console_type='novnc')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 683, in get_console_url
+    raise RuntimeError(
+RuntimeError: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-4ef9c744-d8d5-472e-be1a-3bba0722c774)
+2026-05-19 11:08:56 - app.routes.vms - ERROR - Error getting console: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-4ef9c744-d8d5-472e-be1a-3bba0722c774)
+Traceback (most recent call last):
+  File "/app/app/routes/vms.py", line 360, in get_console
+    vnc_url = manager.get_vnc_console(instance_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 690, in get_vnc_console
+    return self.get_console_url(instance_id, console_type='novnc')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/app/utils/openstack.py", line 683, in get_console_url
+    raise RuntimeError(
+RuntimeError: Unable to create console with attempts ['create_server_console(instance_id, console_type=console_type)', 'create_server_console(instance_id, console_type)', 'direct session POST /servers/{id}/action os-getVNCConsole']; last error: Unrecognized schema in response body. (HTTP 500) (Request-ID: req-4ef9c744-d8d5-472e-be1a-3bba0722c774)

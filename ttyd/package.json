@@ -1,0 +1,9 @@
+{
+  "name": "ttyd-ssh-wrapper",
+  "version": "1.0.0",
+  "description": "ttyd wrapper for SSH connections",
+  "main": "ttyd-wrapper.js",
+  "dependencies": {
+    "ws": "^8.14.0"
+  }
+}

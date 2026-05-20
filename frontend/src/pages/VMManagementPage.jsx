@@ -12,6 +12,7 @@ import {
   Trash2,
   Plus,
   Monitor,
+  Terminal,
   AlertCircle,
 } from 'lucide-react'
 
@@ -74,6 +75,8 @@ export default function VMManagementPage() {
   const [operatingInstance, setOperatingInstance] = useState(null)
   const [pendingStarts, setPendingStarts] = useState([])
   const [pendingStops, setPendingStops] = useState([])
+  const [pendingDeletes, setPendingDeletes] = useState([])
+  const [deletedInstances, setDeletedInstances] = useState([])
 
   const addPendingStart = (instanceId) => {
     setPendingStarts((current) => (current.includes(instanceId) ? current : [...current, instanceId]))
@@ -89,6 +92,18 @@ export default function VMManagementPage() {
 
   const removePendingStop = (instanceId) => {
     setPendingStops((current) => current.filter((id) => id !== instanceId))
+  }
+
+  const addPendingDelete = (instanceId) => {
+    setPendingDeletes((current) => (current.includes(instanceId) ? current : [...current, instanceId]))
+  }
+
+  const removePendingDelete = (instanceId) => {
+    setPendingDeletes((current) => current.filter((id) => id !== instanceId))
+  }
+
+  const addDeletedInstance = (instanceId) => {
+    setDeletedInstances((current) => (current.includes(instanceId) ? current : [...current, instanceId]))
   }
 
   const waitForInstanceActive = async (instanceId) => {
@@ -332,6 +347,10 @@ export default function VMManagementPage() {
         addPendingStop(instanceId)
         setInstances((current) => current.map((instance) => instance.id === instanceId ? { ...instance, status: 'STOPPING' } : instance))
       }
+      if (action === 'delete') {
+        addPendingDelete(instanceId)
+        setInstances((current) => current.map((instance) => instance.id === instanceId ? { ...instance, status: 'DELETING' } : instance))
+      }
 
       switch (action) {
         case 'unrescue':
@@ -356,7 +375,12 @@ export default function VMManagementPage() {
           if (window.confirm('Are you sure you want to delete this instance?')) {
             await vmService.deleteInstance(instanceId)
             message = 'Instance deleted successfully'
+            addDeletedInstance(instanceId)
+            // Show deleted state for 1.5 seconds before removing
+            await new Promise(resolve => setTimeout(resolve, 1500))
           } else {
+            removePendingDelete(instanceId)
+            setInstances((current) => current.map((instance) => instance.id === instanceId ? { ...instance, status: oldStatus } : instance))
             return
           }
           break
@@ -379,12 +403,16 @@ export default function VMManagementPage() {
       if (action === 'stop') {
         removePendingStop(instanceId)
       }
+      if (action === 'delete') {
+        removePendingDelete(instanceId)
+      }
       addNotification({
         type: 'error',
         message: error.response?.data?.message || `Failed to ${action} instance`,
       })
     } finally {
       setOperatingInstance(null)
+      // For delete action, fetchData will be called after the deletion confirmation shows
     }
   }
 
@@ -397,6 +425,41 @@ export default function VMManagementPage() {
       addNotification({
         type: 'error',
         message: error.response?.data?.message || 'Failed to open console',
+      })
+    }
+  }
+
+  const handleTerminal = async (instanceId) => {
+    try {
+      const response = await vmService.getInstance(instanceId)
+      const instance = response.data?.instance
+      if (!instance) {
+        addNotification({
+          type: 'error',
+          message: 'Failed to get instance details',
+        })
+        return
+      }
+      
+      const floatingIp = instance.floating_ip || (instance.interfaces && instance.interfaces.find(iface => iface.type === 'floating')?.address)
+      if (!floatingIp) {
+        addNotification({
+          type: 'error',
+          message: 'Instance has no floating IP. Assign a floating IP to access via SSH.',
+        })
+        return
+      }
+      
+      const username = window.prompt('Enter SSH username (default: ubuntu):', 'ubuntu')
+      if (username === null) return // User cancelled
+      
+      const ttydUrl = import.meta.env.VITE_TTYD_URL || `http://${window.location.hostname}:7681`
+      const sshUrl = `${ttydUrl}?target=${encodeURIComponent(floatingIp)}&user=${encodeURIComponent(username)}`
+      window.open(sshUrl, '_blank')
+    } catch (error) {
+      addNotification({
+        type: 'error',
+        message: 'Failed to open terminal',
       })
     }
   }
@@ -693,6 +756,8 @@ export default function VMManagementPage() {
                             const isRescued = status.includes('rescue')
                             const isStarting = pendingStarts.includes(instance.id) || status === 'starting' || status.includes('build') || status.includes('reboot') || status.includes('rebuild')
                             const isStopping = pendingStops.includes(instance.id) || status === 'stopping'
+                            const isDeleting = pendingDeletes.includes(instance.id) || status === 'deleting'
+                            const isDeleted = deletedInstances.includes(instance.id)
 
                             if (isRescued) {
                               return (
@@ -709,14 +774,26 @@ export default function VMManagementPage() {
                               )
                             }
 
-                            if (isStarting || isStopping) {
+                            if (isDeleted) {
                               return (
                                 <Button
                                   size="sm"
                                   variant="secondary"
                                   disabled
                                 >
-                                  {isStopping ? 'Stopping' : 'Starting'}
+                                  (vm deleted)
+                                </Button>
+                              )
+                            }
+
+                            if (isStarting || isStopping || isDeleting) {
+                              return (
+                                <Button
+                                  size="sm"
+                                  variant="secondary"
+                                  disabled
+                                >
+                                  {isDeleting ? 'Deleting...' : isStopping ? 'Stopping...' : 'Starting...'}
                                 </Button>
                               )
                             }
@@ -764,6 +841,14 @@ export default function VMManagementPage() {
                               >
                                 <Monitor className="w-4 h-4" />
                               </Button>
+                              <Button
+                                size="sm"
+                                variant="secondary"
+                                title="Open terminal"
+                                onClick={() => handleTerminal(instance.id)}
+                              >
+                                <Terminal className="w-4 h-4" />
+                              </Button>
                             </>
                           )}
                           <Button
@@ -772,7 +857,7 @@ export default function VMManagementPage() {
                             title="Delete instance"
                             onClick={() => handleVMAction(instance.id, 'delete')}
                             loading={operatingInstance === `${instance.id}-delete`}
-                            disabled={isLoading}
+                            disabled={isLoading || pendingDeletes.includes(instance.id) || deletedInstances.includes(instance.id)}
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
