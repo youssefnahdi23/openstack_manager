@@ -12,7 +12,6 @@ import {
   Trash2,
   Plus,
   Monitor,
-  Terminal,
   AlertCircle,
 } from 'lucide-react'
 
@@ -429,41 +428,6 @@ export default function VMManagementPage() {
     }
   }
 
-  const handleTerminal = async (instanceId) => {
-    try {
-      const response = await vmService.getInstance(instanceId)
-      const instance = response.data?.instance
-      if (!instance) {
-        addNotification({
-          type: 'error',
-          message: 'Failed to get instance details',
-        })
-        return
-      }
-      
-      const floatingIp = instance.floating_ip || (instance.interfaces && instance.interfaces.find(iface => iface.type === 'floating')?.address)
-      if (!floatingIp) {
-        addNotification({
-          type: 'error',
-          message: 'Instance has no floating IP. Assign a floating IP to access via SSH.',
-        })
-        return
-      }
-      
-      const username = window.prompt('Enter SSH username (default: ubuntu):', 'ubuntu')
-      if (username === null) return // User cancelled
-      
-      const ttydUrl = import.meta.env.VITE_TTYD_URL || `http://${window.location.hostname}:7681`
-      const sshUrl = `${ttydUrl}?target=${encodeURIComponent(floatingIp)}&user=${encodeURIComponent(username)}`
-      window.open(sshUrl, '_blank')
-    } catch (error) {
-      addNotification({
-        type: 'error',
-        message: 'Failed to open terminal',
-      })
-    }
-  }
-
   return (
     <div className="flex h-screen bg-slate-900">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
@@ -840,14 +804,6 @@ export default function VMManagementPage() {
                                 onClick={() => handleConsole(instance.id)}
                               >
                                 <Monitor className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="secondary"
-                                title="Open terminal"
-                                onClick={() => handleTerminal(instance.id)}
-                              >
-                                <Terminal className="w-4 h-4" />
                               </Button>
                             </>
                           )}

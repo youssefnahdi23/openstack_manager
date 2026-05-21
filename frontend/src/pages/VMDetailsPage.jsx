@@ -5,7 +5,7 @@ import { Sidebar } from '../components/Sidebar'
 import { useNotificationStore } from '../store'
 import { vmService } from '../services/api'
 import { LoadingSpinner, VMStatus } from '../components/Common'
-import { ArrowLeft, ExternalLink, AlertCircle, Terminal } from 'lucide-react'
+import { ArrowLeft, ExternalLink, AlertCircle } from 'lucide-react'
 
 function formatInterfaces(interfaces) {
   if (!interfaces || interfaces.length === 0) return '-'
@@ -60,39 +60,6 @@ export default function VMDetailsPage() {
     )
   }
 
-  const handleTerminal = async () => {
-    try {
-      if (!instance) {
-        addNotification({
-          type: 'error',
-          message: 'Instance details not available',
-        })
-        return
-      }
-      
-      const floatingIp = instance.floating_ip || (instance.interfaces && instance.interfaces.find(iface => iface.type === 'floating')?.address)
-      if (!floatingIp) {
-        addNotification({
-          type: 'error',
-          message: 'Instance has no floating IP. Assign a floating IP to access via SSH.',
-        })
-        return
-      }
-      
-      const username = window.prompt('Enter SSH username (default: ubuntu):', 'ubuntu')
-      if (username === null) return // User cancelled
-      
-      const ttydUrl = import.meta.env.VITE_TTYD_URL || `http://${window.location.hostname}:7681`
-      const sshUrl = `${ttydUrl}?target=${encodeURIComponent(floatingIp)}&user=${encodeURIComponent(username)}`
-      window.open(sshUrl, '_blank')
-    } catch (error) {
-      addNotification({
-        type: 'error',
-        message: 'Failed to open terminal',
-      })
-    }
-  }
-
   return (
     <div className="flex h-screen bg-slate-900">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
@@ -107,20 +74,12 @@ export default function VMDetailsPage() {
               <Link to="/vms" className="text-blue-400 hover:text-blue-200 text-sm font-medium">
                 <ArrowLeft className="inline-block w-4 h-4 mr-1" /> Back to VM management
               </Link>
-              <a
-                href={import.meta.env.VITE_NO_VNC_URL || `http://${window.location.hostname}:6080`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/terminal"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm"
               >
-                <ExternalLink className="w-4 h-4" /> Open Console
-              </a>
-              <button
-                onClick={() => handleTerminal()}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm"
-              >
-                <Terminal className="w-4 h-4" /> Open Terminal
-              </button>
+                <ExternalLink className="w-4 h-4" /> Terminal Access
+              </Link>
             </div>
           </div>
         </header>

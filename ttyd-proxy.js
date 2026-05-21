@@ -72,8 +72,8 @@ function attachTtydLogging(proc, targetLabel) {
 }
 
 // Get or create ttyd process for SSH target
-async function getTtydPort(target, user = 'ubuntu') {
-  const sessionId = `ssh_${target}_${user}`;
+async function getTtydPort(target, user = 'ubuntu', password = '') {
+  const sessionId = `ssh_${target}_${user}_${password}`;
   
   if (SESSIONS.has(sessionId)) {
     const session = SESSIONS.get(sessionId);
@@ -89,7 +89,11 @@ async function getTtydPort(target, user = 'ubuntu') {
     port++;
   }
   
-  const sshCmd = `exec ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=5 "${user}@${target}" || bash -i`;
+  const escapedPassword = password.replace(/'/g, `'\\''`);
+  const sshBase = `ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 -tt -o PreferredAuthentications=password,publickey ${user}@${target}`;
+  const sshCmd = password
+    ? `sshpass -p '${escapedPassword}' ${sshBase} || exec bash -i`
+    : `${sshBase} || exec bash -i`;
 
   
   const ttydProc = spawn(TTYD_BINARY, [
@@ -172,12 +176,14 @@ const server = http.createServer(async (req, res) => {
     const urlObj = new URL(req.url, `http://localhost`);
     const target = urlObj.searchParams.get('target');
     const user = urlObj.searchParams.get('user') || 'ubuntu';
+    const password = urlObj.searchParams.get('password') || '';
     urlObj.searchParams.delete('target');
     urlObj.searchParams.delete('user');
+    urlObj.searchParams.delete('password');
     let targetPath = urlObj.pathname + urlObj.search;
     if (!targetPath) targetPath = '/';
 
-    const targetPort = target ? await getTtydPort(target, user) : await getLocalTtydPort();
+    const targetPort = target ? await getTtydPort(target, user, password) : await getLocalTtydPort();
     const proxyReq = http.request({
       hostname: '127.0.0.1',
       port: targetPort,
@@ -212,12 +218,14 @@ server.on('upgrade', async (req, socket, head) => {
     const urlObj = new URL(req.url, `http://localhost`);
     const target = urlObj.searchParams.get('target');
     const user = urlObj.searchParams.get('user') || 'ubuntu';
+    const password = urlObj.searchParams.get('password') || '';
     urlObj.searchParams.delete('target');
     urlObj.searchParams.delete('user');
+    urlObj.searchParams.delete('password');
     let targetPath = urlObj.pathname + urlObj.search;
     if (!targetPath) targetPath = '/';
 
-    const targetPort = target ? await getTtydPort(target, user) : await getLocalTtydPort();
+    const targetPort = target ? await getTtydPort(target, user, password) : await getLocalTtydPort();
     const proxyReq = http.request({
       hostname: '127.0.0.1',
       port: targetPort,
@@ -250,7 +258,7 @@ server.on('upgrade', async (req, socket, head) => {
       socket.destroy();
     });
 
-    proxyReq.end();
+    proxyReq.end(head);
   } catch (err) {
     console.error('WebSocket handling error:', err);
     socket.destroy();

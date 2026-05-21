@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useRequireAuth } from '../hooks/useAuth'
 import { Sidebar } from '../components/Sidebar'
 import { useVMStore, useNotificationStore } from '../store'
 import { vmService } from '../services/api'
 import { StatCard, LoadingSpinner } from '../components/Common'
-import { Server, HardDrive, Image as ImageIcon, Network, AlertCircle, CheckCircle } from 'lucide-react'
+import { Server, HardDrive, Image as ImageIcon, Network, AlertCircle, CheckCircle, Terminal, Monitor } from 'lucide-react'
 
 export default function DashboardPage() {
   const auth = useRequireAuth()
@@ -122,15 +123,13 @@ export default function DashboardPage() {
                     <Server className="w-6 h-6 mx-auto mb-2 text-blue-400" />
                     <p className="text-white font-medium">Manage VMs</p>
                   </a>
-                  <a
-                    href={import.meta.env.VITE_WEB_TERMINAL_URL || `http://${window.location.hostname}:7681`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="/terminal"
                     className="p-4 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-lg text-center transition-colors"
                   >
                     <Terminal className="w-6 h-6 mx-auto mb-2 text-purple-400" />
-                    <p className="text-white font-medium">Web Terminal</p>
-                  </a>
+                    <p className="text-white font-medium">Terminal Access</p>
+                  </Link>
                   <a
                     href={import.meta.env.VITE_NO_VNC_URL || `http://${window.location.hostname}:6080`}
                     target="_blank"
@@ -153,5 +152,3 @@ export default function DashboardPage() {
     </div>
   )
 }
-
-import { Terminal, Monitor } from 'lucide-react'

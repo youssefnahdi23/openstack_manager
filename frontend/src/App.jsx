@@ -5,6 +5,7 @@ import DashboardPage from './pages/DashboardPage'
 import VMManagementPage from './pages/VMManagementPage'
 import VMDetailsPage from './pages/VMDetailsPage'
 import MonitoringPage from './pages/MonitoringPage'
+import TerminalPage from './pages/TerminalPage'
 import { NotificationContainer } from './components/Notification'
 import './index.css'
 
@@ -34,6 +35,10 @@ function App() {
           <Route
             path="/monitoring"
             element={<ProtectedRoute element={<MonitoringPage />} />}
+          />
+          <Route
+            path="/terminal"
+            element={<ProtectedRoute element={<TerminalPage />} />}
           />
           <Route path="/" element={<Navigate to="/dashboard" />} />
         </Routes>
