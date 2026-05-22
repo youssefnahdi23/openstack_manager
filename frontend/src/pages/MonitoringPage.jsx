@@ -13,6 +13,31 @@ export default function MonitoringPage() {
   const [loading, setLoading] = useState(true)
   const [placementLoading, setPlacementLoading] = useState(true)
 
+  const normalizeDiskUsage = () => {
+    if (!placementUsage) {
+      return { used: 0, total: 0 }
+    }
+
+    const diskTotals = {
+      used: Number(placementUsage.totals?.disk?.used || 0),
+      total: Number(placementUsage.totals?.disk?.total || 0),
+    }
+
+    const providerTotals = placementUsage.providers?.reduce(
+      (acc, provider) => ({
+        used: acc.used + Number(provider.disk_used_gb || 0),
+        total: acc.total + Number(provider.disk_total_gb || 0),
+      }),
+      { used: 0, total: 0 }
+    ) || { used: 0, total: 0 }
+
+    if (providerTotals.total > 0 && providerTotals.total !== diskTotals.total) {
+      return providerTotals
+    }
+
+    return diskTotals
+  }
+
   useEffect(() => {
     fetchMetrics()
     fetchPlacementUsage()
@@ -157,7 +182,10 @@ export default function MonitoringPage() {
                 <div className="space-y-5">
                   {renderUsageBar('CPU cores', placementUsage.totals.cpu.used, placementUsage.totals.cpu.total, 'cores')}
                   {renderUsageBar('RAM', placementUsage.totals.ram.used, placementUsage.totals.ram.total, 'MB')}
-                  {renderUsageBar('Disk', placementUsage.totals.disk.used, placementUsage.totals.disk.total, 'GB')}
+                  {(() => {
+                    const diskUsage = normalizeDiskUsage()
+                    return renderUsageBar('Disk', diskUsage.used, diskUsage.total, 'GB')
+                  })()}
                   {placementUsage.providers && placementUsage.providers.length > 0 && (
                     <div className="rounded-lg bg-slate-900 p-4 border border-slate-700">
                       <h3 className="text-sm font-semibold text-white mb-3">Resource Providers</h3>

@@ -22,6 +22,95 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --app-bg: #0f172a;
+  --app-text: #e2e8f0;
+  --surface-900: #0f172a;
+  --surface-800: #1e293b;
+  --surface-700: #334155;
+  --surface-600: #475569;
+  --surface-border: #334155;
+  --text-muted: #94a3b8;
+  --text-muted-2: #cbd5e1;
+}
+
+html[data-theme='light'] {
+  --app-bg: #f8fafc;
+  --app-text: #0f172a;
+  --surface-900: #ffffff;
+  --surface-800: #f1f5f9;
+  --surface-700: #e2e8f0;
+  --surface-600: #cbd5e1;
+  --surface-border: #cbd5e1;
+  --text-muted: #475569;
+  --text-muted-2: #64748b;
+}
+
+html[data-theme='dark'] {
+  --app-bg: #0f172a;
+  --app-text: #e2e8f0;
+  --surface-900: #0f172a;
+  --surface-800: #1e293b;
+  --surface-700: #334155;
+  --surface-600: #475569;
+  --surface-border: #334155;
+  --text-muted: #94a3b8;
+  --text-muted-2: #cbd5e1;
+}
+
+body {
+  background-color: var(--app-bg);
+  color: var(--app-text);
+}
+
+html[data-theme='light'] body {
+  background-color: var(--app-bg);
+  color: var(--app-text);
+}
+
+html[data-theme='light'] .bg-slate-900 {
+  background-color: var(--surface-900) !important;
+}
+
+html[data-theme='light'] .bg-slate-800 {
+  background-color: var(--surface-800) !important;
+}
+
+html[data-theme='light'] .bg-slate-700 {
+  background-color: var(--surface-700) !important;
+}
+
+html[data-theme='light'] .bg-slate-600 {
+  background-color: var(--surface-600) !important;
+}
+
+html[data-theme='light'] .border-slate-700,
+html[data-theme='light'] .border-slate-600 {
+  border-color: var(--surface-border) !important;
+}
+
+html[data-theme='light'] .text-white {
+  color: var(--app-text) !important;
+}
+
+html[data-theme='light'] .text-slate-300,
+html[data-theme='light'] .text-slate-400,
+html[data-theme='light'] .text-slate-500,
+html[data-theme='light'] .text-slate-200 {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme='light'] .text-slate-600,
+html[data-theme='light'] .text-slate-700,
+html[data-theme='light'] .text-slate-900 {
+  color: var(--text-muted-2) !important;
+}
+
+html[data-theme='light'] .bg-slate-700\/50,
+html[data-theme='light'] .bg-slate-900\/90 {
+  background-color: rgba(148, 163, 184, 0.25) !important;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;

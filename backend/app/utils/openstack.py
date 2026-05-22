@@ -812,6 +812,20 @@ class OpenStackManager:
             }
             provider_details = []
 
+            def parse_int(value):
+                if value is None:
+                    return 0
+                if isinstance(value, int):
+                    return value
+                if isinstance(value, float):
+                    return int(value)
+                if isinstance(value, str):
+                    try:
+                        return int(float(value))
+                    except ValueError:
+                        return 0
+                return 0
+
             for provider in providers:
                 provider_id = provider.get('uuid') or provider.get('id')
                 provider_name = provider.get('name') or provider_id
@@ -832,12 +846,12 @@ class OpenStackManager:
                 except Exception as e:
                     logger.debug(f'Unable to load placement usages for {provider_id}: {e}')
 
-                cpu_total = int(inventories.get('VCPU', {}).get('total', 0) or 0)
-                cpu_used = int(usages.get('VCPU', 0) or 0)
-                ram_total = int(inventories.get('MEMORY_MB', {}).get('total', 0) or 0)
-                ram_used = int(usages.get('MEMORY_MB', 0) or 0)
-                disk_total = int(inventories.get('DISK_GB', {}).get('total', 0) or 0)
-                disk_used = int(usages.get('DISK_GB', 0) or 0)
+                cpu_total = parse_int(inventories.get('VCPU', {}).get('total', 0) or 0)
+                cpu_used = parse_int(usages.get('VCPU', 0) or 0)
+                ram_total = parse_int(inventories.get('MEMORY_MB', {}).get('total', 0) or 0)
+                ram_used = parse_int(usages.get('MEMORY_MB', 0) or 0)
+                disk_total = parse_int(inventories.get('DISK_GB', {}).get('total', 0) or 0)
+                disk_used = parse_int(usages.get('DISK_GB', 0) or 0)
 
                 totals['cpu']['total'] += cpu_total
                 totals['cpu']['used'] += cpu_used

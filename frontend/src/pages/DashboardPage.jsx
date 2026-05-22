@@ -128,7 +128,7 @@ export default function DashboardPage() {
                     className="p-4 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-lg text-center transition-colors"
                   >
                     <Terminal className="w-6 h-6 mx-auto mb-2 text-purple-400" />
-                    <p className="text-white font-medium">Terminal Access</p>
+                    <p className="text-white font-medium">Open PuTTY</p>
                   </Link>
                   <a
                     href={import.meta.env.VITE_NO_VNC_URL || `http://${window.location.hostname}:6080`}
