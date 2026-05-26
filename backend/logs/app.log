@@ -3711,3 +3711,194 @@ AttributeError: 'Proxy' object has no attribute 'create_server_console'
 2026-05-22 10:03:13 - app - INFO - Application started in production mode
 2026-05-22 10:03:13 - app - INFO - Application started in production mode
 2026-05-22 10:03:13 - app - INFO - Application started in production mode
+2026-05-22 10:30:43 - app - INFO - Logging configured successfully
+2026-05-22 10:30:43 - app - INFO - Logging configured successfully
+2026-05-22 10:30:43 - app - INFO - Logging configured successfully
+2026-05-22 10:30:43 - app - INFO - Logging configured successfully
+2026-05-22 10:30:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-22 10:30:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-22 10:30:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-22 10:30:45 - app - INFO - Application started in production mode
+2026-05-22 10:30:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-22 10:30:45 - app - INFO - Application started in production mode
+2026-05-22 10:30:45 - app - INFO - Application started in production mode
+2026-05-22 10:30:45 - app - INFO - Application started in production mode
+2026-05-22 10:31:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-22 10:31:05 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-22 11:44:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-22 11:44:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:34:41 - app - INFO - Logging configured successfully
+2026-05-26 00:34:41 - app - INFO - Logging configured successfully
+2026-05-26 00:34:41 - app - INFO - Logging configured successfully
+2026-05-26 00:34:42 - app - INFO - Logging configured successfully
+2026-05-26 00:34:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:34:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:34:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:34:47 - app - INFO - Application started in production mode
+2026-05-26 00:34:47 - app - INFO - Application started in production mode
+2026-05-26 00:34:47 - app.utils.openstack - WARNING - Placement endpoint not found; trying direct URL fallback
+2026-05-26 00:34:47 - app - INFO - Application started in production mode
+2026-05-26 00:34:47 - app.utils.openstack - WARNING - Unable to resolve placement endpoint
+2026-05-26 00:34:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:34:47 - app - INFO - Application started in production mode
+2026-05-26 00:34:54 - app.utils.openstack - WARNING - Placement endpoint not found; trying direct URL fallback
+2026-05-26 00:34:54 - app.utils.openstack - WARNING - Unable to resolve placement endpoint
+2026-05-26 00:44:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:44:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:44:59 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:44:59 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:00 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:45:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:00 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:45:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:00 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:45:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:01 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:45:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:05 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:07 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:11 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:14 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:19 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:45:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:22 - app.routes.vms - INFO - User 'admin' requested noVNC console for instance a3bd7a49-4515-4c4c-8369-3cdf6f573794
+2026-05-26 00:45:22 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:45:23 - app.utils.openstack - WARNING - Console creation attempt 1 failed: 'Proxy' object has no attribute 'create_server_console'
+Traceback (most recent call last):
+  File "/app/app/utils/openstack.py", line 613, in get_console_url
+    console = self.conn.compute.create_server_console(instance_id, console_type=console_type)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Proxy' object has no attribute 'create_server_console'
+2026-05-26 00:45:23 - app.utils.openstack - WARNING - Console creation attempt 2 failed: 'Proxy' object has no attribute 'create_server_console'
+Traceback (most recent call last):
+  File "/app/app/utils/openstack.py", line 623, in get_console_url
+    console = self.conn.compute.create_server_console(instance_id, console_type)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Proxy' object has no attribute 'create_server_console'
+2026-05-26 00:46:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:00 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:46:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:01 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:46:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:01 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:46:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:01 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:46:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:03 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1', 'Priority': 'u=0'}
+2026-05-26 00:46:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:10 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1', 'Priority': 'u=0'}
+2026-05-26 00:46:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:13 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1', 'Priority': 'u=0'}
+2026-05-26 00:46:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:14 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1', 'Priority': 'u=0'}
+2026-05-26 00:46:14 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:14 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:14 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:14 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:15 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1', 'Priority': 'u=0'}
+2026-05-26 00:46:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:58 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:46:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:58 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:46:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:58 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:46:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:58 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:46:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:46:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:05 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:06 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:07 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:13 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:47:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:16 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:47:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:56 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:47:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:56 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:47:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:56 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:47:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:57 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:47:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:47:59 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:48:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:48:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:48:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:48:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:48:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:48:03 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyNjk2LjAwNjMzNX0.kkALYHYm3vq4y0D6EjgrHE8tmUjwAI5FgEtkasP3g68', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:48:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:49:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:49:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:07 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:07 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:07 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyOTk3LjY4NzUxNH0.VLdaQqn2g22isX5f7lb5I0-xsOMXMvWbN2AKassvOoA', 'X-Openstack-Project': 'admin', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:50:07 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:07 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:07 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:07 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:08 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyOTk3LjY4NzUxNH0.VLdaQqn2g22isX5f7lb5I0-xsOMXMvWbN2AKassvOoA', 'X-Openstack-Project': 'admin', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:50:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:08 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyOTk3LjY4NzUxNH0.VLdaQqn2g22isX5f7lb5I0-xsOMXMvWbN2AKassvOoA', 'X-Openstack-Project': 'admin', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:50:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:08 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzc5ODQyOTk3LjY4NzUxNH0.VLdaQqn2g22isX5f7lb5I0-xsOMXMvWbN2AKassvOoA', 'X-Openstack-Project': 'admin', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-05-26 00:50:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-05-26 00:50:11 - app.utils.openstack - INFO - Successfully connected to OpenStack

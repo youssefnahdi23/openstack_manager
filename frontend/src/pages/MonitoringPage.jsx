@@ -12,6 +12,12 @@ export default function MonitoringPage() {
   const [placementUsage, setPlacementUsage] = useState(null)
   const [loading, setLoading] = useState(true)
   const [placementLoading, setPlacementLoading] = useState(true)
+  const [timeSeries, setTimeSeries] = useState({ cpu: [], ram: [], disk: [] })
+  const [seriesLoading, setSeriesLoading] = useState(true)
+  const [streamError, setStreamError] = useState('')
+  const prometheusBase = import.meta.env.VITE_PROMETHEUS_URL
+    ? import.meta.env.VITE_PROMETHEUS_URL.replace(/\/+$/, '')
+    : '/prometheus'
 
   const normalizeDiskUsage = () => {
     if (!placementUsage) {
@@ -41,9 +47,11 @@ export default function MonitoringPage() {
   useEffect(() => {
     fetchMetrics()
     fetchPlacementUsage()
+    fetchTimeSeries()
     const interval = setInterval(() => {
       fetchMetrics()
       fetchPlacementUsage()
+      fetchTimeSeries()
     }, 30000) // Refresh every 30 seconds
     return () => clearInterval(interval)
   }, [])
@@ -73,6 +81,58 @@ export default function MonitoringPage() {
     }
   }
 
+  const fetchTimeSeries = async () => {
+    try {
+      setSeriesLoading(true)
+      setStreamError('')
+      const apiBase = prometheusBase
+      const end = Math.floor(Date.now() / 1000)
+      const start = end - 3600
+      const step = 30
+
+      const fetchSeries = async (query) => {
+        const url = `${apiBase}/api/v1/query_range?query=${encodeURIComponent(query)}&start=${start}&end=${end}&step=${step}`
+        const response = await fetch(url)
+        const body = await response.json()
+        if (body.status !== 'success') {
+          throw new Error(body.error || 'Query failed')
+        }
+        const result = body.data.result[0]
+        return (result?.values || []).map(([ts, value]) => ({ x: Number(ts) * 1000, y: Number(value) }))
+      }
+
+      const [cpuUsed, cpuTotal, ramUsed, ramTotal, diskUsed, diskTotal] = await Promise.all([
+        fetchSeries('placement_cpu_used'),
+        fetchSeries('placement_cpu_total'),
+        fetchSeries('placement_ram_used_mb'),
+        fetchSeries('placement_ram_total_mb'),
+        fetchSeries('placement_disk_used_gb'),
+        fetchSeries('placement_disk_total_gb'),
+      ])
+
+      setTimeSeries({
+        cpu: cpuUsed.map((point, index) => ({
+          ...point,
+          total: cpuTotal[index]?.y || 0,
+        })),
+        ram: ramUsed.map((point, index) => ({
+          ...point,
+          total: ramTotal[index]?.y || 0,
+        })),
+        disk: diskUsed.map((point, index) => ({
+          ...point,
+          total: diskTotal[index]?.y || 0,
+        })),
+      })
+    } catch (error) {
+      console.error('Failed to fetch Prometheus series:', error)
+      setStreamError('Unable to load time-series data from Prometheus. Check that Prometheus is reachable and scraping backend metrics.')
+      setTimeSeries({ cpu: [], ram: [], disk: [] })
+    } finally {
+      setSeriesLoading(false)
+    }
+  }
+
   const renderUsageBar = (label, used, total, unit) => {
     const usedVal = Number(used || 0)
     const totalVal = Number(total || 0)
@@ -87,6 +147,71 @@ export default function MonitoringPage() {
         <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
           <div className="h-full bg-blue-500 rounded-full" style={{ width: `${percentage}%` }} />
         </div>
+      </div>
+    )
+  }
+
+  const renderTimeSeriesChart = (title, series, color) => {
+    if (!series || series.length === 0) {
+      return (
+        <div className="rounded-lg border border-slate-700 bg-slate-800 p-4 text-slate-400">
+          No time-series data available for {title}.
+        </div>
+      )
+    }
+
+    const values = series.map((point) => point.y)
+    const maxValue = Math.max(...values, 1)
+    const minValue = Math.min(...values, 0)
+    const points = series
+      .map((point, index) => {
+        const x = (index / (series.length - 1)) * 100
+        const y = 100 - ((point.y - minValue) / (maxValue - minValue || 1)) * 100
+        return `${x},${y}`
+      })
+      .join(' ')
+
+    return (
+      <div className="rounded-lg border border-slate-700 bg-slate-800 p-4">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h3 className="text-sm font-semibold text-white">{title}</h3>
+            <p className="text-slate-400 text-xs">Latest: {series[series.length - 1].y.toFixed(1)}</p>
+          </div>
+          <div className="text-xs text-slate-500">{series.length} points</div>
+        </div>
+        <svg viewBox="0 0 100 100" className="w-full h-32">
+          <polyline
+            fill="none"
+            stroke={color}
+            strokeWidth="1.5"
+            points={points}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <line x1="0" y1="100" x2="100" y2="100" stroke="#334155" strokeWidth="0.5" />
+        </svg>
+      </div>
+    )
+  }
+
+  const renderPrometheusGraphImage = (query, title) => {
+    const end = Math.floor(Date.now() / 1000)
+    const start = end - 3600
+    const chartUrl = `${prometheusBase}/render?g0.expr=${encodeURIComponent(query)}&g0.tab=0&from=${start}&to=${end}&width=700&height=220`
+
+    return (
+      <div className="rounded-lg border border-slate-700 bg-slate-800 p-4">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h3 className="text-sm font-semibold text-white">{title}</h3>
+            <p className="text-slate-400 text-xs">Rendered by Prometheus</p>
+          </div>
+          <a href={`${prometheusBase}/graph?g0.expr=${encodeURIComponent(query)}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-xs hover:text-blue-300">
+            Open in Graph UI
+          </a>
+        </div>
+        <img src={chartUrl} alt={`${title} graph`} className="w-full rounded-lg border border-slate-700 bg-slate-950" loading="lazy" />
       </div>
     )
   }
@@ -107,6 +232,7 @@ export default function MonitoringPage() {
               onClick={() => {
                 fetchMetrics()
                 fetchPlacementUsage()
+                fetchTimeSeries()
               }}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
@@ -164,6 +290,44 @@ export default function MonitoringPage() {
                 <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
                   <span className="text-slate-300">Prometheus</span>
                   <span className="px-3 py-1 bg-green-900/20 text-green-400 rounded-full text-sm">Running</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-2 card">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-cyan-400" />
+                  <div>
+                    <h2 className="text-lg font-semibold text-white">Resource Usage Over Time</h2>
+                    <p className="text-slate-400 text-sm">Live Prometheus range data updated every 30 seconds.</p>
+                  </div>
+                </div>
+                <span className="text-slate-400 text-sm">Streaming metrics</span>
+              </div>
+              {seriesLoading ? (
+                <div className="flex items-center justify-center h-48">
+                  <LoadingSpinner />
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+                  {renderTimeSeriesChart('CPU Used (cores)', timeSeries.cpu, '#60a5fa')}
+                  {renderTimeSeriesChart('RAM Used (MB)', timeSeries.ram, '#38bdf8')}
+                  {renderTimeSeriesChart('Disk Used (GB)', timeSeries.disk, '#fbbf24')}
+                </div>
+              )}
+              {streamError ? (
+                <div className="mt-4 rounded-lg border border-amber-500 bg-amber-900/80 p-4 text-sm text-amber-100">
+                  {streamError}
+                </div>
+              ) : null}
+
+              <div className="mt-6">
+                <h3 className="text-sm font-semibold text-white mb-3">Prometheus snapshot graphs</h3>
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+                  {renderPrometheusGraphImage('placement_cpu_used', 'CPU Used (cores)')}
+                  {renderPrometheusGraphImage('placement_ram_used_mb', 'RAM Used (MB)')}
+                  {renderPrometheusGraphImage('placement_disk_used_gb', 'Disk Used (GB)')}
                 </div>
               </div>
             </div>
@@ -230,14 +394,14 @@ export default function MonitoringPage() {
                 Prometheus Visualization
               </h2>
               <p className="text-slate-400 text-sm mb-4">
-                Embedded Prometheus graph UI for backend and placement metrics. <a href={import.meta.env.VITE_PROMETHEUS_URL || `http://${window.location.hostname}:9090/graph`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">Open in new tab</a> if the embedded view is not displaying correctly.
+                Embedded Prometheus graph UI for backend and placement metrics. <a href={`${prometheusBase}/graph`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">Open in new tab</a> if the embedded view is not displaying correctly.
               </p>
               <div className="rounded-lg overflow-hidden border border-slate-700 bg-slate-900">
                 <iframe
-                  src={`${import.meta.env.VITE_PROMETHEUS_URL || `http://${window.location.hostname}:9090`}/graph`}
+                  src={`${prometheusBase}/graph`}
                   title="Prometheus Graph"
                   className="w-full h-[680px] bg-slate-900 border-0"
-                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -249,7 +413,7 @@ export default function MonitoringPage() {
                 Raw Prometheus Metrics
               </h2>
               <p className="text-slate-400 text-sm mb-4">
-                View detailed metrics at <a href={import.meta.env.VITE_PROMETHEUS_URL || `http://${window.location.hostname}:9090`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">Prometheus Dashboard</a>
+                View detailed metrics at <a href={prometheusBase} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">Prometheus Dashboard</a>
               </p>
               {loading ? (
                 <div className="flex items-center justify-center h-64">
