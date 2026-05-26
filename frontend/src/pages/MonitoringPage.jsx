@@ -3,7 +3,19 @@ import { useRequireAuth } from '../hooks/useAuth'
 import { Sidebar } from '../components/Sidebar'
 import { LoadingSpinner } from '../components/Common'
 import { monitoringService } from '../services/api'
-import { Activity, AlertCircle, CheckCircle, Clock } from 'lucide-react'
+import { Activity, AlertCircle, CheckCircle, Clock, BarChart3, Gauge, Server } from 'lucide-react'
+
+// Monitoring service URLs
+const MONITORING_URLS = {
+  prometheus: 'http://192.168.91.128:9090',
+  grafana: 'http://192.168.91.128:3000',
+  nodeExporter: 'http://192.168.91.128:9100/metrics',
+  openstackExporter: 'http://192.168.91.128:9180/metrics',
+  grafanaDashboards: {
+    nodeExporter: 1860,
+    openstackOverview: 13747
+  }
+}
 
 export default function MonitoringPage() {
   const auth = useRequireAuth()
@@ -12,6 +24,7 @@ export default function MonitoringPage() {
   const [placementUsage, setPlacementUsage] = useState(null)
   const [loading, setLoading] = useState(true)
   const [placementLoading, setPlacementLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState('grafana')
 
   useEffect(() => {
     fetchMetrics()
@@ -25,10 +38,9 @@ export default function MonitoringPage() {
 
   const fetchMetrics = async () => {
     try {
-      const metricsUrl = import.meta.env.VITE_PROMETHEUS_METRICS_URL || '/metrics'
-      const response = await fetch(metricsUrl)
-      const text = await response.text()
-      setMetrics(text)
+      const response = await fetch(MONITORING_URLS.prometheus)
+      // Just test if Prometheus is accessible
+      setMetrics('Prometheus accessible')
     } catch (error) {
       console.error('Failed to fetch metrics:', error)
     } finally {
@@ -76,7 +88,7 @@ export default function MonitoringPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-white">Monitoring & Metrics</h1>
-              <p className="text-slate-400 text-sm">System monitoring and Prometheus metrics</p>
+              <p className="text-slate-400 text-sm">Prometheus, Grafana, and OpenStack monitoring dashboard</p>
             </div>
             <button
               onClick={() => {
@@ -90,154 +102,314 @@ export default function MonitoringPage() {
           </div>
         </header>
 
-        {/* Content */}
-        <div className="flex-1 overflow-auto p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Quick Stats */}
-            <div className="card">
-              <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <Activity className="w-5 h-5 text-blue-400" />
-                System Status
-              </h2>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
-                  <span className="text-slate-300">API Health</span>
-                  <span className="flex items-center gap-2 text-green-400">
-                    <CheckCircle className="w-4 h-4" /> Operational
-                  </span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
-                  <span className="text-slate-300">Database</span>
-                  <span className="flex items-center gap-2 text-green-400">
-                    <CheckCircle className="w-4 h-4" /> Connected
-                  </span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
-                  <span className="text-slate-300">OpenStack</span>
-                  <span className="flex items-center gap-2 text-green-400">
-                    <CheckCircle className="w-4 h-4" /> Connected
-                  </span>
-                </div>
-              </div>
+        {/* Service Status Bar */}
+        <div className="bg-slate-800 border-b border-slate-700 px-6 py-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <a href={MONITORING_URLS.prometheus} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-blue-400 hover:text-blue-300">
+                <Gauge className="w-4 h-4" />
+                <span>Prometheus</span>
+              </a>
             </div>
-
-            {/* Services */}
-            <div className="card">
-              <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-purple-400" />
-                Services
-              </h2>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
-                  <span className="text-slate-300">Frontend</span>
-                  <span className="px-3 py-1 bg-green-900/20 text-green-400 rounded-full text-sm">Running</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
-                  <span className="text-slate-300">Backend</span>
-                  <span className="px-3 py-1 bg-green-900/20 text-green-400 rounded-full text-sm">Running</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
-                  <span className="text-slate-300">Prometheus</span>
-                  <span className="px-3 py-1 bg-green-900/20 text-green-400 rounded-full text-sm">Running</span>
-                </div>
-              </div>
+            <div className="flex items-center gap-2">
+              <a href={MONITORING_URLS.grafana} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-purple-400 hover:text-purple-300">
+                <BarChart3 className="w-4 h-4" />
+                <span>Grafana</span>
+              </a>
             </div>
-
-            {/* Placement Usage */}
-            <div className="lg:col-span-2 card">
-              <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <Activity className="w-5 h-5 text-cyan-400" />
-                DevStack Placement Usage
-              </h2>
-              {placementLoading ? (
-                <div className="flex items-center justify-center h-48">
-                  <LoadingSpinner />
-                </div>
-              ) : placementUsage && (placementUsage.totals.cpu.total > 0 || placementUsage.totals.ram.total > 0 || placementUsage.totals.disk.total > 0) ? (
-                <div className="space-y-5">
-                  {renderUsageBar('CPU cores', placementUsage.totals.cpu.used, placementUsage.totals.cpu.total, 'cores')}
-                  {renderUsageBar('RAM', placementUsage.totals.ram.used, placementUsage.totals.ram.total, 'MB')}
-                  {renderUsageBar('Disk', placementUsage.totals.disk.used, placementUsage.totals.disk.total, 'GB')}
-                  {placementUsage.providers && placementUsage.providers.length > 0 && (
-                    <div className="rounded-lg bg-slate-900 p-4 border border-slate-700">
-                      <h3 className="text-sm font-semibold text-white mb-3">Resource Providers</h3>
-                      <div className="space-y-3">
-                        {placementUsage.providers.map((provider) => (
-                          <div key={provider.id} className="rounded-lg bg-slate-800 p-3">
-                            <div className="flex items-center justify-between text-sm text-slate-300 mb-2">
-                              <span>{provider.name}</span>
-                              <span className="text-slate-400">{provider.id}</span>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-slate-200 text-sm">
-                              <div className="space-y-1">
-                                <div className="text-slate-400">CPU</div>
-                                <div>{provider.cpu_used} / {provider.cpu_total} cores</div>
-                              </div>
-                              <div className="space-y-1">
-                                <div className="text-slate-400">RAM</div>
-                                <div>{provider.ram_used_mb} / {provider.ram_total_mb} MB</div>
-                              </div>
-                              <div className="space-y-1">
-                                <div className="text-slate-400">Disk</div>
-                                <div>{provider.disk_used_gb} / {provider.disk_total_gb} GB</div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="text-slate-400 text-center py-8">
-                  No placement data available. Ensure OpenStack Placement service is running and configured.
-                </div>
-              )}
+            <div className="flex items-center gap-2">
+              <a href={MONITORING_URLS.nodeExporter} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-green-400 hover:text-green-300">
+                <Server className="w-4 h-4" />
+                <span>Node Exporter</span>
+              </a>
             </div>
-
-            {/* Prometheus Visualization */}
-            <div className="lg:col-span-2 card">
-              <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-yellow-400" />
-                Prometheus Visualization
-              </h2>
-              <p className="text-slate-400 text-sm mb-4">
-                Embedded Prometheus graph UI for backend and placement metrics. <a href={import.meta.env.VITE_PROMETHEUS_URL || `http://${window.location.hostname}:9090/graph`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">Open in new tab</a> if the embedded view is not displaying correctly.
-              </p>
-              <div className="rounded-lg overflow-hidden border border-slate-700 bg-slate-900">
-                <iframe
-                  src={`${import.meta.env.VITE_PROMETHEUS_URL || `http://${window.location.hostname}:9090`}/graph`}
-                  title="Prometheus Graph"
-                  className="w-full h-[680px] bg-slate-900 border-0"
-                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                />
-              </div>
-            </div>
-
-            {/* Metrics */}
-            <div className="lg:col-span-2 card">
-              <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-yellow-400" />
-                Raw Prometheus Metrics
-              </h2>
-              <p className="text-slate-400 text-sm mb-4">
-                View detailed metrics at <a href={import.meta.env.VITE_PROMETHEUS_URL || `http://${window.location.hostname}:9090`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">Prometheus Dashboard</a>
-              </p>
-              {loading ? (
-                <div className="flex items-center justify-center h-64">
-                  <LoadingSpinner />
-                </div>
-              ) : metrics ? (
-                <div className="bg-slate-900 rounded-lg p-4 font-mono text-sm text-slate-300 overflow-x-auto max-h-96 overflow-y-auto">
-                  <pre className="whitespace-pre-wrap break-words">{metrics}</pre>
-                </div>
-              ) : (
-                <div className="text-slate-400 text-center py-8">
-                  Failed to load metrics
-                </div>
-              )}
+            <div className="flex items-center gap-2">
+              <a href={MONITORING_URLS.openstackExporter} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-orange-400 hover:text-orange-300">
+                <Activity className="w-4 h-4" />
+                <span>OpenStack Exporter</span>
+              </a>
             </div>
           </div>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="bg-slate-800 border-b border-slate-700 px-6 py-3 flex gap-4">
+          <button
+            onClick={() => setActiveTab('grafana')}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              activeTab === 'grafana'
+                ? 'bg-purple-600 text-white'
+                : 'text-slate-300 hover:text-white hover:bg-slate-700'
+            }`}
+          >
+            Grafana Dashboards
+          </button>
+          <button
+            onClick={() => setActiveTab('prometheus')}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              activeTab === 'prometheus'
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-300 hover:text-white hover:bg-slate-700'
+            }`}
+          >
+            Prometheus
+          </button>
+          <button
+            onClick={() => setActiveTab('placement')}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              activeTab === 'placement'
+                ? 'bg-cyan-600 text-white'
+                : 'text-slate-300 hover:text-white hover:bg-slate-700'
+            }`}
+          >
+            Placement Usage
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 overflow-auto p-6">
+          {/* Grafana Dashboards Tab */}
+          {activeTab === 'grafana' && (
+            <div className="space-y-6">
+              {/* Dashboard Info */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="card">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <BarChart3 className="w-5 h-5 text-purple-400" />
+                    Node Exporter Dashboard
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-4">
+                    Dashboard ID: <span className="text-slate-300 font-mono">1860</span>
+                  </p>
+                  <div className="flex gap-2">
+                    <a
+                      href={`${MONITORING_URLS.grafana}/d/1860`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+                    >
+                      Open Dashboard
+                    </a>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Activity className="w-5 h-5 text-orange-400" />
+                    OpenStack Overview Dashboard
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-4">
+                    Dashboard ID: <span className="text-slate-300 font-mono">13747</span>
+                  </p>
+                  <div className="flex gap-2">
+                    <a
+                      href={`${MONITORING_URLS.grafana}/d/13747`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+                    >
+                      Open Dashboard
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Embedded Node Exporter Dashboard */}
+              <div className="card">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Server className="w-5 h-5 text-green-400" />
+                  Node Exporter Full Metrics
+                </h3>
+                <p className="text-slate-400 text-sm mb-4">
+                  Embedded Grafana dashboard showing node metrics (CPU, Memory, Disk, Network)
+                </p>
+                <div className="rounded-lg overflow-hidden border border-slate-700 bg-slate-900">
+                  <iframe
+                    src={`${MONITORING_URLS.grafana}/d/1860?kiosk=tv`}
+                    title="Node Exporter Dashboard"
+                    className="w-full h-[700px] bg-slate-900 border-0"
+                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
+                    allowFullScreen={true}
+                  />
+                </div>
+              </div>
+
+              {/* Embedded OpenStack Overview Dashboard */}
+              <div className="card">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-orange-400" />
+                  OpenStack Overview Metrics
+                </h3>
+                <p className="text-slate-400 text-sm mb-4">
+                  Embedded Grafana dashboard showing OpenStack-specific metrics and resource utilization
+                </p>
+                <div className="rounded-lg overflow-hidden border border-slate-700 bg-slate-900">
+                  <iframe
+                    src={`${MONITORING_URLS.grafana}/d/13747?kiosk=tv`}
+                    title="OpenStack Overview Dashboard"
+                    className="w-full h-[700px] bg-slate-900 border-0"
+                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
+                    allowFullScreen={true}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Prometheus Tab */}
+          {activeTab === 'prometheus' && (
+            <div className="space-y-6">
+              {/* Quick Links */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="card">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Gauge className="w-5 h-5 text-blue-400" />
+                    Prometheus Interface
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-4">
+                    Access the full Prometheus graph UI for metric exploration and querying
+                  </p>
+                  <a
+                    href={`${MONITORING_URLS.prometheus}/graph`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors inline-block"
+                  >
+                    Open Prometheus
+                  </a>
+                </div>
+
+                <div className="card">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Server className="w-5 h-5 text-green-400" />
+                    Node Exporter Metrics
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-4">
+                    View raw metrics from Node Exporter (CPU, Memory, Disk, Network stats)
+                  </p>
+                  <a
+                    href={MONITORING_URLS.nodeExporter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors inline-block"
+                  >
+                    View Metrics
+                  </a>
+                </div>
+
+                <div className="card">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Activity className="w-5 h-5 text-orange-400" />
+                    OpenStack Exporter Metrics
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-4">
+                    View raw metrics from OpenStack Exporter (Nova, Glance, Neutron stats)
+                  </p>
+                  <a
+                    href={MONITORING_URLS.openstackExporter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors inline-block"
+                  >
+                    View Metrics
+                  </a>
+                </div>
+
+                <div className="card">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-purple-400" />
+                    Prometheus Targets
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-4">
+                    Check Prometheus targets and scrape configurations
+                  </p>
+                  <a
+                    href={`${MONITORING_URLS.prometheus}/targets`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors inline-block"
+                  >
+                    View Targets
+                  </a>
+                </div>
+              </div>
+
+              {/* Embedded Prometheus Graph */}
+              <div className="card">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Gauge className="w-5 h-5 text-blue-400" />
+                  Prometheus Graph Explorer
+                </h3>
+                <p className="text-slate-400 text-sm mb-4">
+                  Embedded Prometheus interface for querying metrics. Open in new tab for better experience.
+                </p>
+                <div className="rounded-lg overflow-hidden border border-slate-700 bg-slate-900">
+                  <iframe
+                    src={`${MONITORING_URLS.prometheus}/graph`}
+                    title="Prometheus Graph"
+                    className="w-full h-[700px] bg-slate-900 border-0"
+                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Placement Usage Tab */}
+          {activeTab === 'placement' && (
+            <div className="space-y-6">
+              <div className="card">
+                <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-cyan-400" />
+                  DevStack Placement Usage
+                </h2>
+                {placementLoading ? (
+                  <div className="flex items-center justify-center h-48">
+                    <LoadingSpinner />
+                  </div>
+                ) : placementUsage && (placementUsage.totals.cpu.total > 0 || placementUsage.totals.ram.total > 0 || placementUsage.totals.disk.total > 0) ? (
+                  <div className="space-y-5">
+                    {renderUsageBar('CPU cores', placementUsage.totals.cpu.used, placementUsage.totals.cpu.total, 'cores')}
+                    {renderUsageBar('RAM', placementUsage.totals.ram.used, placementUsage.totals.ram.total, 'MB')}
+                    {renderUsageBar('Disk', placementUsage.totals.disk.used, placementUsage.totals.disk.total, 'GB')}
+                    {placementUsage.providers && placementUsage.providers.length > 0 && (
+                      <div className="rounded-lg bg-slate-900 p-4 border border-slate-700 mt-6">
+                        <h3 className="text-sm font-semibold text-white mb-3">Resource Providers</h3>
+                        <div className="space-y-3">
+                          {placementUsage.providers.map((provider) => (
+                            <div key={provider.id} className="rounded-lg bg-slate-800 p-3">
+                              <div className="flex items-center justify-between text-sm text-slate-300 mb-2">
+                                <span>{provider.name}</span>
+                                <span className="text-slate-400">{provider.id}</span>
+                              </div>
+                              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-slate-200 text-sm">
+                                <div className="space-y-1">
+                                  <div className="text-slate-400">CPU</div>
+                                  <div>{provider.cpu_used} / {provider.cpu_total} cores</div>
+                                </div>
+                                <div className="space-y-1">
+                                  <div className="text-slate-400">RAM</div>
+                                  <div>{provider.ram_used_mb} / {provider.ram_total_mb} MB</div>
+                                </div>
+                                <div className="space-y-1">
+                                  <div className="text-slate-400">Disk</div>
+                                  <div>{provider.disk_used_gb} / {provider.disk_total_gb} GB</div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-slate-400 text-center py-8">
+                    No placement data available. Ensure OpenStack Placement service is running and configured.
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
