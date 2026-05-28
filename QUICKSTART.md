@@ -6,7 +6,7 @@
 - Windows, macOS, or Linux
 - 4GB RAM minimum
 - 10GB disk space
-- OpenStack DevStack running at 192.168.91.128 (optional - for full functionality)
+- OpenStack DevStack running and `OPENSTACK_AUTH_URL` set to its identity endpoint (e.g. http://192.168.91.128/identity)
 
 ## Installation (5 minutes)
 
@@ -160,9 +160,11 @@ Then access at http://localhost:8080
    ```
 
 ### OpenStack Connection Failed
-1. Verify OpenStack is running:
+1. Verify OpenStack is running (replace with your OpenStack identity URL):
    ```bash
-   curl http://192.168.91.128/identity
+   curl http://<OPENSTACK_IP>/identity
+   # or if you have the env var set
+   curl "$OPENSTACK_AUTH_URL"
    ```
 
 2. Check backend logs:
