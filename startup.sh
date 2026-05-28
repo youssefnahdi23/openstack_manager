@@ -28,8 +28,7 @@ if [ ! -f ".env" ]; then
     if [ -f ".env.example" ]; then
         cp .env.example .env
         echo "✓ Created .env file from template"
-        echo "⚠️  Please update .env with your configuration before running again"
-        exit 1
+        echo "You can update .env later; missing values will be prompted now."
     else
         echo "❌ .env.example file not found"
         exit 1
@@ -37,6 +36,36 @@ if [ ! -f ".env" ]; then
 fi
 
 echo "✓ .env file exists"
+
+# Ensure OPENSTACK_AUTH_URL is set (prompt and persist if missing)
+if [ -z "${OPENSTACK_AUTH_URL:-}" ]; then
+    echo ""
+    echo "OPENSTACK_AUTH_URL is not set. This is required to connect to OpenStack/DevStack."
+    read -p "Enter OpenStack identity URL (e.g. http://192.168.91.128/identity): " input
+    if [ -z "$input" ]; then
+        echo "❌ No OpenStack URL provided. Aborting."
+        exit 1
+    fi
+    # Optional quick check
+    if ! curl -sf "$input" > /dev/null 2>&1; then
+        echo "⚠️ Warning: Failed to reach $input. Continue? [y/N]"
+        read -r ans
+        if [ "$ans" != "y" ] && [ "$ans" != "Y" ]; then
+            echo "Aborting."
+            exit 1
+        fi
+    fi
+    # Persist to .env (replace if present, append otherwise)
+    if grep -q '^OPENSTACK_AUTH_URL=' .env >/dev/null 2>&1; then
+        sed -i.bak "s|^OPENSTACK_AUTH_URL=.*|OPENSTACK_AUTH_URL=$input|" .env
+    else
+        echo "OPENSTACK_AUTH_URL=$input" >> .env
+    fi
+    export OPENSTACK_AUTH_URL="$input"
+    echo "✓ OPENSTACK_AUTH_URL set to $input and saved to .env"
+else
+    echo "Using OPENSTACK_AUTH_URL=$OPENSTACK_AUTH_URL"
+fi
 
 # Pull latest images
 echo ""

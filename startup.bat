@@ -33,8 +33,7 @@ if not exist ".env" (
     if exist ".env.example" (
         copy .env.example .env
         echo + Created .env file from template
-        echo - Please update .env with your configuration before running again
-        exit /b 1
+        echo - You can update .env later; missing values will be prompted now.
     ) else (
         echo X .env.example file not found
         exit /b 1
@@ -43,6 +42,25 @@ if not exist ".env" (
 
 echo + .env file exists
 echo.
+REM Ensure OPENSTACK_AUTH_URL is set (prompt and persist if missing)
+if "%OPENSTACK_AUTH_URL%"=="" (
+    set /p OPENSTACK_AUTH_URL=Enter OpenStack identity URL (e.g. http://192.168.91.128/identity): 
+    if "%OPENSTACK_AUTH_URL%"=="" (
+        echo X No OpenStack URL provided. Aborting.
+        exit /b 1
+    )
+    REM Persist to .env: replace if exists, otherwise append
+    findstr /R /C:"^OPENSTACK_AUTH_URL=" .env >nul 2>&1
+    if errorlevel 1 (
+        echo OPENSTACK_AUTH_URL=%OPENSTACK_AUTH_URL%>>.env
+    ) else (
+        powershell -Command "(Get-Content .env) -replace 'OPENSTACK_AUTH_URL=.*','OPENSTACK_AUTH_URL=%OPENSTACK_AUTH_URL%' | Set-Content .env"
+    )
+    echo + OPENSTACK_AUTH_URL set to %OPENSTACK_AUTH_URL% and saved to .env
+) else (
+    echo + Using OPENSTACK_AUTH_URL=%OPENSTACK_AUTH_URL%
+)
+
 
 echo Pulling latest Docker images...
 docker-compose pull
