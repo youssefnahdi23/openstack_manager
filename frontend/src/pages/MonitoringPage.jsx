@@ -3,9 +3,9 @@ import { useRequireAuth } from '../hooks/useAuth'
 import { Sidebar } from '../components/Sidebar'
 import { LoadingSpinner } from '../components/Common'
 import { monitoringService } from '../services/api'
-import { Activity, AlertCircle, CheckCircle, Clock, BarChart3, Gauge, Server } from 'lucide-react'
+import { Activity, CheckCircle, BarChart3, Gauge, Server } from 'lucide-react'
 
-// Monitoring service URLs
+// Monitoring service URLs for the DevStack environment.
 const MONITORING_URLS = {
   prometheus: 'http://192.168.91.128:9090',
   grafana: 'http://192.168.91.128:3000',
@@ -27,11 +27,11 @@ const MONITORING_URLS = {
   }
 }
 
-const getGrafanaDashboardUrl = (dashboard) => dashboard.url || `${MONITORING_URLS.grafana}/d/${dashboard.uid}/${dashboard.slug}`
-const getGrafanaDashboardEmbedUrl = (dashboard) => `${getGrafanaDashboardUrl(dashboard)}&kiosk=tv`
-
 export default function MonitoringPage() {
+  // Enforce authentication before rendering the monitoring page.
   const auth = useRequireAuth()
+
+  // UI state.
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [placementUsage, setPlacementUsage] = useState(null)
   const [timeSeries, setTimeSeries] = useState({ cpu: [], ram: [], disk: [] })
@@ -43,6 +43,7 @@ export default function MonitoringPage() {
   const [placementLoading, setPlacementLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('prometheus')
 
+  // Load monitoring data when the page mounts and refresh every 30 seconds.
   useEffect(() => {
     fetchPlacementUsage()
     fetchTimeSeries()
@@ -55,6 +56,7 @@ export default function MonitoringPage() {
     return () => clearInterval(interval)
   }, [])
 
+  // Query the backend for OpenStack placement usage data.
   const fetchPlacementUsage = async () => {
     try {
       setPlacementLoading(true)
@@ -67,6 +69,7 @@ export default function MonitoringPage() {
     }
   }
 
+  // Retrieve Prometheus time-series data for the charts.
   const fetchTimeSeries = async () => {
     try {
       setSeriesLoading(true)
@@ -107,6 +110,7 @@ export default function MonitoringPage() {
     }
   }
 
+  // Fetch single-value Prometheus queries for high-level status cards.
   const fetchDirectMetrics = async () => {
     try {
       setDirectMetricsLoading(true)
@@ -172,6 +176,7 @@ export default function MonitoringPage() {
     }
   }
 
+  // Format Prometheus uptime seconds into a human-readable duration.
   const formatDuration = (seconds) => {
     if (seconds == null || Number.isNaN(seconds)) {
       return 'N/A'
@@ -190,6 +195,7 @@ export default function MonitoringPage() {
     return parts.join(' ')
   }
 
+  // Render a simple horizontal usage bar for placement resources.
   const renderUsageBar = (label, used, total, unit) => {
     const usedVal = Number(used || 0)
     const totalVal = Number(total || 0)
@@ -208,6 +214,7 @@ export default function MonitoringPage() {
     )
   }
 
+  // Render a lightweight inline chart from Prometheus samples.
   const renderTimeSeriesChart = (title, series, color) => {
     if (!series || series.length === 0) {
       return (
@@ -248,27 +255,6 @@ export default function MonitoringPage() {
           />
           <line x1="0" y1="100" x2="100" y2="100" stroke="#334155" strokeWidth="0.5" />
         </svg>
-      </div>
-    )
-  }
-
-  const renderPrometheusGraphImage = (query, title) => {
-    const end = Math.floor(Date.now() / 1000)
-    const start = end - 3600
-    const chartUrl = `${MONITORING_URLS.prometheus}/render?g0.expr=${encodeURIComponent(query)}&g0.tab=0&from=${start}&to=${end}&width=700&height=220`
-
-    return (
-      <div className="rounded-lg border border-slate-700 bg-slate-800 p-4">
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <h3 className="text-sm font-semibold text-white">{title}</h3>
-            <p className="text-slate-400 text-xs">Rendered by Prometheus</p>
-          </div>
-          <a href={`${MONITORING_URLS.prometheus}/graph?g0.expr=${encodeURIComponent(query)}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-xs hover:text-blue-300">
-            Open in Graph UI
-          </a>
-        </div>
-        <img src={chartUrl} alt={`${title} graph`} className="w-full rounded-lg border border-slate-700 bg-slate-950" loading="lazy" />
       </div>
     )
   }

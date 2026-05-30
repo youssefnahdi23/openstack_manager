@@ -693,27 +693,41 @@ class OpenStackManager:
             raise
     
     def is_connected(self):
-        """Check if connected to OpenStack"""
+        """Return True when OpenStack is reachable.
+
+        This method performs a lightweight OpenStack API call rather than
+        relying only on the existence of the connection object.
+        """
         if not self.conn:
             return False
 
         try:
-            # Issue a lightweight API call to verify the connection is active.
+            # Primary connectivity check: list compute servers.
             servers = self.conn.compute.servers()
             next(servers, None)
             return True
         except Exception as e:
-            logger.warning(f'OpenStack connection check failed using compute servers: {e}', exc_info=True)
-            try:
-                projects = self.conn.identity.projects()
-                next(projects, None)
-                return True
-            except Exception as identity_exc:
-                logger.error(f'OpenStack identity connectivity check failed: {identity_exc}', exc_info=True)
-                return False
+            logger.warning(
+                'OpenStack connection check failed using compute servers: %s',
+                e,
+                exc_info=True
+            )
+
+        try:
+            # Fallback connectivity check: list identity projects.
+            projects = self.conn.identity.projects()
+            next(projects, None)
+            return True
+        except Exception as identity_exc:
+            logger.error(
+                'OpenStack identity connectivity check failed: %s',
+                identity_exc,
+                exc_info=True
+            )
+            return False
 
     def get_stats(self):
-        """Get OpenStack statistics"""
+        """Collect a simple OpenStack resource summary."""
         try:
             if not self.conn:
                 return {
@@ -722,28 +736,34 @@ class OpenStackManager:
                     'stopped_instances': 0,
                     'total_flavors': 0,
                     'total_images': 0,
-                    'total_networks': 0
+                    'total_networks': 0,
                 }
 
             instances = list(self.conn.compute.servers())
 
             return {
                 'total_instances': len(instances),
-                'running_instances': len([i for i in instances if getattr(i, 'status', '').upper() == 'ACTIVE']),
-                'stopped_instances': len([i for i in instances if getattr(i, 'status', '').upper() in ['STOPPED', 'SHUTOFF']]),
+                'running_instances': len([
+                    instance for instance in instances
+                    if getattr(instance, 'status', '').upper() == 'ACTIVE'
+                ]),
+                'stopped_instances': len([
+                    instance for instance in instances
+                    if getattr(instance, 'status', '').upper() in ['STOPPED', 'SHUTOFF']
+                ]),
                 'total_flavors': len(list(self.conn.compute.flavors())),
                 'total_images': len(list(self.conn.image.images())),
-                'total_networks': len(list(self.conn.network.networks()))
+                'total_networks': len(list(self.conn.network.networks())),
             }
         except Exception as e:
-            logger.error(f'Error getting stats: {str(e)}')
+            logger.error('Error getting stats: %s', e, exc_info=True)
             return {
                 'total_instances': 0,
                 'running_instances': 0,
                 'stopped_instances': 0,
                 'total_flavors': 0,
                 'total_images': 0,
-                'total_networks': 0
+                'total_networks': 0,
             }
 
     def _get_service_endpoint(self, service_type='placement'):

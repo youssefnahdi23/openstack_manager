@@ -13,7 +13,11 @@ os_manager = get_openstack_manager()
 
 @bp.route('/health', methods=['GET'])
 def health_check():
-    """Health check endpoint"""
+    """Return overall system health.
+
+    This endpoint checks both OpenStack connectivity and database reachability.
+    It uses lightweight read-only queries for health validation.
+    """
     try:
         openstack_connected = os_manager.is_connected()
         database_connected = True
@@ -26,6 +30,7 @@ def health_check():
             database_connected = False
             database_error = str(db_exc)
         finally:
+            # Always rollback session state after a raw query.
             try:
                 db.session.rollback()
             except Exception:
@@ -42,10 +47,6 @@ def health_check():
             payload['database_error'] = database_error
 
         return jsonify(payload), (200 if status == 'healthy' else 503)
-
     except Exception as e:
-        logger.error(f'Health check error: {str(e)}')
-        return jsonify({
-            'status': 'unhealthy',
-            'error': str(e)
-        }), 500
+        logger.error('Health check error: %s', e, exc_info=True)
+        return jsonify({'status': 'unhealthy', 'error': str(e)}), 500
