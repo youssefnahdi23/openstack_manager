@@ -12,43 +12,48 @@ const MONITORING_URLS = {
   nodeExporter: 'http://192.168.91.128:9100/metrics',
   openstackExporter: 'http://192.168.91.128:9180/metrics',
   grafanaDashboards: {
-    nodeExporter: 1860,
-    openstackOverview: 13747
+    nodeExporter: {
+      id: 1860,
+      uid: 'rYdddlPWk',
+      slug: 'node-exporter-full',
+      url: 'http://192.168.91.128:3000/d/rYdddlPWk/node-exporter-full?orgId=1&from=now-24h&to=now&timezone=browser&var-ds_prometheus=ffnfspc11u328b&var-job=node_exporter&var-nodename=devstack&var-node=localhost:9100&refresh=1m'
+    },
+    openstackOverview: {
+      id: 21085,
+      uid: 'openstack-overview',
+      slug: 'openstack-overview',
+      url: 'http://192.168.91.128:3000/d/openstack-overview/openstack-overview?orgId=1&from=now-30m&to=now&timezone=browser&var-job=openstack_exporter&var-instance=$__all'
+    }
   }
 }
+
+const getGrafanaDashboardUrl = (dashboard) => dashboard.url || `${MONITORING_URLS.grafana}/d/${dashboard.uid}/${dashboard.slug}`
+const getGrafanaDashboardEmbedUrl = (dashboard) => `${getGrafanaDashboardUrl(dashboard)}&kiosk=tv`
 
 export default function MonitoringPage() {
   const auth = useRequireAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [metrics, setMetrics] = useState(null)
   const [placementUsage, setPlacementUsage] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [timeSeries, setTimeSeries] = useState({ cpu: [], ram: [], disk: [] })
+  const [seriesLoading, setSeriesLoading] = useState(true)
+  const [streamError, setStreamError] = useState('')
+  const [directMetrics, setDirectMetrics] = useState([])
+  const [directMetricsLoading, setDirectMetricsLoading] = useState(true)
+  const [directMetricsError, setDirectMetricsError] = useState('')
   const [placementLoading, setPlacementLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState('grafana')
+  const [activeTab, setActiveTab] = useState('prometheus')
 
   useEffect(() => {
-    fetchMetrics()
     fetchPlacementUsage()
     fetchTimeSeries()
+    fetchDirectMetrics()
     const interval = setInterval(() => {
-      fetchMetrics()
       fetchPlacementUsage()
       fetchTimeSeries()
+      fetchDirectMetrics()
     }, 30000) // Refresh every 30 seconds
     return () => clearInterval(interval)
   }, [])
-
-  const fetchMetrics = async () => {
-    try {
-      const response = await fetch(MONITORING_URLS.prometheus)
-      // Just test if Prometheus is accessible
-      setMetrics('Prometheus accessible')
-    } catch (error) {
-      console.error('Failed to fetch metrics:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const fetchPlacementUsage = async () => {
     try {
@@ -66,7 +71,7 @@ export default function MonitoringPage() {
     try {
       setSeriesLoading(true)
       setStreamError('')
-      const apiBase = prometheusBase
+      const apiBase = MONITORING_URLS.prometheus
       const end = Math.floor(Date.now() / 1000)
       const start = end - 3600
       const step = 30
@@ -82,28 +87,16 @@ export default function MonitoringPage() {
         return (result?.values || []).map(([ts, value]) => ({ x: Number(ts) * 1000, y: Number(value) }))
       }
 
-      const [cpuUsed, cpuTotal, ramUsed, ramTotal, diskUsed, diskTotal] = await Promise.all([
-        fetchSeries('placement_cpu_used'),
-        fetchSeries('placement_cpu_total'),
-        fetchSeries('placement_ram_used_mb'),
-        fetchSeries('placement_ram_total_mb'),
-        fetchSeries('placement_disk_used_gb'),
-        fetchSeries('placement_disk_total_gb'),
+      const [cpuUsage, ramUsage, diskUsage] = await Promise.all([
+        fetchSeries('100 - avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100'),
+        fetchSeries('100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)'),
+        fetchSeries('100 * (1 - node_filesystem_avail_bytes / node_filesystem_size_bytes)'),
       ])
 
       setTimeSeries({
-        cpu: cpuUsed.map((point, index) => ({
-          ...point,
-          total: cpuTotal[index]?.y || 0,
-        })),
-        ram: ramUsed.map((point, index) => ({
-          ...point,
-          total: ramTotal[index]?.y || 0,
-        })),
-        disk: diskUsed.map((point, index) => ({
-          ...point,
-          total: diskTotal[index]?.y || 0,
-        })),
+        cpu: cpuUsage,
+        ram: ramUsage,
+        disk: diskUsage,
       })
     } catch (error) {
       console.error('Failed to fetch Prometheus series:', error)
@@ -112,6 +105,89 @@ export default function MonitoringPage() {
     } finally {
       setSeriesLoading(false)
     }
+  }
+
+  const fetchDirectMetrics = async () => {
+    try {
+      setDirectMetricsLoading(true)
+      setDirectMetricsError('')
+      const apiBase = MONITORING_URLS.prometheus
+      const directQueries = [
+        {
+          key: 'node_up',
+          label: 'Node Exporter Status',
+          query: 'up{job="node_exporter"}',
+          isStatus: true,
+        },
+        {
+          key: 'openstack_up',
+          label: 'OpenStack Exporter Status',
+          query: 'up{job="openstack_exporter"}',
+          isStatus: true,
+        },
+        {
+          key: 'cpu_usage',
+          label: 'CPU Usage (%)',
+          query: '100 - avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100',
+          unit: '%',
+          decimals: 1,
+        },
+        {
+          key: 'ram_usage',
+          label: 'RAM Usage (%)',
+          query: '100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)',
+          unit: '%',
+          decimals: 1,
+        },
+        {
+          key: 'uptime',
+          label: 'Uptime',
+          query: 'time() - node_boot_time_seconds',
+          isDuration: true,
+        },
+      ]
+
+      const promises = directQueries.map(async (item) => {
+        const response = await fetch(`${apiBase}/api/v1/query?query=${encodeURIComponent(item.query)}`)
+        const body = await response.json()
+        if (body.status !== 'success') {
+          throw new Error(body.error || 'Query failed')
+        }
+
+        const value = body.data.result?.[0]?.value
+        return {
+          ...item,
+          value: value ? Number(value[1]) : null,
+        }
+      })
+
+      const results = await Promise.all(promises)
+      setDirectMetrics(results)
+    } catch (error) {
+      console.error('Failed to fetch direct Prometheus metrics:', error)
+      setDirectMetricsError('Unable to retrieve Prometheus metrics. Check whether Prometheus is reachable and the exporters are active.')
+      setDirectMetrics([])
+    } finally {
+      setDirectMetricsLoading(false)
+    }
+  }
+
+  const formatDuration = (seconds) => {
+    if (seconds == null || Number.isNaN(seconds)) {
+      return 'N/A'
+    }
+
+    const rounded = Math.max(0, Math.floor(seconds))
+    const days = Math.floor(rounded / 86400)
+    const hours = Math.floor((rounded % 86400) / 3600)
+    const minutes = Math.floor((rounded % 3600) / 60)
+    const parts = []
+
+    if (days) parts.push(`${days}d`)
+    if (hours) parts.push(`${hours}h`)
+    if (minutes || parts.length === 0) parts.push(`${minutes}m`)
+
+    return parts.join(' ')
   }
 
   const renderUsageBar = (label, used, total, unit) => {
@@ -179,7 +255,7 @@ export default function MonitoringPage() {
   const renderPrometheusGraphImage = (query, title) => {
     const end = Math.floor(Date.now() / 1000)
     const start = end - 3600
-    const chartUrl = `${prometheusBase}/render?g0.expr=${encodeURIComponent(query)}&g0.tab=0&from=${start}&to=${end}&width=700&height=220`
+    const chartUrl = `${MONITORING_URLS.prometheus}/render?g0.expr=${encodeURIComponent(query)}&g0.tab=0&from=${start}&to=${end}&width=700&height=220`
 
     return (
       <div className="rounded-lg border border-slate-700 bg-slate-800 p-4">
@@ -188,7 +264,7 @@ export default function MonitoringPage() {
             <h3 className="text-sm font-semibold text-white">{title}</h3>
             <p className="text-slate-400 text-xs">Rendered by Prometheus</p>
           </div>
-          <a href={`${prometheusBase}/graph?g0.expr=${encodeURIComponent(query)}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-xs hover:text-blue-300">
+          <a href={`${MONITORING_URLS.prometheus}/graph?g0.expr=${encodeURIComponent(query)}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-xs hover:text-blue-300">
             Open in Graph UI
           </a>
         </div>
@@ -211,9 +287,9 @@ export default function MonitoringPage() {
             </div>
             <button
               onClick={() => {
-                fetchMetrics()
                 fetchPlacementUsage()
                 fetchTimeSeries()
+                fetchDirectMetrics()
               }}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
@@ -300,10 +376,12 @@ export default function MonitoringPage() {
                   </h3>
                   <p className="text-slate-400 text-sm mb-4">
                     Dashboard ID: <span className="text-slate-300 font-mono">1860</span>
+                    <br />
+                    UID: <span className="text-slate-300 font-mono">{MONITORING_URLS.grafanaDashboards.nodeExporter.uid}</span>
                   </p>
                   <div className="flex gap-2">
                     <a
-                      href={`${MONITORING_URLS.grafana}/d/1860`}
+                      href={MONITORING_URLS.grafanaDashboards.nodeExporter.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
@@ -319,11 +397,13 @@ export default function MonitoringPage() {
                     OpenStack Overview Dashboard
                   </h3>
                   <p className="text-slate-400 text-sm mb-4">
-                    Dashboard ID: <span className="text-slate-300 font-mono">13747</span>
+                    Dashboard ID: <span className="text-slate-300 font-mono">21085</span>
+                    <br />
+                    UID: <span className="text-slate-300 font-mono">{MONITORING_URLS.grafanaDashboards.openstackOverview.uid}</span>
                   </p>
                   <div className="flex gap-2">
                     <a
-                      href={`${MONITORING_URLS.grafana}/d/13747`}
+                      href={MONITORING_URLS.grafanaDashboards.openstackOverview.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
@@ -334,43 +414,37 @@ export default function MonitoringPage() {
                 </div>
               </div>
 
-              {/* Embedded Node Exporter Dashboard */}
               <div className="card">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <Server className="w-5 h-5 text-green-400" />
-                  Node Exporter Full Metrics
+                  <BarChart3 className="w-5 h-5 text-purple-400" />
+                  Grafana Dashboards
                 </h3>
                 <p className="text-slate-400 text-sm mb-4">
-                  Embedded Grafana dashboard showing node metrics (CPU, Memory, Disk, Network)
+                  Grafana dashboards are available via external links. Embedded Grafana panels have been removed because browser iframe blocking is unreliable.
                 </p>
-                <div className="rounded-lg overflow-hidden border border-slate-700 bg-slate-900">
-                  <iframe
-                    src={`${MONITORING_URLS.grafana}/d/1860?kiosk=tv`}
-                    title="Node Exporter Dashboard"
-                    className="w-full h-[700px] bg-slate-900 border-0"
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
-                    allowFullScreen={true}
-                  />
-                </div>
-              </div>
-
-              {/* Embedded OpenStack Overview Dashboard */}
-              <div className="card">
-                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-orange-400" />
-                  OpenStack Overview Metrics
-                </h3>
-                <p className="text-slate-400 text-sm mb-4">
-                  Embedded Grafana dashboard showing OpenStack-specific metrics and resource utilization
-                </p>
-                <div className="rounded-lg overflow-hidden border border-slate-700 bg-slate-900">
-                  <iframe
-                    src={`${MONITORING_URLS.grafana}/d/13747?kiosk=tv`}
-                    title="OpenStack Overview Dashboard"
-                    className="w-full h-[700px] bg-slate-900 border-0"
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
-                    allowFullScreen={true}
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="rounded-lg bg-slate-800 p-4 border border-slate-700">
+                    <p className="text-sm text-slate-400 mb-3">Node Exporter Dashboard</p>
+                    <a
+                      href={MONITORING_URLS.grafanaDashboards.nodeExporter.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors inline-block"
+                    >
+                      Open Node Exporter Dashboard
+                    </a>
+                  </div>
+                  <div className="rounded-lg bg-slate-800 p-4 border border-slate-700">
+                    <p className="text-sm text-slate-400 mb-3">OpenStack Overview Dashboard</p>
+                    <a
+                      href={MONITORING_URLS.grafanaDashboards.openstackOverview.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors inline-block"
+                    >
+                      Open OpenStack Overview Dashboard
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -455,22 +529,54 @@ export default function MonitoringPage() {
               </div>
 
               {/* Embedded Prometheus Graph */}
-              <div className="card">
-                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <Gauge className="w-5 h-5 text-blue-400" />
-                  Prometheus Graph Explorer
-                </h3>
-                <p className="text-slate-400 text-sm mb-4">
-                  Embedded Prometheus interface for querying metrics. Open in new tab for better experience.
-                </p>
-                <div className="rounded-lg overflow-hidden border border-slate-700 bg-slate-900">
-                  <iframe
-                    src={`${MONITORING_URLS.prometheus}/graph`}
-                    title="Prometheus Graph"
-                    className="w-full h-[700px] bg-slate-900 border-0"
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                  />
+              <div className="space-y-6">
+                <div className="card">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Gauge className="w-5 h-5 text-blue-400" />
+                    Direct Prometheus Metrics
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-4">
+                    These values are queried directly from Prometheus so you can monitor exporter health even when Grafana embeds are blocked.
+                  </p>
+                  {directMetricsLoading ? (
+                    <div className="flex items-center justify-center h-48">
+                      <LoadingSpinner />
+                    </div>
+                  ) : directMetricsError ? (
+                    <div className="text-sm text-red-300">{directMetricsError}</div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {directMetrics.map((metric) => (
+                        <div key={metric.key} className="rounded-lg bg-slate-800 p-4 border border-slate-700">
+                          <div className="flex items-center justify-between text-sm text-slate-400 mb-3">
+                            <span>{metric.label}</span>
+                            <span className="font-semibold text-white">
+                              {metric.isStatus
+                                ? (metric.value === 1 ? 'OK' : metric.value === 0 ? 'DOWN' : 'N/A')
+                                : metric.isDuration
+                                ? formatDuration(metric.value)
+                                : metric.value !== null
+                                ? `${metric.value.toFixed(metric.decimals ?? 1)}${metric.unit || ''}`
+                                : 'N/A'}
+                            </span>
+                          </div>
+                          {metric.query && (
+                            <p className="text-xs text-slate-500">Query: {metric.query}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
+
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                  {renderTimeSeriesChart('CPU Usage (%)', timeSeries.cpu, '#38bdf8')}
+                  {renderTimeSeriesChart('RAM Usage (%)', timeSeries.ram, '#60a5fa')}
+                  {renderTimeSeriesChart('Disk Usage (%)', timeSeries.disk, '#f97316')}
+                </div>
+                {streamError && (
+                  <div className="text-sm text-red-300">{streamError}</div>
+                )}
               </div>
             </div>
           )}

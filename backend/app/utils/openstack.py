@@ -694,8 +694,24 @@ class OpenStackManager:
     
     def is_connected(self):
         """Check if connected to OpenStack"""
-        return self.conn is not None
-    
+        if not self.conn:
+            return False
+
+        try:
+            # Issue a lightweight API call to verify the connection is active.
+            servers = self.conn.compute.servers()
+            next(servers, None)
+            return True
+        except Exception as e:
+            logger.warning(f'OpenStack connection check failed using compute servers: {e}', exc_info=True)
+            try:
+                projects = self.conn.identity.projects()
+                next(projects, None)
+                return True
+            except Exception as identity_exc:
+                logger.error(f'OpenStack identity connectivity check failed: {identity_exc}', exc_info=True)
+                return False
+
     def get_stats(self):
         """Get OpenStack statistics"""
         try:
@@ -708,9 +724,9 @@ class OpenStackManager:
                     'total_images': 0,
                     'total_networks': 0
                 }
-            
+
             instances = list(self.conn.compute.servers())
-            
+
             return {
                 'total_instances': len(instances),
                 'running_instances': len([i for i in instances if getattr(i, 'status', '').upper() == 'ACTIVE']),

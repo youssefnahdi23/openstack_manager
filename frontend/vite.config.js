@@ -36,6 +36,12 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/novnc/, ''),
       },
+      '/grafana': {
+        target: 'http://192.168.91.128:3000',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/grafana/, ''),
+      },
     },
   },
   build: {
