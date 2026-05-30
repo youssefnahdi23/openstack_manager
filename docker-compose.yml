@@ -129,21 +129,8 @@ services:
       - vm-portal-network
     restart: unless-stopped
 
-  # ttyd Web Terminal with SSH support via Node.js proxy
-  ttyd:
-    build:
-      context: .
-      dockerfile: ttyd/Dockerfile
-    container_name: vm-portal-ttyd
-    ports:
-      - "7681:7681"
-    volumes:
-      - ./ttyd-proxy.js:/app/ttyd-proxy.js:ro
-    networks:
-      - vm-portal-network
-    restart: unless-stopped
-
   # noVNC Console
+  # The deprecated ttyd service has been removed, so only noVNC remains here.
   novnc:
     image: theasp/novnc:latest
     container_name: vm-portal-novnc

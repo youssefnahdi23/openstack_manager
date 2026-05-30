@@ -1,9 +1,11 @@
+.env
 .env.local
 .env.production
 node_modules/
 dist/
 .DS_Store
 *.log
+logs/
 build/
 .idea/
 .vscode/

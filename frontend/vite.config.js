@@ -1,6 +1,8 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
+// Vite development server configuration. Proxy rules allow the frontend to
+// call backend and monitoring services by path during local development.
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -24,12 +26,7 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/prometheus/, ''),
       },
-      '/ttyd': {
-        target: 'http://ttyd:7681',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/ttyd/, ''),
-      },
+      // '/ttyd' proxy removed because ttyd is no longer included in the deployment.
       '/novnc': {
         target: 'http://novnc:8080',
         changeOrigin: true,

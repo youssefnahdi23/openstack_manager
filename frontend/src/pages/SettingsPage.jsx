@@ -3,6 +3,7 @@ import { useRequireAuth } from '../hooks/useAuth'
 import { Sidebar } from '../components/Sidebar'
 import { ExternalLink } from 'lucide-react'
 
+// Theme options supported by the portal settings page.
 const themeOptions = [
   { value: 'system', label: 'System Default' },
   { value: 'light', label: 'Light' },
@@ -12,11 +13,18 @@ const themeOptions = [
 export default function SettingsPage({ theme, setTheme }) {
   const auth = useRequireAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const horizonUrl = import.meta.env.VITE_OPENSTACK_HORIZON_URL || `http://${window.location.hostname}/horizon/`
+
+  // Default Horizon URL points to the DevStack IP.
+  // Override with VITE_OPENSTACK_HORIZON_URL if needed.
+  const horizonUrl = import.meta.env.VITE_OPENSTACK_HORIZON_URL || 'http://192.168.91.128/'
   const apiUrl = import.meta.env.VITE_API_BASE_URL || '/api'
   const projectName = localStorage.getItem('openstack_project') || import.meta.env.VITE_OPENSTACK_PROJECT_NAME || 'admin'
 
+  // The Settings page is intentionally lightweight and static; it provides
+  // easy access to the portal theme and the Horizon dashboard link.
+
   return (
+    // Top-level page layout: sidebar + main content area.
     <div className="flex h-screen bg-slate-900">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
