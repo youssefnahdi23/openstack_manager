@@ -30,7 +30,6 @@ A modern full-stack cloud management portal for managing OpenStack virtual machi
   - OpenStack connection status
 
 - **Additional Services**
-  - Web terminal (ttyd)
   - noVNC console access
   - Prometheus monitoring
   - Activity logging
@@ -52,7 +51,7 @@ A modern full-stack cloud management portal for managing OpenStack virtual machi
 │        │              │              │  │
 │   ┌────▼────┐   ┌────▼────┐   ┌────▼────┐
 │   │ Frontend │   │ Backend  │   │ Services │
-│   │ (React)  │   │ (Flask)  │   │ (ttyd...) │
+│   │ (React)  │   │ (Flask)  │   │ (noVNC)  │
 │   │ Port 5173│   │ Port 5000│   │          │
 │   └────┬────┘   └────┬────┘   └────┬────┘
 │        │              │              │
@@ -118,7 +117,6 @@ This will:
 |---------|-----|---------|
 | Web UI | http://localhost | Main dashboard |
 | API | http://localhost/api | Backend API |
-| Web Terminal | http://localhost/ttyd | Terminal access |
 | noVNC Console | http://localhost:6080 | VM console |
 | Prometheus | http://localhost:9090 | Metrics dashboard |
 

@@ -217,12 +217,7 @@ A production-ready full-stack application for managing OpenStack virtual machine
    - Metrics collection
    - Time-series database
 
-7. **ttyd Web Terminal**
-   - Image: tsl0741/ttyd:latest
-   - Port: 7681
-   - SSH/shell access
-
-8. **noVNC Console**
+7. **noVNC Console**
    - Image: geek1011/novnc:latest
    - Port: 6080
    - VNC viewer for VM consoles
@@ -246,7 +241,7 @@ A production-ready full-stack application for managing OpenStack virtual machine
 ✅ Backend API routing (/api)
 ✅ Frontend serving (/)
 ✅ React Router SPA support
-✅ WebSocket support (ttyd, noVNC)
+✅ WebSocket support (noVNC)
 ✅ Security headers
 ✅ Gzip compression
 ✅ Client max body size: 100MB
@@ -257,7 +252,6 @@ A production-ready full-stack application for managing OpenStack virtual machine
 - `/api/*` → Flask backend
 - `/metrics` → Prometheus
 - `/prometheus/*` → Prometheus UI
-- `/ttyd/*` → Web terminal
 - `/novnc/*` → noVNC console
 - `/*` → React frontend
 
@@ -398,7 +392,6 @@ A production-ready full-stack application for managing OpenStack virtual machine
 - ✅ Request tracking
 
 ### Additional Services
-- ✅ Web terminal (ttyd) access
 - ✅ noVNC console access
 - ✅ Health check endpoint
 - ✅ Metrics endpoint

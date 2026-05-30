@@ -21,14 +21,14 @@
          │ Port 5173            Port 5000             Services
          │
     ┌────▼────────┐        ┌────────▼────────┐    ┌──────────┐
-    │   React     │        │   Flask         │    │  ttyd    │
-    │  Frontend   │        │  Backend        │    │  7681    │
+    │   React     │        │   Flask         │    │  noVNC   │
+    │  Frontend   │        │  Backend        │    │  6080    │
     │ (Vite)      │        │  API            │    │          │
-    │             │        │                 │    │  noVNC   │
-    │ - SPA       │        │ - Auth routes   │    │  6080    │
+    │             │        │                 │    │Prometheus│
+    │ - SPA       │        │ - Auth routes   │    │  9090    │
     │ - Login     │        │ - VM routes     │    │          │
-    │ - Dashboard │        │ - Health check  │    │Prometheus│
-    │ - VM Mgmt   │        │ - Metrics       │    │  9090    │
+    │ - Dashboard │        │ - Health check  │    │          │
+    │ - VM Mgmt   │        │ - Metrics       │    │          │
     └─────┬───────┘        └────────┬────────┘    └──────────┘
           │                          │
           │         ┌────────────────┼────────────────┐
@@ -96,7 +96,6 @@
   - Application cache
 
 ### Web Services
-- **ttyd (7681):** Web terminal access
 - **noVNC (6080):** Browser-based VM console
 - **Prometheus (9090):** Metrics collection and visualization
 
