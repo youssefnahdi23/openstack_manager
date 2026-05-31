@@ -61,7 +61,7 @@ export default function VMDetailsPage() {
   }
 
   return (
-    <div className="flex h-screen bg-slate-900">
+    <div className="flex h-screen" style={{ backgroundColor: 'var(--app-bg)' }}>
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="bg-slate-800 border-b border-slate-700 px-6 py-4">

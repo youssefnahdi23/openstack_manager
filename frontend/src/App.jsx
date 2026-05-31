@@ -45,7 +45,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-slate-900">
+      <div className="min-h-screen" style={{ backgroundColor: 'var(--app-bg)' }}>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route

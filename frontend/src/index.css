@@ -32,18 +32,34 @@ html {
   --surface-border: #334155;
   --text-muted: #94a3b8;
   --text-muted-2: #cbd5e1;
+  --primary: #3b82f6;
+  --primary-dark: #1e40af;
+  --success: #10b981;
+  --success-dark: #047857;
+  --warning: #f59e0b;
+  --warning-dark: #d97706;
+  --danger: #ef4444;
+  --danger-dark: #dc2626;
 }
 
 html[data-theme='light'] {
-  --app-bg: #f8fafc;
-  --app-text: #0f172a;
-  --surface-900: #ffffff;
-  --surface-800: #f1f5f9;
-  --surface-700: #e2e8f0;
-  --surface-600: #cbd5e1;
-  --surface-border: #cbd5e1;
-  --text-muted: #475569;
-  --text-muted-2: #64748b;
+  --app-bg: #ffffff;
+  --app-text: #1f2937;
+  --surface-900: #f9fafb;
+  --surface-800: #f3f4f6;
+  --surface-700: #e5e7eb;
+  --surface-600: #d1d5db;
+  --surface-border: #d1d5db;
+  --text-muted: #6b7280;
+  --text-muted-2: #4b5563;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --success: #059669;
+  --success-dark: #047857;
+  --warning: #d97706;
+  --warning-dark: #b45309;
+  --danger: #dc2626;
+  --danger-dark: #b91c1c;
 }
 
 html[data-theme='dark'] {
@@ -56,6 +72,14 @@ html[data-theme='dark'] {
   --surface-border: #334155;
   --text-muted: #94a3b8;
   --text-muted-2: #cbd5e1;
+  --primary: #3b82f6;
+  --primary-dark: #1e40af;
+  --success: #10b981;
+  --success-dark: #047857;
+  --warning: #f59e0b;
+  --warning-dark: #d97706;
+  --danger: #ef4444;
+  --danger-dark: #dc2626;
 }
 
 body {
@@ -111,6 +135,247 @@ html[data-theme='light'] .bg-slate-900\/90 {
   background-color: rgba(148, 163, 184, 0.25) !important;
 }
 
+/* Light theme button colors */
+html[data-theme='light'] .bg-blue-600 {
+  background-color: var(--primary) !important;
+}
+
+html[data-theme='light'] .bg-blue-600:hover,
+html[data-theme='light'] .hover\:bg-blue-700:hover {
+  background-color: var(--primary-dark) !important;
+}
+
+html[data-theme='light'] .bg-blue-700 {
+  background-color: var(--primary-dark) !important;
+}
+
+html[data-theme='light'] .bg-green-600 {
+  background-color: var(--success) !important;
+}
+
+html[data-theme='light'] .bg-green-600:hover,
+html[data-theme='light'] .hover\:bg-green-700:hover {
+  background-color: var(--success-dark) !important;
+}
+
+html[data-theme='light'] .bg-green-700 {
+  background-color: var(--success-dark) !important;
+}
+
+html[data-theme='light'] .bg-red-600 {
+  background-color: var(--danger) !important;
+}
+
+html[data-theme='light'] .bg-red-600:hover,
+html[data-theme='light'] .hover\:bg-red-700:hover {
+  background-color: var(--danger-dark) !important;
+}
+
+html[data-theme='light'] .bg-red-700 {
+  background-color: var(--danger-dark) !important;
+}
+
+html[data-theme='light'] .bg-orange-600 {
+  background-color: var(--warning) !important;
+}
+
+html[data-theme='light'] .bg-orange-600:hover,
+html[data-theme='light'] .hover\:bg-orange-700:hover {
+  background-color: var(--warning-dark) !important;
+}
+
+html[data-theme='light'] .bg-orange-700 {
+  background-color: var(--warning-dark) !important;
+}
+
+html[data-theme='light'] .bg-purple-600 {
+  background-color: #a855f7 !important;
+}
+
+html[data-theme='light'] .bg-purple-600:hover,
+html[data-theme='light'] .hover\:bg-purple-700:hover {
+  background-color: #9333ea !important;
+}
+
+html[data-theme='light'] .bg-purple-700 {
+  background-color: #9333ea !important;
+}
+
+/* Light theme text colors for links and icons */
+html[data-theme='light'] .text-blue-400,
+html[data-theme='light'] .text-blue-400\/50 {
+  color: #1e40af !important;
+}
+
+html[data-theme='light'] .hover\:text-blue-300:hover {
+  color: #1e40af !important;
+}
+
+html[data-theme='light'] .text-green-400,
+html[data-theme='light'] .text-green-400\/50 {
+  color: #047857 !important;
+}
+
+html[data-theme='light'] .hover\:text-green-300:hover {
+  color: #047857 !important;
+}
+
+html[data-theme='light'] .text-orange-400,
+html[data-theme='light'] .text-orange-400\/50 {
+  color: #b45309 !important;
+}
+
+html[data-theme='light'] .hover\:text-orange-300:hover {
+  color: #b45309 !important;
+}
+
+html[data-theme='light'] .text-purple-400,
+html[data-theme='light'] .text-purple-400\/50 {
+  color: #7e22ce !important;
+}
+
+html[data-theme='light'] .hover\:text-purple-300:hover {
+  color: #7e22ce !important;
+}
+
+html[data-theme='light'] .text-red-400,
+html[data-theme='light'] .text-red-400\/50 {
+  color: #991b1b !important;
+}
+
+html[data-theme='light'] .hover\:text-red-300:hover {
+  color: #991b1b !important;
+}
+
+html[data-theme='light'] .text-yellow-400,
+html[data-theme='light'] .text-yellow-400\/50 {
+  color: #b45309 !important;
+}
+
+html[data-theme='light'] .text-blue-500,
+html[data-theme='light'] .text-blue-500\/10 {
+  color: #1e40af !important;
+}
+
+/* Light theme background badges and status indicators */
+html[data-theme='light'] .bg-green-900\/20 {
+  background-color: #dcfce7 !important;
+}
+
+html[data-theme='light'] .bg-red-900\/20 {
+  background-color: #fee2e2 !important;
+}
+
+html[data-theme='light'] .bg-blue-900\/20 {
+  background-color: #dbeafe !important;
+}
+
+html[data-theme='light'] .bg-yellow-900\/20 {
+  background-color: #fef3c7 !important;
+}
+
+html[data-theme='light'] .bg-orange-900\/20 {
+  background-color: #ffedd5 !important;
+}
+
+html[data-theme='light'] .bg-purple-900\/20 {
+  background-color: #f3e8ff !important;
+}
+
+/* Light theme status badge colors */
+html[data-theme='light'] .text-green-400.text-green-400,
+html[data-theme='light'] .bg-green-900\/20 .text-green-400 {
+  color: #059669 !important;
+}
+
+html[data-theme='light'] .text-red-400.text-red-400,
+html[data-theme='light'] .bg-red-900\/20 .text-red-400 {
+  color: #dc2626 !important;
+}
+
+html[data-theme='light'] .text-blue-400.text-blue-400,
+html[data-theme='light'] .bg-blue-900\/20 .text-blue-400 {
+  color: #2563eb !important;
+}
+
+html[data-theme='light'] .text-yellow-400.text-yellow-400,
+html[data-theme='light'] .bg-yellow-900\/20 .text-yellow-400 {
+  color: #d97706 !important;
+}
+
+html[data-theme='light'] .text-orange-400.text-orange-400,
+html[data-theme='light'] .bg-orange-900\/20 .text-orange-400 {
+  color: #d97706 !important;
+}
+
+/* Light theme borders */
+html[data-theme='light'] .border-blue-700 {
+  border-color: #1e40af !important;
+}
+
+html[data-theme='light'] .border-green-700 {
+  border-color: #047857 !important;
+}
+
+html[data-theme='light'] .border-red-700 {
+  border-color: #991b1b !important;
+}
+
+html[data-theme='light'] .border-yellow-700 {
+  border-color: #b45309 !important;
+}
+
+html[data-theme='light'] .border-blue-500\/50 {
+  border-color: rgba(30, 64, 175, 0.5) !important;
+}
+
+/* Light theme shadows and effects */
+html[data-theme='light'] .hover\:shadow-blue-500\/20:hover {
+  box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.2) !important;
+}
+
+/* Light theme code blocks and pre elements */
+html[data-theme='light'] code,
+html[data-theme='light'] pre {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+}
+
+html[data-theme='light'] .bg-slate-900\/50 {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+}
+
+html[data-theme='light'] pre.whitespace-pre-wrap,
+html[data-theme='light'] .bg-slate-900.p-3 {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+  border-color: #d1d5db !important;
+}
+
+html[data-theme='light'] .text-slate-300,
+html[data-theme='light'] .text-xs.text-slate-300 {
+  color: #6b7280 !important;
+}
+
+/* Light theme scrollbar */
+html[data-theme='light'] ::-webkit-scrollbar {
+  width: 8px;
+}
+
+html[data-theme='light'] ::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+html[data-theme='light'] ::-webkit-scrollbar-thumb {
+  background: #cbd5db;
+  border-radius: 4px;
+}
+
+html[data-theme='light'] ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
@@ -160,6 +425,11 @@ html[data-theme='light'] .bg-slate-900\/90 {
   background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+html[data-theme='light'] .glass {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* Card styles */
