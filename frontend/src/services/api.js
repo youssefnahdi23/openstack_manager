@@ -39,6 +39,7 @@ export const authService = {
   logout: () => api.post('/auth/logout'),
   getCurrentUser: () => api.get('/auth/current-user'),
   verifyToken: () => api.get('/auth/verify-token'),
+  refreshToken: () => api.post('/auth/refresh-token'),
 }
 
 export const vmService = {

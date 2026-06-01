@@ -37,8 +37,8 @@ class User(db.Model):
         )
         return user
     
-    def generate_token(self, expires_in=86400):
-        """Generate JWT token"""
+    def generate_token(self, expires_in=7200):
+        """Generate JWT token (expires in 2 hours by default)"""
         payload = {
             'user_id': self.id,
             'username': self.username,

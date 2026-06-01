@@ -1,7 +1,12 @@
 import { create } from 'zustand'
 import { authService } from './services/api'
 
-export const useAuthStore = create((set) => ({
+const TOKEN_REFRESH_INTERVAL = 60 * 1000 // Refresh every 60 seconds while active
+let refreshTimer = null
+let lastActivityTime = Date.now()
+const ACTIVITY_TIMEOUT = 60 * 60 * 1000 // Consider inactive after 1 hour
+
+export const useAuthStore = create((set, get) => ({
 
   token: localStorage.getItem('token') || null,
   user: JSON.parse(localStorage.getItem('user') || 'null'),
@@ -9,12 +14,17 @@ export const useAuthStore = create((set) => ({
   isAuthenticated: !!localStorage.getItem('token'),
   isLoading: false,
   error: null,
+  sessionExpireTime: null,
 
   setToken: (token) => {
     if (token) {
       localStorage.setItem('token', token)
+      // Token expires in 2 hours (7200 seconds)
+      const expireTime = Date.now() + (7200 * 1000)
+      set({ sessionExpireTime: expireTime })
     } else {
       localStorage.removeItem('token')
+      set({ sessionExpireTime: null })
     }
     set({ token })
   },
@@ -37,6 +47,42 @@ export const useAuthStore = create((set) => ({
     set({ user })
   },
 
+  refreshToken: async () => {
+    try {
+      const response = await authService.refreshToken()
+      const { token } = response.data
+      get().setToken(token)
+      lastActivityTime = Date.now()
+      return true
+    } catch (error) {
+      console.error('Token refresh failed:', error)
+      get().logout()
+      return false
+    }
+  },
+
+  startSessionKeepAlive: () => {
+    // Cancel existing timer if any
+    if (refreshTimer) {
+      clearInterval(refreshTimer)
+    }
+    
+    // Refresh token every 60 seconds if user is authenticated
+    refreshTimer = setInterval(() => {
+      const store = get()
+      if (store.isAuthenticated) {
+        store.refreshToken()
+      }
+    }, TOKEN_REFRESH_INTERVAL)
+  },
+
+  stopSessionKeepAlive: () => {
+    if (refreshTimer) {
+      clearInterval(refreshTimer)
+      refreshTimer = null
+    }
+  },
+
   login: async (username, password, project) => {
     set({ isLoading: true, error: null })
     try {
@@ -52,6 +98,14 @@ export const useAuthStore = create((set) => ({
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
 
+      // Set session expiration time (2 hours from now)
+      const expireTime = Date.now() + (7200 * 1000)
+      set({ sessionExpireTime: expireTime })
+
+      // Start session keep-alive
+      get().startSessionKeepAlive()
+      lastActivityTime = Date.now()
+
       return { success: true, user }
     } catch (error) {
       const message = error.response?.data?.message || 'Login failed'
@@ -65,11 +119,13 @@ export const useAuthStore = create((set) => ({
   logout: () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
+    get().stopSessionKeepAlive()
     set({
       token: null,
       user: null,
       isAuthenticated: false,
       error: null,
+      sessionExpireTime: null,
     })
   },
 

@@ -94,3 +94,22 @@ def verify_token(current_user):
     except Exception as e:
         logger.error(f'Token verification error: {str(e)}')
         return jsonify({'message': 'Internal server error'}), 500
+
+
+@bp.route('/refresh-token', methods=['POST'])
+@token_required
+def refresh_token(current_user):
+    """Refresh token to extend session (for session keep-alive)"""
+    try:
+        # Generate a new token with fresh expiry time
+        new_token = current_user.generate_token(expires_in=7200)  # 2 hours
+        
+        return jsonify({
+            'message': 'Token refreshed',
+            'token': new_token,
+            'user': current_user.to_dict()
+        }), 200
+    
+    except Exception as e:
+        logger.error(f'Token refresh error: {str(e)}')
+        return jsonify({'message': 'Internal server error'}), 500

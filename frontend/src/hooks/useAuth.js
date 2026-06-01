@@ -13,11 +13,28 @@ export const useRequireAuth = () => {
 
   useEffect(() => {
     if (!auth.isAuthenticated) {
-      navigate('/login')
+      navigate('/login', { replace: true })
     }
   }, [auth.isAuthenticated, navigate])
 
   return auth
+}
+
+// Initialize auth on app load
+export const useInitializeAuth = () => {
+  const auth = useAuth()
+
+  useEffect(() => {
+    if (auth.isAuthenticated && auth.token) {
+      // Start session keep-alive if user has a token
+      auth.startSessionKeepAlive()
+    }
+
+    return () => {
+      // Cleanup on unmount
+      auth.stopSessionKeepAlive()
+    }
+  }, [auth.isAuthenticated, auth.token])
 }
 
 export const useLocalStorage = (key, initialValue) => {

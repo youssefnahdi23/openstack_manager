@@ -8,15 +8,52 @@ import MonitoringPage from './pages/MonitoringPage'
 import TerminalPage from './pages/TerminalPage'
 import SettingsPage from './pages/SettingsPage'
 import { NotificationContainer } from './components/Notification'
+import { useInitializeAuth, useAuth } from './hooks/useAuth'
 import './index.css'
 
 function ProtectedRoute({ element }) {
-  const token = localStorage.getItem('token')
-  return token ? element : <Navigate to="/login" />
+  const auth = useAuth()
+  return auth.isAuthenticated ? element : <Navigate to="/login" replace />
+}
+
+function AppContent({ theme, setTheme }) {
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/dashboard"
+        element={<ProtectedRoute element={<DashboardPage />} />}
+      />
+      <Route
+        path="/vms"
+        element={<ProtectedRoute element={<VMManagementPage />} />}
+      />
+      <Route
+        path="/vms/:instanceId"
+        element={<ProtectedRoute element={<VMDetailsPage />} />}
+      />
+      <Route
+        path="/monitoring"
+        element={<ProtectedRoute element={<MonitoringPage />} />}
+      />
+      <Route
+        path="/terminal"
+        element={<ProtectedRoute element={<TerminalPage />} />}
+      />
+      <Route
+        path="/settings"
+        element={<ProtectedRoute element={<SettingsPage theme={theme} setTheme={setTheme} />} />}
+      />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
+  )
 }
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'system')
+  
+  // Initialize auth and session keep-alive
+  useInitializeAuth()
 
   useEffect(() => {
     const root = document.documentElement
@@ -46,34 +83,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen" style={{ backgroundColor: 'var(--app-bg)' }}>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/dashboard"
-            element={<ProtectedRoute element={<DashboardPage />} />}
-          />
-          <Route
-            path="/vms"
-            element={<ProtectedRoute element={<VMManagementPage />} />}
-          />
-          <Route
-            path="/vms/:instanceId"
-            element={<ProtectedRoute element={<VMDetailsPage />} />}
-          />
-          <Route
-            path="/monitoring"
-            element={<ProtectedRoute element={<MonitoringPage />} />}
-          />
-          <Route
-            path="/terminal"
-            element={<ProtectedRoute element={<TerminalPage />} />}
-          />
-          <Route
-            path="/settings"
-            element={<ProtectedRoute element={<SettingsPage theme={theme} setTheme={setTheme} />} />}
-          />
-          <Route path="/" element={<Navigate to="/dashboard" />} />
-        </Routes>
+        <AppContent theme={theme} setTheme={setTheme} />
         <NotificationContainer />
       </div>
     </Router>
