@@ -5,6 +5,7 @@ import { Sidebar } from '../components/Sidebar'
 import { useVMStore, useNotificationStore } from '../store'
 import { vmService, healthService } from '../services/api'
 import { StatCard, LoadingSpinner } from '../components/Common'
+import NoVNCModal from '../components/NoVNCModal'
 import { Server, HardDrive, Image as ImageIcon, Network, AlertCircle, CheckCircle, Terminal, Monitor } from 'lucide-react'
 
 export default function DashboardPage() {
@@ -17,6 +18,7 @@ export default function DashboardPage() {
   })
   const [healthLoading, setHealthLoading] = useState(true)
   const [healthError, setHealthError] = useState('')
+  const [noVNCOpen, setNoVNCOpen] = useState(false)
   const [statsError, setStatsError] = useState('')
 
   const stats = useVMStore((state) => state.stats)
@@ -102,6 +104,7 @@ export default function DashboardPage() {
               <LoadingSpinner />
             </div>
           ) : stats ? (
+            <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <StatCard
                 icon={Server}
@@ -174,18 +177,18 @@ export default function DashboardPage() {
                     <Terminal className="w-6 h-6 mx-auto mb-2 text-purple-400" />
                     <p className="text-white font-medium">Open PuTTY</p>
                   </Link>
-                  <a
-                    href={import.meta.env.VITE_NO_VNC_URL || `http://${window.location.hostname}:6080`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => setNoVNCOpen(true)}
                     className="p-4 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-lg text-center transition-colors"
                   >
                     <Monitor className="w-6 h-6 mx-auto mb-2 text-green-400" />
                     <p className="text-white font-medium">noVNC Console</p>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
+            <NoVNCModal isOpen={noVNCOpen} onClose={() => setNoVNCOpen(false)} />
+            </>
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-3">
               <div>Failed to load statistics.</div>
