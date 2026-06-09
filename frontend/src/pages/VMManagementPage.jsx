@@ -40,6 +40,7 @@ export default function VMManagementPage() {
   const isLoading = useVMStore((state) => state.isLoading)
 
   const addNotification = useNotificationStore((state) => state.addNotification)
+  const [importingImage, setImportingImage] = useState(false)
 
   const formatInterfaces = (interfaces) => {
     if (!interfaces || interfaces.length === 0) return '-'
@@ -463,6 +464,25 @@ export default function VMManagementPage() {
                 <Plus className="w-4 h-4" />
                 Create Instance
               </Button>
+              <Button
+                onClick={async () => {
+                  const url = window.prompt('Enter image URL (http(s)://...)')
+                  if (!url) return
+                  const name = window.prompt('Optional image name (leave blank to auto)')
+                  try {
+                    setImportingImage(true)
+                    await vmService.importImageFromUrl(url, name)
+                    addNotification({ type: 'success', message: 'Image import initiated' })
+                    await fetchData()
+                  } catch (err) {
+                    addNotification({ type: 'error', message: err.response?.data?.message || 'Failed to import image' })
+                  } finally { setImportingImage(false) }
+                }}
+                variant="secondary"
+                size="md"
+              >
+                Add Image (URL)
+              </Button>
             </div>
           </div>
         </header>
@@ -796,6 +816,23 @@ export default function VMManagementPage() {
                                 disabled={isLoading}
                               >
                                 <RotateCw className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="secondary"
+                                title="Take snapshot"
+                                onClick={async () => {
+                                  const name = window.prompt('Snapshot name (optional)')
+                                  try {
+                                    await vmService.createSnapshot(instance.id, name)
+                                    addNotification({ type: 'success', message: 'Snapshot requested' })
+                                    await fetchData()
+                                  } catch (err) {
+                                    addNotification({ type: 'error', message: err.response?.data?.message || 'Failed to create snapshot' })
+                                  }
+                                }}
+                              >
+                                Snapshot
                               </Button>
                               <Button
                                 size="sm"

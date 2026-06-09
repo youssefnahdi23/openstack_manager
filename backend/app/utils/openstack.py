@@ -1,3 +1,4 @@
+import json
 import os
 from openstack import connect, config as openstack_config
 import logging
@@ -89,6 +90,25 @@ class OpenStackManager:
                 })
         return interfaces
 
+    def _sanitize_error_message(self, message):
+        if message is None:
+            return None
+        return ' '.join(str(message).split())
+
+    def _get_fault_info(self, server):
+        fault = getattr(server, 'fault', None)
+        if not fault:
+            return None
+
+        if isinstance(fault, dict):
+            return {
+                'code': fault.get('code'),
+                'message': fault.get('message'),
+                'details': fault.get('details')
+            }
+
+        return {'message': str(fault)}
+
     def list_instances(self):
         """List all instances"""
         try:
@@ -163,6 +183,18 @@ class OpenStackManager:
                     flavor_name = None
 
                 interfaces = self._extract_interface_details(getattr(server, 'addresses', None))
+                fault = getattr(server, 'fault', None)
+                fault_info = None
+                if fault:
+                    if isinstance(fault, dict):
+                        fault_info = {
+                            'code': fault.get('code'),
+                            'message': fault.get('message'),
+                            'details': fault.get('details')
+                        }
+                    else:
+                        fault_info = {'message': str(fault)}
+
                 return {
                     'id': server.id,
                     'name': getattr(server, 'name', None),
@@ -177,7 +209,8 @@ class OpenStackManager:
                     'interfaces': interfaces,
                     'floating_ip': self._get_floating_ip_from_addresses(getattr(server, 'addresses', None)),
                     'metadata': getattr(server, 'metadata', None),
-                    'security_groups': getattr(server, 'security_groups', None)
+                    'security_groups': getattr(server, 'security_groups', None),
+                    'fault': fault_info
                 }
             return None
         except Exception as e:
@@ -230,6 +263,19 @@ class OpenStackManager:
             getattr(network, 'is_shared', False),
             getattr(network, 'shared', False),
         ])
+
+    def _normalize_network_ids(self, network_ids):
+        if network_ids is None:
+            return []
+        if isinstance(network_ids, str):
+            try:
+                parsed = json.loads(network_ids)
+                return self._normalize_network_ids(parsed)
+            except ValueError:
+                network_ids = [network_ids]
+        if isinstance(network_ids, (list, tuple, set)):
+            return [str(item).strip() for item in network_ids if item is not None and str(item).strip()]
+        return [str(network_ids).strip()] if str(network_ids).strip() else []
 
     def _get_default_network_id(self):
         """Return the best available private network ID.
@@ -285,24 +331,49 @@ class OpenStackManager:
             if not self.conn:
                 return None
             
-            # Get flavor and image objects
-            flavor = self.conn.compute.get_flavor(flavor_id)
-            image = self.conn.image.get_image(image_id)
-            
+            # Normalize networks and get flavor/image objects
+            network_ids = self._normalize_network_ids(network_ids)
             if not network_ids:
                 default_network = self._get_default_network_id()
                 if not default_network:
                     raise ValueError('No network selected and no default network is available')
                 network_ids = [default_network]
+
+            flavor = self.conn.compute.get_flavor(flavor_id)
+            image = self.conn.image.get_image(image_id)
             
-            server = self.conn.compute.create_server(
-                name=name,
-                flavor_id=flavor_id,
-                image_id=image_id,
-                networks=[{'uuid': net_id} for net_id in network_ids if net_id],
-                **kwargs
-            )
+            if not network_ids:
+                raise ValueError('No valid network IDs were provided for instance creation')
+
+            create_kwargs = {
+                'name': name,
+                'flavor_id': flavor_id,
+                'image_id': image_id,
+                'networks': [{'uuid': net_id} for net_id in network_ids if net_id],
+            }
+            create_kwargs.update(kwargs)
+            logger.debug(f'Creating instance {name} with networks={network_ids}, flavor_id={flavor_id}, image_id={image_id}')
+
+            server = self.conn.compute.create_server(**create_kwargs)
             
+            server = self.conn.compute.create_server(**create_kwargs)
+            try:
+                server = self.conn.compute.wait_for_server(server, status='ACTIVE', failures=['ERROR'], interval=3, wait=120)
+            except Exception as wait_err:
+                server = self.conn.compute.get_server(server.id)
+                if getattr(server, 'status', '').upper() == 'ERROR':
+                    fault = getattr(server, 'fault', None)
+                    if isinstance(fault, dict):
+                        fault_msg = fault.get('message') or fault.get('details')
+                    else:
+                        fault_msg = getattr(fault, 'message', None) or getattr(fault, 'details', None) if fault else None
+                    if not fault_msg:
+                        fault_msg = str(wait_err)
+                    logger.error(f'Instance build failed for {name}: {fault_msg}')
+                    raise RuntimeError(f"Instance '{name}' failed to build: {fault_msg}") from wait_err
+                raise
+            if getattr(server, 'status', '').upper() != 'ACTIVE':
+                raise RuntimeError(f"Instance '{name}' did not reach ACTIVE state; current status: {getattr(server, 'status', None)}")
             return {
                 'id': server.id,
                 'name': server.name,
@@ -487,6 +558,7 @@ class OpenStackManager:
             if not self.conn:
                 return []
 
+            network_ids = self._normalize_network_ids(network_ids)
             if not network_ids:
                 default_network = self._get_default_network_id()
                 if not default_network:
@@ -495,6 +567,9 @@ class OpenStackManager:
 
             if not key_name:
                 key_name = self._get_default_keypair_name()
+
+            if not network_ids:
+                raise ValueError('No valid network IDs were provided for instance creation')
 
             instances = []
             for idx in range(max(1, int(count))):
@@ -509,13 +584,38 @@ class OpenStackManager:
                     create_kwargs['key_name'] = key_name
                 create_kwargs.update(kwargs)
 
+                logger.info('=== FULL CREATE REQUEST ===')
+                logger.info(f'Server name: {server_name}')
+                logger.info(f'Create kwargs: {json.dumps(create_kwargs, indent=2, default=str)}')
+                logger.info('========================')
+                logger.debug(f'Creating instance {server_name} with networks={network_ids}, flavor_id={flavor_id}, image_id={image_id}, key_name={key_name}')
+
                 server = self.conn.compute.create_server(**create_kwargs)
 
                 try:
                     server = self.conn.compute.wait_for_server(server, status='ACTIVE', failures=['ERROR'], interval=3, wait=120)
-                except Exception:
-                    # Continue even if waiting fails; server object still contains an ID
-                    pass
+                except Exception as wait_err:
+                    server = self.conn.compute.get_server(server.id)
+                    fault_info = self._get_fault_info(server)
+                    fault_msg = None
+                    if fault_info:
+                        fault_msg = fault_info.get('message') or fault_info.get('details')
+                    if not fault_msg:
+                        fault_msg = str(wait_err)
+                    fault_msg = self._sanitize_error_message(fault_msg)
+                    logger.error(f'Instance build failed for {server_name}: {fault_msg}')
+                    raise RuntimeError(f"Instance '{server_name}' failed to build: {fault_msg}") from wait_err
+
+                server = self.conn.compute.get_server(server.id)
+                if getattr(server, 'status', '').upper() != 'ACTIVE':
+                    fault_info = self._get_fault_info(server)
+                    fault_msg = None
+                    if fault_info:
+                        fault_msg = fault_info.get('message') or fault_info.get('details')
+                    if not fault_msg:
+                        fault_msg = f"Instance '{server_name}' did not reach ACTIVE state; current status: {getattr(server, 'status', None)}"
+                    logger.error(f'Instance build failed for {server_name}: {fault_msg}')
+                    raise RuntimeError(f"Instance '{server_name}' failed to build: {fault_msg}")
 
                 instance_data = {
                     'id': server.id,
@@ -690,6 +790,63 @@ class OpenStackManager:
             return self.get_console_url(instance_id, console_type='novnc')
         except Exception as e:
             logger.error(f'Error getting VNC console: {str(e)}', exc_info=True)
+            raise
+
+    def create_snapshot(self, instance_id, name):
+        """Create a snapshot (image) from a server instance."""
+        try:
+            if not self.conn:
+                raise RuntimeError('Not connected to OpenStack')
+
+            # openstacksdk provides create_server_image which accepts a server or server id
+            image = None
+            try:
+                image = self.conn.compute.create_server_image(instance_id, name=name)
+            except Exception:
+                # Fallback: try passing server object
+                server = self.conn.compute.get_server(instance_id)
+                image = self.conn.compute.create_server_image(server, name=name)
+
+            # Return basic image info
+            return {
+                'id': getattr(image, 'id', None) or (image.get('id') if isinstance(image, dict) else None),
+                'name': getattr(image, 'name', name) or (image.get('name') if isinstance(image, dict) else name),
+                'status': getattr(image, 'status', 'queued') if image is not None else 'queued'
+            }
+        except Exception as e:
+            logger.error(f'Error creating snapshot for {instance_id}: {e}', exc_info=True)
+            raise
+
+    def create_image_from_url(self, url, name=None, disk_format='qcow2', container_format='bare'):
+        """Create/import an image from a remote URL using web-download if supported."""
+        try:
+            if not self.conn:
+                raise RuntimeError('Not connected to OpenStack')
+
+            if not name:
+                name = url.split('/')[-1] or 'imported-image'
+
+            # Create image record
+            image = self.conn.image.create_image(name=name, disk_format=disk_format, container_format=container_format)
+
+            # Try import via web-download if supported
+            try:
+                # new openstacksdk exposes import_image
+                if hasattr(self.conn.image, 'import_image'):
+                    self.conn.image.import_image(image, method='web-download', uri=url)
+                else:
+                    # Some environments may not support import_image; try direct upload via session
+                    logger.warning('image.import_image not available on this SDK; image will be created without import')
+            except Exception as import_exc:
+                logger.warning(f'Image import via URL failed: {import_exc}', exc_info=True)
+
+            return {
+                'id': getattr(image, 'id', None) or (image.get('id') if isinstance(image, dict) else None),
+                'name': getattr(image, 'name', name) or (image.get('name') if isinstance(image, dict) else name),
+                'status': getattr(image, 'status', None) or 'queued'
+            }
+        except Exception as e:
+            logger.error(f'Error creating image from URL {url}: {e}', exc_info=True)
             raise
     
     def is_connected(self):

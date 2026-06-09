@@ -113,3 +113,40 @@ def refresh_token(current_user):
     except Exception as e:
         logger.error(f'Token refresh error: {str(e)}')
         return jsonify({'message': 'Internal server error'}), 500
+
+
+@bp.route('/change-password', methods=['POST'])
+@token_required
+def change_password(current_user):
+    """Allow a logged-in user to change their password by providing the current password and a new password."""
+    try:
+        data = request.get_json() or {}
+        current = data.get('current_password')
+        new = data.get('new_password')
+
+        if not current or not new:
+            return jsonify({'message': 'Missing current or new password'}), 400
+
+        if not current_user.verify_password(current):
+            return jsonify({'message': 'Current password is incorrect'}), 403
+
+        if len(new) < 6:
+            return jsonify({'message': 'New password must be at least 6 characters'}), 400
+
+        # Update password hash
+        current_user.password_hash = User.hash_password(new)
+        db.session.commit()
+
+        activity = ActivityLog(
+            user_id=current_user.id,
+            action='change_password',
+            details='User changed password',
+            status='success'
+        )
+        db.session.add(activity)
+        db.session.commit()
+
+        return jsonify({'message': 'Password changed successfully'}), 200
+    except Exception as e:
+        logger.error(f'Change password error: {str(e)}')
+        return jsonify({'message': 'Internal server error'}), 500

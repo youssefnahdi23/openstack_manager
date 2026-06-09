@@ -40,6 +40,7 @@ export const authService = {
   getCurrentUser: () => api.get('/auth/current-user'),
   verifyToken: () => api.get('/auth/verify-token'),
   refreshToken: () => api.post('/auth/refresh-token'),
+  changePassword: (current_password, new_password) => api.post('/auth/change-password', { current_password, new_password }),
 }
 
 export const vmService = {
@@ -58,6 +59,9 @@ export const vmService = {
   getConsole: (id) => api.get(`/vms/instances/${id}/console`),
   getStats: () => api.get('/vms/stats'),
   unrescueInstance: (id) => api.post(`/vms/instances/${id}/unrescue`),
+  createSnapshot: (id, name) => api.post(`/vms/instances/${id}/snapshot`, { name }),
+  importImageFromUrl: (url, name) => api.post('/vms/images/from-url', { url, name }),
+  exportDevstackCSV: () => api.get('/vms/export/devstack-csv', { responseType: 'blob' }),
 }
 
 export const monitoringService = {

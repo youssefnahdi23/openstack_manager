@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { useRequireAuth } from '../hooks/useAuth'
 import { Sidebar } from '../components/Sidebar'
 import { ExternalLink } from 'lucide-react'
+import { authService, vmService } from '../services/api'
+import { useNotificationStore } from '../store'
+import { Button } from '../components/Common'
 
 // Theme options supported by the portal settings page.
 const themeOptions = [
@@ -13,6 +16,12 @@ const themeOptions = [
 export default function SettingsPage({ theme, setTheme }) {
   const auth = useRequireAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const addNotification = useNotificationStore((state) => state.addNotification)
+
+  const [currentPassword, setCurrentPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [changing, setChanging] = useState(false)
 
   // Default Horizon URL points to the DevStack IP.
   // Override with VITE_OPENSTACK_HORIZON_URL if needed.
@@ -89,6 +98,63 @@ export default function SettingsPage({ theme, setTheme }) {
                     <span className="text-slate-200">{option.label}</span>
                   </label>
                 ))}
+              </div>
+            </section>
+
+            <section className="card">
+              <h2 className="text-lg font-semibold text-white mb-3">Security</h2>
+              <p className="text-slate-400 text-sm mb-4">Change your account password.</p>
+              <form onSubmit={async (e) => {
+                e.preventDefault()
+                if (!currentPassword || !newPassword) {
+                  addNotification({ type: 'error', message: 'Please fill both password fields' })
+                  return
+                }
+                if (newPassword !== confirmPassword) {
+                  addNotification({ type: 'error', message: 'New passwords do not match' })
+                  return
+                }
+                setChanging(true)
+                try {
+                  await authService.changePassword(currentPassword, newPassword)
+                  addNotification({ type: 'success', message: 'Password changed' })
+                  setCurrentPassword(''); setNewPassword(''); setConfirmPassword('')
+                } catch (err) {
+                  addNotification({ type: 'error', message: err.response?.data?.message || 'Failed to change password' })
+                } finally { setChanging(false) }
+              }}>
+                <div className="space-y-3">
+                  <input type="password" placeholder="Current password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white" />
+                  <input type="password" placeholder="New password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white" />
+                  <input type="password" placeholder="Confirm new password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white" />
+                </div>
+                <div className="mt-3 flex gap-2">
+                  <Button type="submit" variant="primary" loading={changing}>Change Password</Button>
+                </div>
+              </form>
+            </section>
+
+            <section className="card">
+              <h2 className="text-lg font-semibold text-white mb-3">Export</h2>
+              <p className="text-slate-400 text-sm mb-4">Export OpenStack instance information as CSV.</p>
+              <div>
+                <Button variant="secondary" onClick={async () => {
+                  try {
+                    const resp = await vmService.exportDevstackCSV()
+                    const blob = new Blob([resp.data], { type: 'text/csv' })
+                    const url = window.URL.createObjectURL(blob)
+                    const a = document.createElement('a')
+                    a.href = url
+                    a.download = 'devstack-instances.csv'
+                    document.body.appendChild(a)
+                    a.click()
+                    a.remove()
+                    window.URL.revokeObjectURL(url)
+                    addNotification({ type: 'success', message: 'CSV downloaded' })
+                  } catch (err) {
+                    addNotification({ type: 'error', message: err.response?.data?.message || 'Failed to export CSV' })
+                  }
+                }}>Download CSV</Button>
               </div>
             </section>
           </div>

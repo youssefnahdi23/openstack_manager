@@ -1,9 +1,18 @@
+import json
 import os
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, make_response
+import io
+import csv
 from app import db
 from app.models.user import token_required, VMLog
 from app.utils.openstack import get_openstack_manager
 import logging
+
+
+def _sanitize_error_text(text):
+    if text is None:
+        return None
+    return ' '.join(str(text).split())
 
 bp = Blueprint('vms', __name__, url_prefix='/api/vms')
 logger = logging.getLogger(__name__)
@@ -12,6 +21,20 @@ logger = logging.getLogger(__name__)
 def get_openstack_manager_for_request():
     project_name = request.headers.get('X-OpenStack-Project') or os.getenv('OPENSTACK_PROJECT_NAME', 'admin')
     return get_openstack_manager(project_name=project_name)
+
+
+def _normalize_network_ids(network_ids):
+    if network_ids is None:
+        return []
+    if isinstance(network_ids, str):
+        try:
+            parsed = json.loads(network_ids)
+            network_ids = parsed
+        except ValueError:
+            network_ids = [network_ids]
+    if isinstance(network_ids, (list, tuple, set)):
+        return [str(item).strip() for item in network_ids if item is not None and str(item).strip()]
+    return [str(network_ids).strip()] if str(network_ids).strip() else []
 
 
 @bp.route('/instances', methods=['GET'])
@@ -59,13 +82,25 @@ def create_instance(current_user):
 
         count = int(data.get('count', 1))
         assign_floating_ip = bool(data.get('assign_floating_ip', False))
-        network_ids = data.get('network_ids') or []
+        network_ids = _normalize_network_ids(data.get('network_ids'))
         if data.get('network_id') and not network_ids:
-            network_ids = [data.get('network_id')]
+            network_ids = _normalize_network_ids(data.get('network_id'))
         key_name = data.get('key_name')
         manager = get_openstack_manager_for_request()
-
+        # Ensure we have valid network IDs before calling OpenStack
         try:
+            if not network_ids:
+                try:
+                    default_net = manager._get_default_network_id()
+                except Exception:
+                    default_net = None
+                if default_net:
+                    network_ids = [default_net]
+                else:
+                    msg = 'No network selected and no default network is available. Please select a network.'
+                    logger.error(f'Create instance rejected: {msg}; payload={data}')
+                    return jsonify({'message': msg}), 400
+
             created_instances = manager.create_instances(
                 name=data.get('name'),
                 flavor_id=data.get('flavor_id'),
@@ -75,6 +110,35 @@ def create_instance(current_user):
                 assign_floating_ip=assign_floating_ip,
                 key_name=key_name
             )
+
+            failed_instances = [inst for inst in created_instances if inst.get('status', '').upper() != 'ACTIVE']
+            if failed_instances:
+                failed_details = []
+                failed_logs = []
+                for inst in failed_instances:
+                    details = manager.get_instance(inst.get('id')) or {}
+                    failed_details.append({
+                        'id': inst.get('id'),
+                        'name': inst.get('name'),
+                        'status': inst.get('status'),
+                        'fault': details.get('fault')
+                    })
+                    failed_logs.append(VMLog(
+                        user_id=current_user.id,
+                        instance_id=inst.get('id', ''),
+                        instance_name=inst.get('name'),
+                        action='create',
+                        status='failed',
+                        message=str(details.get('fault') or details.get('status'))
+                    ))
+
+                if failed_logs:
+                    db.session.add_all(failed_logs)
+                    db.session.commit()
+
+                message = f"{len(failed_details)} instance(s) failed to build"
+                logger.error(f'Create instance failed: {message}; details={failed_details}')
+                return jsonify({'message': message, 'failed_instances': failed_details}), 500
 
             vm_logs = []
             for instance in created_instances:
@@ -108,11 +172,13 @@ def create_instance(current_user):
             raise e
     
     except ValueError as e:
-        logger.error(f'Error creating instance: {str(e)}')
-        return jsonify({'message': str(e)}), 400
+        message = _sanitize_error_text(str(e))
+        logger.error(f'Error creating instance: {message}')
+        return jsonify({'message': message}), 400
     except Exception as e:
-        logger.error(f'Error creating instance: {str(e)}')
-        return jsonify({'message': str(e)}), 500
+        message = _sanitize_error_text(str(e))
+        logger.error(f'Error creating instance: {message}')
+        return jsonify({'message': message}), 500
 
 
 @bp.route('/instances/<instance_id>', methods=['DELETE'])
@@ -331,6 +397,96 @@ def list_keypairs(current_user):
         return jsonify({'keypairs': keypairs}), 200
     except Exception as e:
         logger.error(f'Error listing keypairs: {str(e)}')
+        return jsonify({'message': str(e)}), 500
+
+
+@bp.route('/instances/<instance_id>/snapshot', methods=['POST'])
+@token_required
+def create_snapshot(current_user, instance_id):
+    """Create a snapshot image from an instance"""
+    try:
+        data = request.get_json() or {}
+        name = data.get('name') or f'{instance_id}-snapshot'
+
+        vm_log = VMLog(
+            user_id=current_user.id,
+            instance_id=instance_id,
+            instance_name=name,
+            action='snapshot',
+            status='pending'
+        )
+        db.session.add(vm_log)
+        db.session.commit()
+
+        try:
+            manager = get_openstack_manager_for_request()
+            image = manager.create_snapshot(instance_id, name)
+            vm_log.status = 'success'
+            db.session.commit()
+
+            return jsonify({'message': 'Snapshot created', 'image': image}), 201
+        except Exception as e:
+            vm_log.status = 'failed'
+            vm_log.message = str(e)
+            db.session.commit()
+            raise e
+
+    except Exception as e:
+        logger.error(f'Error creating snapshot: {str(e)}')
+        return jsonify({'message': str(e)}), 500
+
+
+@bp.route('/images/from-url', methods=['POST'])
+@token_required
+def create_image_from_url(current_user):
+    """Import/create an image from a remote URL"""
+    try:
+        data = request.get_json() or {}
+        url = data.get('url')
+        name = data.get('name')
+
+        if not url:
+            return jsonify({'message': 'Missing image URL'}), 400
+
+        manager = get_openstack_manager_for_request()
+        image = manager.create_image_from_url(url, name=name)
+
+        return jsonify({'message': 'Image import started', 'image': image}), 202
+    except Exception as e:
+        logger.error(f'Error importing image from url: {str(e)}')
+        return jsonify({'message': str(e)}), 500
+
+
+@bp.route('/export/devstack-csv', methods=['GET'])
+@token_required
+def export_devstack_csv(current_user):
+    """Export instance list as CSV"""
+    try:
+        manager = get_openstack_manager_for_request()
+        instances = manager.list_instances() or []
+
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(['id', 'name', 'status', 'flavor', 'image', 'floating_ip', 'created', 'updated'])
+
+        for inst in instances:
+            writer.writerow([
+                inst.get('id'),
+                inst.get('name'),
+                inst.get('status'),
+                inst.get('flavor'),
+                inst.get('image'),
+                inst.get('floating_ip'),
+                inst.get('created'),
+                inst.get('updated')
+            ])
+
+        resp = make_response(output.getvalue())
+        resp.headers['Content-Type'] = 'text/csv'
+        resp.headers['Content-Disposition'] = 'attachment; filename=devstack-instances.csv'
+        return resp
+    except Exception as e:
+        logger.error(f'Error exporting CSV: {str(e)}')
         return jsonify({'message': str(e)}), 500
 
 
