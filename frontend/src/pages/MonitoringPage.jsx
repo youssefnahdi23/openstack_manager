@@ -214,7 +214,7 @@ export default function MonitoringPage() {
     )
   }
 
-  // Render a lightweight inline chart from Prometheus samples.
+  // Render an improved mathematical chart with X/Y axes from Prometheus samples.
   const renderTimeSeriesChart = (title, series, color) => {
     if (!series || series.length === 0) {
       return (
@@ -227,10 +227,57 @@ export default function MonitoringPage() {
     const values = series.map((point) => point.y)
     const maxValue = Math.max(...values, 1)
     const minValue = Math.min(...values, 0)
+    const valueRange = maxValue - minValue || 1
+    
+    // Calculate time span for X-axis
+    const firstTime = series[0].x
+    const lastTime = series[series.length - 1].x
+    const timeSpanMs = lastTime - firstTime
+    const timeSpanMin = Math.round(timeSpanMs / 60000) || 1
+    
+    // SVG dimensions with larger margins for better readability
+    const svgWidth = 140
+    const svgHeight = 110
+    const marginLeft = 20
+    const marginBottom = 18
+    const marginRight = 5
+    const marginTop = 5
+    
+    const chartWidth = svgWidth - marginLeft - marginRight
+    const chartHeight = svgHeight - marginBottom - marginTop
+    
+    // Generate grid lines and axis labels for Y-axis
+    const yGridLines = []
+    const yLabels = []
+    const ySteps = 4
+    for (let i = 0; i <= ySteps; i++) {
+      const ratio = i / ySteps
+      const y = marginTop + chartHeight * (1 - ratio)
+      const value = minValue + valueRange * ratio
+      yGridLines.push({ y, value })
+      yLabels.push(value.toFixed(1))
+    }
+    
+    // Generate grid lines and axis labels for X-axis
+    const xGridLines = []
+    const xLabels = []
+    const xSteps = Math.min(5, series.length - 1)
+    for (let i = 0; i <= xSteps; i++) {
+      const ratio = i / xSteps
+      const x = marginLeft + chartWidth * ratio
+      const pointIndex = Math.round((series.length - 1) * ratio)
+      const time = new Date(series[pointIndex].x)
+      const timeStr = time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+      xGridLines.push({ x, time: timeStr })
+    }
+    
+    // Convert data points to SVG coordinates
     const points = series
-      .map((point, index) => {
-        const x = (index / (series.length - 1)) * 100
-        const y = 100 - ((point.y - minValue) / (maxValue - minValue || 1)) * 100
+      .map((point) => {
+        const xRatio = timeSpanMs > 0 ? (point.x - firstTime) / timeSpanMs : 0
+        const yRatio = (point.y - minValue) / valueRange
+        const x = marginLeft + xRatio * chartWidth
+        const y = marginTop + (1 - yRatio) * chartHeight
         return `${x},${y}`
       })
       .join(' ')
@@ -240,21 +287,170 @@ export default function MonitoringPage() {
         <div className="flex items-center justify-between mb-3">
           <div>
             <h3 className="text-sm font-semibold text-white">{title}</h3>
-            <p className="text-slate-400 text-xs">Latest: {series[series.length - 1].y.toFixed(1)}</p>
+            <p className="text-slate-400 text-xs">Latest: {series[series.length - 1].y.toFixed(2)} | Min: {minValue.toFixed(2)} | Max: {maxValue.toFixed(2)}</p>
           </div>
-          <div className="text-xs text-slate-500">{series.length} points</div>
+          <div className="text-xs text-slate-500">{series.length} points over {timeSpanMin}m</div>
         </div>
-        <svg viewBox="0 0 100 100" className="w-full h-32">
-          <polyline
-            fill="none"
-            stroke={color}
-            strokeWidth="1.5"
-            points={points}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <line x1="0" y1="100" x2="100" y2="100" stroke="#334155" strokeWidth="0.5" />
-        </svg>
+        
+        {/* Chart with axes */}
+        <div className="relative overflow-x-auto">
+          <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="w-full min-w-max border border-slate-700 rounded-lg bg-slate-900" style={{ height: '300px' }}>
+            {/* Background */}
+            <rect x="0" y="0" width={svgWidth} height={svgHeight} fill="#1e293b" />
+            
+            {/* Y-axis grid lines */}
+            {yGridLines.map((line, idx) => (
+              <line
+                key={`ygrid-${idx}`}
+                x1={marginLeft}
+                y1={line.y}
+                x2={svgWidth - marginRight}
+                y2={line.y}
+                stroke="#475569"
+                strokeWidth="0.5"
+                strokeDasharray="2,2"
+              />
+            ))}
+            
+            {/* X-axis grid lines */}
+            {xGridLines.map((line, idx) => (
+              <line
+                key={`xgrid-${idx}`}
+                x1={line.x}
+                y1={marginTop}
+                x2={line.x}
+                y2={svgHeight - marginBottom}
+                stroke="#475569"
+                strokeWidth="0.5"
+                strokeDasharray="2,2"
+              />
+            ))}
+            
+            {/* Y-axis */}
+            <line
+              x1={marginLeft}
+              y1={marginTop}
+              x2={marginLeft}
+              y2={svgHeight - marginBottom}
+              stroke="#cbd5e1"
+              strokeWidth="1.5"
+            />
+            
+            {/* X-axis */}
+            <line
+              x1={marginLeft}
+              y1={svgHeight - marginBottom}
+              x2={svgWidth - marginRight}
+              y2={svgHeight - marginBottom}
+              stroke="#cbd5e1"
+              strokeWidth="1.5"
+            />
+            
+            {/* Y-axis label */}
+            <text
+              x={2}
+              y={marginTop + chartHeight / 2}
+              fontSize="3.5"
+              fill="#94a3b8"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              transform={`rotate(-90 2 ${marginTop + chartHeight / 2})`}
+              fontWeight="500"
+            >
+              Value
+            </text>
+            
+            {/* Y-axis ticks and labels */}
+            {yGridLines.map((line, idx) => (
+              <g key={`ylabel-${idx}`}>
+                <line
+                  x1={marginLeft - 2}
+                  y1={line.y}
+                  x2={marginLeft}
+                  y2={line.y}
+                  stroke="#cbd5e1"
+                  strokeWidth="1"
+                />
+                <text
+                  x={marginLeft - 4}
+                  y={line.y}
+                  fontSize="3.2"
+                  fill="#cbd5e1"
+                  textAnchor="end"
+                  dominantBaseline="middle"
+                  fontWeight="400"
+                >
+                  {yLabels[idx]}
+                </text>
+              </g>
+            ))}
+            
+            {/* X-axis ticks and labels */}
+            {xGridLines.map((line, idx) => (
+              <g key={`xlabel-${idx}`}>
+                <line
+                  x1={line.x}
+                  y1={svgHeight - marginBottom}
+                  x2={line.x}
+                  y2={svgHeight - marginBottom + 2}
+                  stroke="#cbd5e1"
+                  strokeWidth="1"
+                />
+                <text
+                  x={line.x}
+                  y={svgHeight - marginBottom + 5}
+                  fontSize="3"
+                  fill="#cbd5e1"
+                  textAnchor="middle"
+                  dominantBaseline="start"
+                  fontWeight="400"
+                >
+                  {line.time}
+                </text>
+              </g>
+            ))}
+            
+            {/* X-axis label */}
+            <text
+              x={marginLeft + chartWidth / 2}
+              y={svgHeight - 1}
+              fontSize="3.5"
+              fill="#94a3b8"
+              textAnchor="middle"
+              dominantBaseline="end"
+              fontWeight="500"
+            >
+              Time (HH:MM)
+            </text>
+            
+            {/* Data line */}
+            <polyline
+              fill="none"
+              stroke={color}
+              strokeWidth="1.8"
+              points={points}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            
+            {/* Current value marker (last point) */}
+            {series.length > 0 && (() => {
+              const lastPoint = series[series.length - 1]
+              const xRatio = timeSpanMs > 0 ? (lastPoint.x - firstTime) / timeSpanMs : 1
+              const yRatio = (lastPoint.y - minValue) / valueRange
+              const x = marginLeft + xRatio * chartWidth
+              const y = marginTop + (1 - yRatio) * chartHeight
+              return (
+                <circle cx={x} cy={y} r="1.5" fill={color} stroke="#fff" strokeWidth="0.8" />
+              )
+            })()}
+          </svg>
+        </div>
+        
+        {/* Chart info */}
+        <div className="text-xs text-slate-400 mt-2">
+          Time window: {timeSpanMin}m | Data points: {series.length}
+        </div>
       </div>
     )
   }
