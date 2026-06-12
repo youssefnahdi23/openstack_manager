@@ -1,7 +1,14 @@
 #!/bin/bash
 
 # VM Portal - Startup Script
-# This script initializes and starts the entire stack
+# This script initializes and starts the entire web application stack using Docker Compose. It performs the following steps:
+# 1. Checks for Docker and Docker Compose installation.
+# 2. Ensures the .env file exists (creates from template if missing).
+# 3. Prompts for OPENSTACK_AUTH_URL if not set and persists it to .env.
+# 4. Pulls the latest Docker images.
+# 5. Builds the Docker images.
+# 6. Starts the services in detached mode.
+# 7. Waits for the database and backend to be ready before confirming successful startup.
 
 set -e
 
