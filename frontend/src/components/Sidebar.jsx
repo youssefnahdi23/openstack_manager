@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAuth } from '../hooks/useAuth'
-import { Menu, LogOut, Home, Cloud, Settings, Terminal, Monitor } from 'lucide-react'
+import { Menu, LogOut, Home, Cloud, Settings, Terminal, Monitor, Users } from 'lucide-react'
 
 export function Sidebar({ isOpen, setIsOpen }) {
   const auth = useAuth()
@@ -8,6 +8,7 @@ export function Sidebar({ isOpen, setIsOpen }) {
   const menuItems = [
     { label: 'Dashboard', href: '/dashboard', icon: Home },
     { label: 'VM Management', href: '/vms', icon: Cloud },
+    { label: 'Students', href: '/students', icon: Users },
     { label: 'Monitoring', href: '/monitoring', icon: Monitor },
     { label: 'Terminal Access', href: '/terminal', icon: Terminal },
     { label: 'Settings', href: '/settings', icon: Settings },

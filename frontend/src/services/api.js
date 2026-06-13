@@ -62,6 +62,7 @@ export const vmService = {
   createSnapshot: (id, name) => api.post(`/vms/instances/${id}/snapshot`, { name }),
   importImageFromUrl: (url, name) => api.post('/vms/images/from-url', { url, name }),
   exportDevstackCSV: () => api.get('/vms/export/devstack-csv', { responseType: 'blob' }),
+  sendInstanceEmail: (id, student_ids) => api.post(`/vms/instances/${id}/email`, { student_ids }),
 }
 
 export const monitoringService = {
@@ -70,6 +71,13 @@ export const monitoringService = {
 
 export const healthService = {
   check: () => api.get('/health'),
+}
+
+export const studentService = {
+  listStudents: () => api.get('/students/'),
+  createStudent: (data) => api.post('/students/', data),
+  updateStudent: (id, data) => api.put(`/students/${id}`, data),
+  deleteStudent: (id) => api.delete(`/students/${id}`),
 }
 
 export default api

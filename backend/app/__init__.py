@@ -34,11 +34,12 @@ def create_app(config_name=None):
     setup_logging(app)
     
     # Register blueprints
-    from app.routes import auth, vms, health, monitoring
+    from app.routes import auth, vms, health, monitoring, students
     app.register_blueprint(auth.bp)
     app.register_blueprint(vms.bp)
     app.register_blueprint(health.bp)
     app.register_blueprint(monitoring.bp)
+    app.register_blueprint(students.bp)
     
     # Create tables and initialize default data
     with app.app_context():

@@ -8,6 +8,13 @@ export default defineConfig({
   server: {
     port: 5173,
     host: '0.0.0.0',
+    allowedHosts: ['stackmanager.local', 'stackmanager.local:80', '127.0.0.1', 'localhost', '0.0.0.0'],
+    origin: 'http://stackmanager.local',
+    hmr: {
+      host: 'stackmanager.local',
+      protocol: 'ws',
+      port: 80,
+    },
     proxy: {
       '/api': {
         target: 'http://backend:8000',

@@ -3,8 +3,8 @@ import { Link, useParams } from 'react-router-dom'
 import { useRequireAuth } from '../hooks/useAuth'
 import { Sidebar } from '../components/Sidebar'
 import { useNotificationStore } from '../store'
-import { vmService } from '../services/api'
-import { LoadingSpinner, VMStatus } from '../components/Common'
+import { studentService, vmService } from '../services/api'
+import { LoadingSpinner, VMStatus, Button } from '../components/Common'
 import { ArrowLeft, ExternalLink, AlertCircle } from 'lucide-react'
 
 function formatInterfaces(interfaces) {
@@ -20,6 +20,9 @@ export default function VMDetailsPage() {
   const { instanceId } = useParams()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [instance, setInstance] = useState(null)
+  const [students, setStudents] = useState([])
+  const [selectedStudentIds, setSelectedStudentIds] = useState([])
+  const [isEmailing, setIsEmailing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const addNotification = useNotificationStore((state) => state.addNotification)
 
@@ -45,6 +48,18 @@ export default function VMDetailsPage() {
     }
   }, [instanceId, addNotification])
 
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await studentService.listStudents()
+        setStudents(response.data.students || [])
+      } catch (error) {
+        console.error('Error loading students:', error)
+      }
+    }
+    fetchStudents()
+  }, [])
+
   const renderMetadata = (metadata) => {
     if (!metadata || Object.keys(metadata).length === 0) {
       return <span className="text-slate-400">No metadata</span>
@@ -58,6 +73,36 @@ export default function VMDetailsPage() {
         ))}
       </div>
     )
+  }
+
+  const getFloatingIp = (instance) => {
+    if (!instance) return '-'
+    if (instance.floating_ip) return instance.floating_ip
+    const addresses = instance.addresses || {}
+    for (const addrList of Object.values(addresses)) {
+      if (Array.isArray(addrList) && addrList.length > 0) {
+        const first = addrList[0]
+        if (first?.addr) return first.addr
+        if (first?.address) return first.address
+      }
+    }
+    return '-'
+  }
+
+  const handleSendEmail = async () => {
+    if (!selectedStudentIds.length) {
+      addNotification({ type: 'error', message: 'Select at least one student to email' })
+      return
+    }
+    setIsEmailing(true)
+    try {
+      await vmService.sendInstanceEmail(instanceId, selectedStudentIds)
+      addNotification({ type: 'success', message: 'Email(s) sent successfully' })
+    } catch (error) {
+      addNotification({ type: 'error', message: error.response?.data?.message || 'Failed to send email' })
+    } finally {
+      setIsEmailing(false)
+    }
   }
 
   return (
@@ -134,7 +179,7 @@ export default function VMDetailsPage() {
                     </div>
                     <div className="flex justify-between gap-4">
                       <span className="text-slate-400">Floating IP</span>
-                      <span>{instance.floating_ip || '-'}</span>
+                      <span>{getFloatingIp(instance)}</span>
                     </div>
                     <div className="flex justify-between gap-4">
                       <span className="text-slate-400">Interfaces</span>
@@ -158,6 +203,51 @@ export default function VMDetailsPage() {
                       <p className="text-slate-400 mb-2">Metadata</p>
                       <div className="rounded-lg border border-slate-700 bg-slate-900 p-3">{renderMetadata(instance.metadata)}</div>
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card">
+                <h3 className="text-lg font-semibold text-white mb-4">Email VM IP to Students</h3>
+                <div className="space-y-4 text-sm text-slate-200">
+                  <p className="text-slate-400">Select one or more students to receive this VM's public IP address.</p>
+                  <div className="grid gap-2 max-h-64 overflow-y-auto rounded-lg border border-slate-700 bg-slate-900 p-4">
+                    {students.length === 0 ? (
+                      <p className="text-slate-500">No students are available. Add students in the Students page.</p>
+                    ) : (
+                      students.map((student) => (
+                        <label key={student.id} className="flex items-center gap-3 rounded-lg border border-slate-700 bg-slate-950/40 px-3 py-2">
+                          <input
+                            type="checkbox"
+                            checked={selectedStudentIds.includes(student.id)}
+                            onChange={(event) => {
+                              const checked = event.target.checked
+                              setSelectedStudentIds((current) => {
+                                if (checked) {
+                                  return [...current, student.id]
+                                }
+                                return current.filter((id) => id !== student.id)
+                              })
+                            }}
+                            className="h-4 w-4 text-blue-500 rounded bg-slate-800 border-slate-700"
+                          />
+                          <span className="text-slate-100">{student.name} — {student.email}</span>
+                        </label>
+                      ))
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">VM Public IP: <span className="text-slate-100">{getFloatingIp(instance)}</span></p>
+                    </div>
+                    <Button
+                      variant="primary"
+                      size="md"
+                      onClick={handleSendEmail}
+                      disabled={isEmailing || students.length === 0}
+                    >
+                      {isEmailing ? 'Sending emails…' : 'Send Email'}
+                    </Button>
                   </div>
                 </div>
               </div>

@@ -87,6 +87,7 @@ services:
       - backend
     volumes:
       - ./frontend/src:/app/src
+      - ./frontend/vite.config.js:/app/vite.config.js:ro
     networks:
       - vm-portal-network
     restart: unless-stopped

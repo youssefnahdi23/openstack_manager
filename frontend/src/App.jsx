@@ -7,6 +7,7 @@ import VMDetailsPage from './pages/VMDetailsPage'
 import MonitoringPage from './pages/MonitoringPage'
 import TerminalPage from './pages/TerminalPage'
 import SettingsPage from './pages/SettingsPage'
+import StudentsPage from './pages/StudentsPage'
 import { NotificationContainer } from './components/Notification'
 import { useInitializeAuth, useAuth } from './hooks/useAuth'
 import './index.css'
@@ -43,6 +44,10 @@ function AppContent({ theme, setTheme }) {
       <Route
         path="/settings"
         element={<ProtectedRoute element={<SettingsPage theme={theme} setTheme={setTheme} />} />}
+      />
+      <Route
+        path="/students"
+        element={<ProtectedRoute element={<StudentsPage />} />}
       />
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
     </Routes>

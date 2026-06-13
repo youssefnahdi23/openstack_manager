@@ -1,12 +1,14 @@
 import json
 import os
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import io
 import csv
 from app import db
 from app.models.user import token_required, VMLog
+from app.models.student import Student
 from app.utils.openstack import get_openstack_manager
 import logging
+import requests
 
 
 def _sanitize_error_text(text):
@@ -550,4 +552,92 @@ def get_stats(current_user):
     
     except Exception as e:
         logger.error(f'Error getting stats: {str(e)}')
+        return jsonify({'message': str(e)}), 500
+
+
+@bp.route('/instances/<instance_id>/email', methods=['POST'])
+@token_required
+def email_instance(current_user, instance_id):
+    """Send VM public IP to one or more students via Brevo"""
+    try:
+        data = request.get_json() or {}
+        student_ids = data.get('student_ids') or []
+        if not student_ids:
+            return jsonify({'message': 'No students selected'}), 400
+
+        manager = get_openstack_manager_for_request()
+        instance = manager.get_instance(instance_id)
+        if not instance:
+            return jsonify({'message': 'Instance not found'}), 404
+
+        # Prefer explicit floating_ip field, fall back to addresses
+        floating_ip = instance.get('floating_ip') or ''
+        if not floating_ip:
+            addresses = instance.get('addresses') or {}
+            first_ip = None
+            try:
+                for net, lst in (addresses.items() if isinstance(addresses, dict) else []):
+                    if lst and isinstance(lst, list):
+                        first = lst[0]
+                        first_ip = first.get('addr') or first.get('address') or None
+                        if first_ip:
+                            break
+            except Exception:
+                first_ip = None
+            floating_ip = first_ip or ''
+
+        students = Student.query.filter(Student.id.in_(student_ids)).all()
+        if not students:
+            return jsonify({'message': 'No matching students found'}), 404
+
+        to_list = [{'email': s.email, 'name': s.name} for s in students]
+
+        brevo_key = os.getenv('BREVO_API_KEY')
+        if not brevo_key:
+            return jsonify({'message': 'Email provider is not configured'}), 500
+
+        subject = f"VM {instance.get('name') or instance_id} public IP"
+        html = f"<p>The public IP for VM <strong>{instance.get('name') or instance_id}</strong> ({instance_id}) is <strong>{floating_ip}</strong></p>"
+
+        payload = {
+            'sender': {'name': 'VM Portal', 'email': 'no-reply@example.com'},
+            'to': to_list,
+            'subject': subject,
+            'htmlContent': html
+        }
+        headers = {'api-key': brevo_key, 'Content-Type': 'application/json'}
+        resp = requests.post('https://api.brevo.com/v3/smtp/email', json=payload, headers=headers, timeout=15)
+
+        if resp.status_code not in (200, 201, 202):
+            logger.error(f'Brevo send failed: {resp.status_code} {resp.text}')
+            return jsonify({'message': 'Failed to send emails', 'detail': resp.text}), 502
+
+        vm_log = VMLog(
+            user_id=current_user.id,
+            instance_id=instance_id,
+            instance_name=instance.get('name'),
+            action='email',
+            status='success',
+            message=f'Sent to {len(to_list)} recipients'
+        )
+        db.session.add(vm_log)
+        db.session.commit()
+
+        return jsonify({'message': 'Emails sent'}), 200
+
+    except Exception as e:
+        logger.error(f'Error sending VM email: {e}', exc_info=True)
+        try:
+            vm_log = VMLog(
+                user_id=current_user.id,
+                instance_id=instance_id,
+                instance_name=instance.get('name') if 'instance' in locals() and instance else '',
+                action='email',
+                status='failed',
+                message=str(e)
+            )
+            db.session.add(vm_log)
+            db.session.commit()
+        except Exception:
+            pass
         return jsonify({'message': str(e)}), 500
