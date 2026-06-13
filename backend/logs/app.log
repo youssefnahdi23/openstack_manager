@@ -14164,3 +14164,834 @@ AttributeError: 'Proxy' object has no attribute 'create_server_console'
 2026-06-13 12:49:22 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
 2026-06-13 12:49:22 - app.utils.openstack - INFO - Successfully connected to OpenStack
 2026-06-13 12:49:22 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:49:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:49:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:49:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:49:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:49:47 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:49:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:49:48 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:49:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:49:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:49:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:49:48 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:49:48 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:49:48 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:49:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:49:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:49:48 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:16 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:16 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:50:16 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:16 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:16 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:16 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:50:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:49 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:50:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:50 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:50:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:50 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:50:50 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:50:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:50 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:50:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:50:50 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:51:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:51:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:51:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:51:28 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:51:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:51:28 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:51:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:51:28 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:51:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:51:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:51:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:51:29 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:51:29 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:51:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:51:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:51:29 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:52:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:52:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:52:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:52:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:52:18 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:52:18 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:52:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:52:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:52:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:52:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:52:18 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:52:18 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:52:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:52:18 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:52:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:52:18 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:53:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:53:20 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:53:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:53:20 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:53:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:53:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:53:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:53:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:53:21 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:53:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:53:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:53:21 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:53:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:53:21 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYxOTUyLjc5Mzc3Nn0.JSf1xOaeDkm4D3SGVZjeUo43FkC1-y39OHaKE0zrzWg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:53:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:53:21 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:54:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:54:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:54:41 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNDY2LjMzODQ1MX0.yUvtPSD_Cxd2LIHJo3QUBHpXeErwYE1jQ6UTm1lYVFY', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:54:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:54:41 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNDY2LjMzODQ1MX0.yUvtPSD_Cxd2LIHJo3QUBHpXeErwYE1jQ6UTm1lYVFY', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:54:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:54:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:54:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:54:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:54:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:54:41 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:54:42 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNDY2LjMzODQ1MX0.yUvtPSD_Cxd2LIHJo3QUBHpXeErwYE1jQ6UTm1lYVFY', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:54:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:54:42 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNDY2LjMzODQ1MX0.yUvtPSD_Cxd2LIHJo3QUBHpXeErwYE1jQ6UTm1lYVFY', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:54:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:54:42 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:56:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:56:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:56:04 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNTQ3LjI0MjY4NX0.-QDL1rIk7VjTlqjK9-UHaa5_Yx_vGtX_KDVoUIAL7Hg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:56:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:56:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:56:04 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNTQ3LjI0MjY4NX0.-QDL1rIk7VjTlqjK9-UHaa5_Yx_vGtX_KDVoUIAL7Hg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:56:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:56:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:56:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:56:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:56:04 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:56:04 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNTQ3LjI0MjY4NX0.-QDL1rIk7VjTlqjK9-UHaa5_Yx_vGtX_KDVoUIAL7Hg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:56:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:56:04 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNTQ3LjI0MjY4NX0.-QDL1rIk7VjTlqjK9-UHaa5_Yx_vGtX_KDVoUIAL7Hg', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:56:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:56:04 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:57:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:57:26 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNjI5Ljg0NDM3M30.uTx_NGbXXOGFZvjth9F1CNPP8OLA-M-issLr2etvs7g', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:57:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:57:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:57:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:57:26 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNjI5Ljg0NDM3M30.uTx_NGbXXOGFZvjth9F1CNPP8OLA-M-issLr2etvs7g', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:57:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:57:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:57:26 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:57:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:57:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:57:26 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNjI5Ljg0NDM3M30.uTx_NGbXXOGFZvjth9F1CNPP8OLA-M-issLr2etvs7g', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:57:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:57:26 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNjI5Ljg0NDM3M30.uTx_NGbXXOGFZvjth9F1CNPP8OLA-M-issLr2etvs7g', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:57:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:57:27 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:58:47 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNzEyLjEwMDY0OH0.NMFEPKJ6OgMTMxueykRChOt3nQdNcEKRu_aCIK2a2I0', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:58:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:58:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:58:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:58:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:58:47 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNzEyLjEwMDY0OH0.NMFEPKJ6OgMTMxueykRChOt3nQdNcEKRu_aCIK2a2I0', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:58:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:58:47 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 12:58:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:58:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:58:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:58:48 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNzEyLjEwMDY0OH0.NMFEPKJ6OgMTMxueykRChOt3nQdNcEKRu_aCIK2a2I0', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:58:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:58:48 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNzEyLjEwMDY0OH0.NMFEPKJ6OgMTMxueykRChOt3nQdNcEKRu_aCIK2a2I0', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 12:58:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 12:58:48 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:00:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:00:08 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNzkzLjQ3OTI5N30.FFdPBdvR2ok1xoPPyYeO2eodedLtjJb5plQwHmMuwRE', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:00:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:00:08 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNzkzLjQ3OTI5N30.FFdPBdvR2ok1xoPPyYeO2eodedLtjJb5plQwHmMuwRE', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:00:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:00:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:00:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:00:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:00:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:00:08 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:00:08 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNzkzLjQ3OTI5N30.FFdPBdvR2ok1xoPPyYeO2eodedLtjJb5plQwHmMuwRE', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:00:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:00:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:00:08 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyNzkzLjQ3OTI5N30.FFdPBdvR2ok1xoPPyYeO2eodedLtjJb5plQwHmMuwRE', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:00:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:00:09 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:01:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:01:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:01:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:01:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:01:29 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyODc0LjEyNzY5OH0.jfSkkjCCJozfffq5E53uVKBeVuaFrnf6b_mj-NhdBbA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:01:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:01:29 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyODc0LjEyNzY5OH0.jfSkkjCCJozfffq5E53uVKBeVuaFrnf6b_mj-NhdBbA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:01:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:01:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:01:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:01:29 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyODc0LjEyNzY5OH0.jfSkkjCCJozfffq5E53uVKBeVuaFrnf6b_mj-NhdBbA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:01:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:01:29 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:01:29 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyODc0LjEyNzY5OH0.jfSkkjCCJozfffq5E53uVKBeVuaFrnf6b_mj-NhdBbA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:01:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:01:29 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:02:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:02:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:02:49 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyOTU0LjgyNDEwM30.PaPeT9eZo2snozufJyhzH0W5O4ZKRBmMpRJo8ZxRBnw', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:02:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:02:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:02:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:02:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:02:50 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyOTU0LjgyNDEwM30.PaPeT9eZo2snozufJyhzH0W5O4ZKRBmMpRJo8ZxRBnw', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:02:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:02:50 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyOTU0LjgyNDEwM30.PaPeT9eZo2snozufJyhzH0W5O4ZKRBmMpRJo8ZxRBnw', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:02:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:02:50 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYyOTU0LjgyNDEwM30.PaPeT9eZo2snozufJyhzH0W5O4ZKRBmMpRJo8ZxRBnw', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:02:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:02:50 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:02:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:02:50 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:04:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:04:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:04:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:04:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:04:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:04:18 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMDM1LjU2ODgxOH0.AW-PXcWhf-tWe2Zz1Jh0Bv7nyRf0s46wVBUtWmpt3gA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:04:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:04:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:04:18 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMDM1LjU2ODgxOH0.AW-PXcWhf-tWe2Zz1Jh0Bv7nyRf0s46wVBUtWmpt3gA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:04:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:04:19 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMDM1LjU2ODgxOH0.AW-PXcWhf-tWe2Zz1Jh0Bv7nyRf0s46wVBUtWmpt3gA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:04:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:04:19 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMDM1LjU2ODgxOH0.AW-PXcWhf-tWe2Zz1Jh0Bv7nyRf0s46wVBUtWmpt3gA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:04:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:04:19 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:04:19 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:06:11 - app - INFO - Logging configured successfully
+2026-06-13 13:06:11 - app - INFO - Logging configured successfully
+2026-06-13 13:06:11 - app - INFO - Logging configured successfully
+2026-06-13 13:06:11 - app - INFO - Logging configured successfully
+2026-06-13 13:06:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:13 - app - INFO - Application started in production mode
+2026-06-13 13:06:13 - app - INFO - Application started in production mode
+2026-06-13 13:06:13 - app - INFO - Application started in production mode
+2026-06-13 13:06:13 - app - INFO - Application started in production mode
+2026-06-13 13:06:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:25 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMTIwLjAzMjcyNn0.dDNRJMWVlpm7jlG7Lcd4rR-javJ0n8zavri1F49nerA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:06:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:25 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMTIwLjAzMjcyNn0.dDNRJMWVlpm7jlG7Lcd4rR-javJ0n8zavri1F49nerA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:06:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:25 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMTIwLjAzMjcyNn0.dDNRJMWVlpm7jlG7Lcd4rR-javJ0n8zavri1F49nerA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:06:25 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMTIwLjAzMjcyNn0.dDNRJMWVlpm7jlG7Lcd4rR-javJ0n8zavri1F49nerA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:06:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:06:25 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:06:25 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:07:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:03 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMTIwLjAzMjcyNn0.dDNRJMWVlpm7jlG7Lcd4rR-javJ0n8zavri1F49nerA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:07:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:03 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMTIwLjAzMjcyNn0.dDNRJMWVlpm7jlG7Lcd4rR-javJ0n8zavri1F49nerA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:07:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:03 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:07:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:03 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMTIwLjAzMjcyNn0.dDNRJMWVlpm7jlG7Lcd4rR-javJ0n8zavri1F49nerA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:07:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:03 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMTIwLjAzMjcyNn0.dDNRJMWVlpm7jlG7Lcd4rR-javJ0n8zavri1F49nerA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:07:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:03 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:03 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:07:12 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMTIwLjAzMjcyNn0.dDNRJMWVlpm7jlG7Lcd4rR-javJ0n8zavri1F49nerA', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1', 'Priority': 'u=0'}
+2026-06-13 13:07:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:12 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:07:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:07:46 - app.utils.openstack - INFO - === FULL CREATE REQUEST ===
+2026-06-13 13:07:46 - app.utils.openstack - INFO - Server name: test
+2026-06-13 13:07:46 - app.utils.openstack - INFO - Create kwargs: {
+  "name": "test",
+  "flavor_id": "1",
+  "image_id": "3c436cdd-dbd2-4544-88b6-226f2daa534a",
+  "networks": [
+    {
+      "uuid": "6a665a4d-566e-472c-8076-7c1b30875ab8"
+    }
+  ]
+}
+2026-06-13 13:07:46 - app.utils.openstack - INFO - ========================
+2026-06-13 13:08:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:04 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMjgzLjI0NDgxOX0.nK_aU80Xj_4YdnQZeWvoLdjTSTvGp0vu-J2lSzmvZDM', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:08:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:23 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:23 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:23 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:23 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMjgzLjI0NDgxOX0.nK_aU80Xj_4YdnQZeWvoLdjTSTvGp0vu-J2lSzmvZDM', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:08:23 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:23 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:24 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMjgzLjI0NDgxOX0.nK_aU80Xj_4YdnQZeWvoLdjTSTvGp0vu-J2lSzmvZDM', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:08:24 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:24 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:24 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:24 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:08:24 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMjgzLjI0NDgxOX0.nK_aU80Xj_4YdnQZeWvoLdjTSTvGp0vu-J2lSzmvZDM', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:08:24 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzYzMjgzLjI0NDgxOX0.nK_aU80Xj_4YdnQZeWvoLdjTSTvGp0vu-J2lSzmvZDM', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 13:08:24 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:24 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:24 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 13:08:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:36 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:44 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:44 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:08:55 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:10:05 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:10:05 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:11:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:11:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:12:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:12:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:14:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:14:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:15:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:15:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:16:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:16:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:18:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:18:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:19:30 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:19:30 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:20:51 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:20:51 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:22:11 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:22:11 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:23:32 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:23:32 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:24:53 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:24:53 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:26:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:26:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:27:38 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:27:38 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:28:59 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:28:59 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:30:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:30:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:31:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:31:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:33:05 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:33:05 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:34:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:34:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:35:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:35:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:37:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:37:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:38:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:38:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:39:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:39:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:40:24 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:40:24 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:41:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:41:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:42:31 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:42:31 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:43:52 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:43:52 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:45:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:45:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:46:34 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:46:34 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:47:54 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:47:55 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:49:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:49:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:50:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:50:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:51:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:51:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:53:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:53:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:54:37 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:54:37 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:55:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:55:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:57:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:57:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:58:39 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 13:58:39 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:00:06 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:00:06 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:01:27 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:01:27 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:02:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:02:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:04:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:04:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:05:30 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:05:30 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:06:51 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:06:51 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:08:11 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:08:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:09:32 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:09:32 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:10:52 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:10:52 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:33 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:33 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:39 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:39 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:39 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:39 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzY3MDMxLjk3OTg0OX0.Z6uEHgcVkW4DSwQfrYON_TM5zrSjm8s1YdfP4XtBgYo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 14:11:39 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:39 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:40 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzY3MDMxLjk3OTg0OX0.Z6uEHgcVkW4DSwQfrYON_TM5zrSjm8s1YdfP4XtBgYo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 14:11:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:40 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzY3MDMxLjk3OTg0OX0.Z6uEHgcVkW4DSwQfrYON_TM5zrSjm8s1YdfP4XtBgYo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 14:11:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:40 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzY3MDMxLjk3OTg0OX0.Z6uEHgcVkW4DSwQfrYON_TM5zrSjm8s1YdfP4XtBgYo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 14:11:40 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:40 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 14:11:40 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 14:11:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:11:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:12:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:12:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:13:34 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:13:34 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:14:54 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:14:54 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:16:14 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:16:14 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:17:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:17:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:18:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:18:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:20:17 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:20:17 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:21:37 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:21:37 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:23:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:23:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:24:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:24:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:25:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:25:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:27:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:27:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:28:23 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:28:23 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:29:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:29:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:31:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:31:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:32:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:32:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:33:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:33:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:35:07 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:35:07 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:36:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:36:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:37:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:37:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:39:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:39:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:40:30 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:40:30 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:41:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:41:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:43:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:43:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:44:30 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:44:30 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:45:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:45:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:47:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:47:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:48:32 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:48:32 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:49:53 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:49:53 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:51:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:51:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:52:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:52:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:53:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:53:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:55:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:55:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:56:36 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:56:36 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:57:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:57:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:59:17 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 14:59:17 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:00:37 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:00:37 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:01:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:01:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:03:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:03:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:04:38 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:04:38 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:05:59 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:05:59 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:07:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:07:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:08:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:08:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:10:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:10:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:11:22 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:11:22 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:12:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:12:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:14:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:14:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:15:24 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:15:24 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:16:44 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:16:44 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:18:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:18:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:19:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:19:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:20:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:20:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:22:06 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:22:06 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:23:27 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:23:27 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:24:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:24:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:26:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:26:08 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:27:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:27:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:28:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:28:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:30:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:30:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:31:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:31:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:32:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:32:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:34:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:34:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:35:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:35:10 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:35:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:35:31 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:35:31 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:36:51 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:36:51 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:37:58 - app - INFO - Logging configured successfully
+2026-06-13 15:37:58 - app - INFO - Logging configured successfully
+2026-06-13 15:37:58 - app - INFO - Logging configured successfully
+2026-06-13 15:37:58 - app - INFO - Logging configured successfully
+2026-06-13 15:38:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:01 - app - INFO - Application started in production mode
+2026-06-13 15:38:01 - app - INFO - Application started in production mode
+2026-06-13 15:38:01 - app - INFO - Application started in production mode
+2026-06-13 15:38:01 - app - INFO - Application started in production mode
+2026-06-13 15:38:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:38:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:38:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:38:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:38:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:26 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 15:38:26 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 15:38:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:34 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:45 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:38:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:45 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:38:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:45 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:38:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:45 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:38:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:38:46 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 15:38:46 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 15:39:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:13 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:39:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:13 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:39:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:13 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 15:39:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:13 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:39:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:13 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzcyMzAxLjU0Nzc4OH0.uZ5_kq5srGo7Mvk9HsKLc0_IuCr2EfZ4Yee-_YWEuoo', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 15:39:13 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:14 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 15:39:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:27 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:33 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:39:33 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:40:53 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:40:53 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:42:14 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:42:15 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:43:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:43:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:44:55 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:44:55 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:46:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:46:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:47:36 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:47:36 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:48:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:48:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:50:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:51:36 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:51:36 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:52:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:52:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:54:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:54:16 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:55:36 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:55:36 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:56:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:56:57 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:58:17 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 15:58:17 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:38:30 - app - INFO - Logging configured successfully
+2026-06-13 17:38:30 - app - INFO - Logging configured successfully
+2026-06-13 17:38:30 - app - INFO - Logging configured successfully
+2026-06-13 17:38:30 - app - INFO - Logging configured successfully
+2026-06-13 17:38:33 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:38:33 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:38:33 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:38:34 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:38:34 - app - INFO - Application started in production mode
+2026-06-13 17:38:34 - app - INFO - Application started in production mode
+2026-06-13 17:38:34 - app - INFO - Application started in production mode
+2026-06-13 17:38:34 - app - INFO - Application started in production mode
+2026-06-13 17:49:34 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:42 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgwMTczLjkzMTM2N30.8d_7L58ZdRdtBqugJEZ3gtnm6MpGuMmYh6a7nBqSYD8', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 17:49:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:43 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgwMTczLjkzMTM2N30.8d_7L58ZdRdtBqugJEZ3gtnm6MpGuMmYh6a7nBqSYD8', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 17:49:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:43 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 17:49:43 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgwMTczLjkzMTM2N30.8d_7L58ZdRdtBqugJEZ3gtnm6MpGuMmYh6a7nBqSYD8', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 17:49:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:43 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'backend:8000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgwMTczLjkzMTM2N30.8d_7L58ZdRdtBqugJEZ3gtnm6MpGuMmYh6a7nBqSYD8', 'X-Openstack-Project': 'demo', 'Connection': 'close', 'Referer': 'http://192.168.127.128:5173/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 17:49:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:43 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 17:49:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:49:51 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:50:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:50:02 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:50:22 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:50:22 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:50:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:50:43 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:51:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:51:04 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:51:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:51:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:51:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:51:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:52:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:52:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:52:33 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:52:33 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:52:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:52:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:53:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:53:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:53:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:53:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:54:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:54:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:55:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:55:21 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:56:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:56:19 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:57:37 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:57:37 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:58:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 17:58:58 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:00:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:00:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:01:39 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:01:39 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:03:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:03:00 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:04:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:04:20 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:05:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:05:41 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:07:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:07:01 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:08:22 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:08:22 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:09:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:09:42 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:11:42 - app - INFO - Logging configured successfully
+2026-06-13 18:11:42 - app - INFO - Logging configured successfully
+2026-06-13 18:11:42 - app - INFO - Logging configured successfully
+2026-06-13 18:11:42 - app - INFO - Logging configured successfully
+2026-06-13 18:11:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:11:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:11:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:11:46 - app - INFO - Application started in production mode
+2026-06-13 18:11:46 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:11:46 - app - INFO - Application started in production mode
+2026-06-13 18:11:46 - app - INFO - Application started in production mode
+2026-06-13 18:11:46 - app - INFO - Application started in production mode
+2026-06-13 18:12:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:18 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:25 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgxNTM4LjIyMjcyN30.Qq2qSiyvIAycU1doMlIuqUKPpNj0DkX0Sc3wHUcWMh4', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 18:12:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:25 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:26 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgxNTM4LjIyMjcyN30.Qq2qSiyvIAycU1doMlIuqUKPpNj0DkX0Sc3wHUcWMh4', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 18:12:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:26 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 18:12:26 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgxNTM4LjIyMjcyN30.Qq2qSiyvIAycU1doMlIuqUKPpNj0DkX0Sc3wHUcWMh4', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 18:12:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:26 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgxNTM4LjIyMjcyN30.Qq2qSiyvIAycU1doMlIuqUKPpNj0DkX0Sc3wHUcWMh4', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 18:12:26 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:26 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 18:12:31 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:31 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:37 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:37 - app.routes.vms - INFO - Email provider override='', selected=brevo, sender=ae9633001@smtp-brevo.com, recipients=2
+2026-06-13 18:12:37 - app.routes.vms - ERROR - Brevo send failed: 401 {"message":"Key not found","code":"unauthorized"}
+
+2026-06-13 18:12:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:45 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:53 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:12:53 - app.routes.vms - INFO - Email provider override='', selected=brevo, sender=ae9633001@smtp-brevo.com, recipients=2
+2026-06-13 18:12:53 - app.routes.vms - ERROR - Brevo send failed: 401 {"message":"Key not found","code":"unauthorized"}
+
+2026-06-13 18:14:06 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:14:06 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:15:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:15:28 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:16:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:16:49 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:18:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:18:09 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:19:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:19:29 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:20:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:20:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:22:11 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:22:11 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:22:45 - app - INFO - Logging configured successfully
+2026-06-13 18:22:45 - app - INFO - Logging configured successfully
+2026-06-13 18:22:45 - app - INFO - Logging configured successfully
+2026-06-13 18:22:45 - app - INFO - Logging configured successfully
+2026-06-13 18:22:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:22:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:22:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:22:47 - app - INFO - Application started in production mode
+2026-06-13 18:22:47 - app - INFO - Application started in production mode
+2026-06-13 18:22:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:22:47 - app - INFO - Application started in production mode
+2026-06-13 18:22:47 - app - INFO - Application started in production mode
+2026-06-13 18:23:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:35 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:47 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgyMTkxLjg3NDg2NH0.JdHyhLs1a9tn935RMDVGB0dXFhWurwv8toYwsnWVR68', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 18:23:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:47 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgyMTkxLjg3NDg2NH0.JdHyhLs1a9tn935RMDVGB0dXFhWurwv8toYwsnWVR68', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 18:23:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:47 - app.routes.vms - INFO - User 'admin' requested network list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgyMTkxLjg3NDg2NH0.JdHyhLs1a9tn935RMDVGB0dXFhWurwv8toYwsnWVR68', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 18:23:47 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:47 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 18:23:48 - app.routes.vms - INFO - User 'admin' requested keypair list; headers={'Host': 'stackmanager.local', 'X-Real-Ip': '192.168.127.1', 'X-Forwarded-For': '192.168.127.1', 'X-Forwarded-Proto': 'http', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzgxMzgyMTkxLjg3NDg2NH0.JdHyhLs1a9tn935RMDVGB0dXFhWurwv8toYwsnWVR68', 'X-Openstack-Project': 'demo', 'Referer': 'http://stackmanager.local/vms', 'Dnt': '1', 'Sec-Gpc': '1'}
+2026-06-13 18:23:48 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:48 - app.routes.vms - WARNING - No keypairs visible in current project, falling back to admin keypair list
+2026-06-13 18:23:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:50 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:56 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:23:56 - app.routes.vms - INFO - Email provider override='', selected=brevo, sender=youssefnahdi95@gmail.com, recipients=2
+2026-06-13 18:24:51 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:24:51 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:26:12 - app.utils.openstack - INFO - Successfully connected to OpenStack
+2026-06-13 18:26:12 - app.utils.openstack - INFO - Successfully connected to OpenStack

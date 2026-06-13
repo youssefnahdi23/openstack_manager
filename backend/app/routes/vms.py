@@ -1,5 +1,7 @@
 import json
 import os
+import smtplib
+from email.message import EmailMessage
 from flask import Blueprint, request, jsonify, make_response, current_app
 import io
 import csv
@@ -592,25 +594,76 @@ def email_instance(current_user, instance_id):
 
         to_list = [{'email': s.email, 'name': s.name} for s in students]
 
-        brevo_key = os.getenv('BREVO_API_KEY')
-        if not brevo_key:
-            return jsonify({'message': 'Email provider is not configured'}), 500
+        brevo_key = current_app.config.get('BREVO_API_KEY', '').strip()
+        sender_name = current_app.config.get('BREVO_SENDER_NAME', 'VM Portal')
+        sender_email = current_app.config.get('BREVO_SENDER_EMAIL', '').strip()
+        smtp_server = current_app.config.get('SMTP_SERVER', '').strip()
+        smtp_port = current_app.config.get('SMTP_PORT', 587)
+        smtp_username = current_app.config.get('SMTP_USERNAME', '').strip()
+        smtp_password = current_app.config.get('SMTP_PASSWORD', '').strip()
+        smtp_use_tls = current_app.config.get('SMTP_USE_TLS', True)
+        email_provider = current_app.config.get('EMAIL_PROVIDER', '').strip().lower()
+
+        # Prefer an explicitly configured sender email.
+        # If the configured sender is still a placeholder or missing, use SMTP username when available.
+        const_placeholder_emails = ('no-reply@example.com', 'no-reply@pfe.com', 'no-reply@localhost')
+        if not sender_email or sender_email.lower() in const_placeholder_emails:
+            sender_email = smtp_username or sender_email
+
+        if not sender_email:
+            sender_email = 'no-reply@example.com'
+
+        if email_provider == 'smtp':
+            provider = 'smtp'
+        elif email_provider == 'brevo':
+            provider = 'brevo'
+        else:
+            provider = 'brevo' if brevo_key else 'smtp'
+
+        if email_provider and email_provider not in ('smtp', 'brevo'):
+            logger.warning(f'Unexpected EMAIL_PROVIDER value: {email_provider!r}. Falling back to {provider}.')
+
+        logger.info(f'Email provider override={email_provider!r}, selected={provider}, sender={sender_email}, recipients={len(to_list)}')
 
         subject = f"VM {instance.get('name') or instance_id} public IP"
         html = f"<p>The public IP for VM <strong>{instance.get('name') or instance_id}</strong> ({instance_id}) is <strong>{floating_ip}</strong></p>"
 
-        payload = {
-            'sender': {'name': 'VM Portal', 'email': 'no-reply@example.com'},
-            'to': to_list,
-            'subject': subject,
-            'htmlContent': html
-        }
-        headers = {'api-key': brevo_key, 'Content-Type': 'application/json'}
-        resp = requests.post('https://api.brevo.com/v3/smtp/email', json=payload, headers=headers, timeout=15)
+        if provider == 'brevo':
+            if not brevo_key:
+                return jsonify({'message': 'Brevo API key not configured'}), 500
 
-        if resp.status_code not in (200, 201, 202):
-            logger.error(f'Brevo send failed: {resp.status_code} {resp.text}')
-            return jsonify({'message': 'Failed to send emails', 'detail': resp.text}), 502
+            payload = {
+                'sender': {'name': sender_name, 'email': sender_email},
+                'to': to_list,
+                'subject': subject,
+                'htmlContent': html
+            }
+            headers = {'api-key': brevo_key, 'Content-Type': 'application/json'}
+            resp = requests.post('https://api.brevo.com/v3/smtp/email', json=payload, headers=headers, timeout=15)
+
+            if resp.status_code not in (200, 201, 202):
+                logger.error(f'Brevo send failed: {resp.status_code} {resp.text}')
+                return jsonify({'message': 'Failed to send emails', 'detail': resp.text}), 502
+        elif provider == 'smtp':
+            if not smtp_server or not smtp_username or not smtp_password:
+                return jsonify({'message': 'SMTP provider is not configured'}), 500
+            try:
+                message = EmailMessage()
+                message['Subject'] = subject
+                message['From'] = f'{sender_name} <{sender_email}>'
+                message['To'] = ', '.join([f"{recipient['name']} <{recipient['email']}>" for recipient in to_list])
+                message.set_content(html, subtype='html')
+
+                with smtplib.SMTP(smtp_server, smtp_port, timeout=15) as smtp:
+                    if smtp_use_tls:
+                        smtp.starttls()
+                    smtp.login(smtp_username, smtp_password)
+                    smtp.send_message(message)
+            except Exception as exc:
+                logger.error(f'SMTP send failed: {exc}', exc_info=True)
+                return jsonify({'message': 'Failed to send emails via SMTP', 'detail': str(exc)}), 502
+        else:
+            return jsonify({'message': 'Email provider is not configured'}), 500
 
         vm_log = VMLog(
             user_id=current_user.id,

@@ -16,7 +16,7 @@ const MONITORING_URLS = {
       id: 1860,
       uid: 'rYdddlPWk',
       slug: 'node-exporter-full',
-      url: 'http://192.168.91.128:3000/d/rYdddlPWk/node-exporter-full?orgId=1&from=now-24h&to=now&timezone=browser&var-ds_prometheus=ffnfspc11u328b&var-job=node_exporter&var-nodename=devstack&var-node=localhost:9100&refresh=1m'
+      url: 'http://192.168.91.128:3000/d/rYdddlPWk/node-exporter-full?orgId=1&from=now-24h&to=now&timezone=browser&var-ds_prometheus=ffnfspc11u328b&var-job=node_exporter&var-nodename=devstack&var-node=localhost:9100&refresh=off'
     },
     openstackOverview: {
       id: 21085,
@@ -43,17 +43,11 @@ export default function MonitoringPage() {
   const [placementLoading, setPlacementLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('prometheus')
 
-  // Load monitoring data when the page mounts and refresh every 30 seconds.
+  // Load monitoring data once when the page mounts.
   useEffect(() => {
     fetchPlacementUsage()
     fetchTimeSeries()
     fetchDirectMetrics()
-    const interval = setInterval(() => {
-      fetchPlacementUsage()
-      fetchTimeSeries()
-      fetchDirectMetrics()
-    }, 30000) // Refresh every 30 seconds
-    return () => clearInterval(interval)
   }, [])
 
   // Query the backend for OpenStack placement usage data.

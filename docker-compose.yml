@@ -59,6 +59,15 @@ services:
       OPENSTACK_REGION_NAME: ${OPENSTACK_REGION_NAME:-RegionOne}
       REDIS_URL: redis://redis:6379/0
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      # Optional email provider configuration
+      BREVO_API_KEY: ${BREVO_API_KEY:-}
+      BREVO_SENDER_NAME: ${BREVO_SENDER_NAME:-VM Portal}
+      BREVO_SENDER_EMAIL: ${BREVO_SENDER_EMAIL:-no-reply@example.com}
+      SMTP_SERVER: ${SMTP_SERVER:-smtp-relay.brevo.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME:-ae9633001@smtp-brevo.com}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_USE_TLS: ${SMTP_USE_TLS:-True}
     ports:
       - "5000:8000"
     depends_on:
