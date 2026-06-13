@@ -625,8 +625,63 @@ def email_instance(current_user, instance_id):
 
         logger.info(f'Email provider override={email_provider!r}, selected={provider}, sender={sender_email}, recipients={len(to_list)}')
 
-        subject = f"VM {instance.get('name') or instance_id} public IP"
-        html = f"<p>The public IP for VM <strong>{instance.get('name') or instance_id}</strong> ({instance_id}) is <strong>{floating_ip}</strong></p>"
+        instance_name = instance.get('name') or instance_id
+        subject = f"VM '{instance_name}' access details"
+
+        plain_text = (
+            f"Your VM '{instance_name}' is reachable at the public IP below:\n\n"
+            f"Instance ID: {instance_id}\n"
+            f"VM Name: {instance_name}\n"
+            f"Public IP: {floating_ip or 'Not available'}\n\n"
+            "If you have any questions, please reply to this email."
+        )
+
+        html = f"""
+        <html>
+          <body style="margin:0;padding:0;background:#f3f4f6;font-family:Arial,Helvetica,sans-serif;color:#111827;">
+            <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td align="center" style="padding:24px;">
+                  <table role="presentation" cellpadding="0" cellspacing="0" width="600" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,0.08);">
+                    <tr>
+                      <td style="background:#0f172a;color:#ffffff;padding:28px 32px;">
+                        <h1 style="margin:0;font-size:24px;line-height:1.2;">VM Access Details</h1>
+                        <p style="margin:8px 0 0;font-size:15px;line-height:1.5;color:#cbd5e1;">Your virtual machine is ready and available below.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:32px;">
+                        <p style="margin:0 0 20px;font-size:15px;line-height:1.7;">Hi there,</p>
+                        <p style="margin:0 0 24px;font-size:15px;line-height:1.7;">Here are the access details for your VM:</p>
+                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;">
+                          <tr>
+                            <td style="padding:14px 16px;border:1px solid #e5e7eb;background:#f8fafc;font-weight:700;width:160px;">VM Name</td>
+                            <td style="padding:14px 16px;border:1px solid #e5e7eb;background:#f8fafc;">{instance_name}</td>
+                          </tr>
+                          <tr>
+                            <td style="padding:14px 16px;border:1px solid #e5e7eb;background:#ffffff;font-weight:700;">Instance ID</td>
+                            <td style="padding:14px 16px;border:1px solid #e5e7eb;background:#ffffff;">{instance_id}</td>
+                          </tr>
+                          <tr>
+                            <td style="padding:14px 16px;border:1px solid #e5e7eb;background:#f8fafc;font-weight:700;">Public IP</td>
+                            <td style="padding:14px 16px;border:1px solid #e5e7eb;background:#f8fafc;">{floating_ip or 'Not available'}</td>
+                          </tr>
+                        </table>
+                        <p style="margin:24px 0 0;font-size:15px;line-height:1.7;">If you need help accessing this VM, reply to this email or contact your system administrator.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="background:#f8fafc;padding:22px 32px;color:#475569;font-size:13px;line-height:1.5;">
+                        <p style="margin:0;">Sent by {sender_name}</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </body>
+        </html>
+        """
 
         if provider == 'brevo':
             if not brevo_key:
@@ -636,6 +691,7 @@ def email_instance(current_user, instance_id):
                 'sender': {'name': sender_name, 'email': sender_email},
                 'to': to_list,
                 'subject': subject,
+                'textContent': plain_text,
                 'htmlContent': html
             }
             headers = {'api-key': brevo_key, 'Content-Type': 'application/json'}
@@ -652,7 +708,8 @@ def email_instance(current_user, instance_id):
                 message['Subject'] = subject
                 message['From'] = f'{sender_name} <{sender_email}>'
                 message['To'] = ', '.join([f"{recipient['name']} <{recipient['email']}>" for recipient in to_list])
-                message.set_content(html, subtype='html')
+                message.set_content(plain_text)
+                message.add_alternative(html, subtype='html')
 
                 with smtplib.SMTP(smtp_server, smtp_port, timeout=15) as smtp:
                     if smtp_use_tls:
